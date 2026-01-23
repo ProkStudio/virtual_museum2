@@ -1,28 +1,39 @@
-/* Базовые стили */
+/* Виртуальный музей блокады Ленинграда - Темная тема */
 :root {
-    --dark-bg: #121212;
-    --darker-bg: #0a0a0a;
-    --light-text: #f0f0f0;
-    --accent-color: #8b0000;
+    --dark-bg: #0a0a0a;
+    --darker-bg: #050505;
+    --card-bg: #1a1a1a;
+    --card-border: #2a2a2a;
+    --accent-dark: #8b0000;
     --accent-light: #a52a2a;
-    --gray-text: #aaa;
-    --card-bg: #1e1e1e;
-    --border-color: #333;
-    --shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+    --text-primary: #f0f0f0;
+    --text-secondary: #aaa;
+    --text-muted: #666;
+    --shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+    --shadow-hover: 0 8px 25px rgba(139, 0, 0, 0.3);
+    --transition: all 0.3s ease;
 }
 
+/* Базовые стили */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
 body {
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Roboto', 'Segoe UI', sans-serif;
     background-color: var(--dark-bg);
-    color: var(--light-text);
+    color: var(--text-primary);
     line-height: 1.6;
     overflow-x: hidden;
+    background-image: 
+        radial-gradient(circle at 15% 50%, rgba(139, 0, 0, 0.05) 0%, transparent 20%),
+        radial-gradient(circle at 85% 30%, rgba(165, 42, 42, 0.05) 0%, transparent 20%);
 }
 
 .container {
@@ -31,84 +42,158 @@ body {
     padding: 0 20px;
 }
 
+/* Типография */
+h1, h2, h3, h4 {
+    font-family: 'Playfair Display', 'Times New Roman', serif;
+    font-weight: 600;
+    line-height: 1.3;
+}
+
+h1 {
+    font-size: 3.5rem;
+    margin-bottom: 1rem;
+}
+
+h2 {
+    font-size: 2.5rem;
+    margin-bottom: 1.5rem;
+    position: relative;
+}
+
+h2::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 0;
+    width: 80px;
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent-dark), var(--accent-light));
+}
+
+h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+p {
+    margin-bottom: 1rem;
+}
+
+a {
+    color: var(--accent-light);
+    text-decoration: none;
+    transition: var(--transition);
+}
+
+a:hover {
+    color: var(--text-primary);
+}
+
+/* Кнопки */
+.btn-primary {
+    display: inline-block;
+    background: linear-gradient(135deg, var(--accent-dark), var(--accent-light));
+    color: white;
+    border: none;
+    padding: 14px 32px;
+    font-size: 1.1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: var(--transition);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    box-shadow: 0 4px 12px rgba(139, 0, 0, 0.3);
+}
+
+.btn-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-hover);
+}
+
 /* Шапка */
 .header {
     position: relative;
-    height: 400px;
-    background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.9)), 
-                url('https://images.unsplash.com/photo-1546900706-ca4183256b62?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');
+    height: 500px;
+    background: 
+        linear-gradient(rgba(10, 10, 10, 0.85), rgba(5, 5, 5, 0.95)),
+        url('https://images.unsplash.com/photo-1544182193-5d69eac5e6f1?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80');
     background-size: cover;
     background-position: center;
+    background-attachment: fixed;
     display: flex;
     align-items: center;
     justify-content: center;
     text-align: center;
-    margin-bottom: 30px;
-    border-radius: 0 0 10px 10px;
-    overflow: hidden;
+    margin-bottom: 40px;
+    border-bottom: 3px solid var(--accent-dark);
 }
 
 .header-content {
     position: relative;
     z-index: 2;
-    padding: 20px;
+    padding: 40px;
+    max-width: 900px;
 }
 
 .museum-title {
-    font-family: 'Playfair Display', serif;
-    font-size: 3.5rem;
-    font-weight: 700;
-    margin-bottom: 10px;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+    font-size: 3.8rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 15px;
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8);
+    background: linear-gradient(to right, #f0f0f0, #c0c0c0);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
 }
 
 .museum-subtitle {
-    font-size: 1.3rem;
-    margin-bottom: 30px;
-    color: var(--gray-text);
+    font-size: 1.4rem;
+    color: var(--text-secondary);
+    margin-bottom: 40px;
+    font-weight: 300;
+    letter-spacing: 1px;
 }
 
 .stats {
     display: flex;
     justify-content: center;
-    gap: 40px;
-    margin-top: 30px;
+    gap: 60px;
+    margin-top: 40px;
+    flex-wrap: wrap;
 }
 
 .stat-item {
     display: flex;
     flex-direction: column;
+    align-items: center;
 }
 
 .stat-number {
-    font-size: 2.5rem;
+    font-size: 3rem;
     font-weight: 700;
-    color: var(--accent-color);
+    color: var(--accent-light);
+    font-family: 'Playfair Display', serif;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 .stat-label {
     font-size: 1rem;
-    color: var(--gray-text);
-    margin-top: 5px;
-}
-
-.header-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(to bottom, rgba(139, 0, 0, 0.2), rgba(0, 0, 0, 0.8));
-    z-index: 1;
+    color: var(--text-secondary);
+    margin-top: 8px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
 /* Навигация */
 .nav {
     background-color: var(--darker-bg);
-    border-radius: 10px;
-    margin-bottom: 30px;
+    border-radius: 8px;
+    margin-bottom: 40px;
     padding: 10px;
     box-shadow: var(--shadow);
+    border: 1px solid var(--card-border);
 }
 
 .nav-list {
@@ -116,32 +201,45 @@ body {
     justify-content: center;
     list-style: none;
     flex-wrap: wrap;
+    gap: 10px;
 }
 
 .nav-link {
-    color: var(--light-text);
+    color: var(--text-secondary);
     text-decoration: none;
     padding: 15px 25px;
-    margin: 0 5px;
-    border-radius: 5px;
+    border-radius: 6px;
     display: flex;
     align-items: center;
-    transition: all 0.3s ease;
+    transition: var(--transition);
     font-weight: 500;
+    position: relative;
+    overflow: hidden;
 }
 
 .nav-link i {
-    margin-right: 8px;
-    font-size: 1.1rem;
+    margin-right: 10px;
+    font-size: 1.2rem;
+    transition: var(--transition);
 }
 
 .nav-link:hover {
-    background-color: rgba(139, 0, 0, 0.2);
+    color: var(--text-primary);
+    background-color: rgba(139, 0, 0, 0.1);
+}
+
+.nav-link:hover i {
     color: var(--accent-light);
+    transform: scale(1.1);
 }
 
 .nav-link.active {
-    background-color: var(--accent-color);
+    background: linear-gradient(135deg, var(--accent-dark), var(--accent-light));
+    color: white;
+    box-shadow: 0 4px 12px rgba(139, 0, 0, 0.3);
+}
+
+.nav-link.active i {
     color: white;
 }
 
@@ -149,6 +247,7 @@ body {
 .content-section {
     display: none;
     animation: fadeIn 0.5s ease;
+    padding: 30px 0;
 }
 
 .content-section.active {
@@ -156,119 +255,148 @@ body {
 }
 
 @keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
 .section-header {
     text-align: center;
-    margin-bottom: 40px;
+    margin-bottom: 50px;
+    padding: 0 20px;
 }
 
 .section-header h2 {
-    font-family: 'Playfair Display', serif;
-    font-size: 2.5rem;
-    margin-bottom: 15px;
-    color: var(--light-text);
+    font-size: 2.8rem;
+    margin-bottom: 20px;
 }
 
 .section-header p {
     max-width: 800px;
     margin: 0 auto;
-    color: var(--gray-text);
+    color: var(--text-secondary);
+    font-size: 1.1rem;
+    line-height: 1.8;
 }
 
 /* Главная страница */
 .hero {
     text-align: center;
-    padding: 40px 20px;
+    padding: 60px 40px;
     background-color: var(--card-bg);
     border-radius: 10px;
-    margin-bottom: 40px;
+    margin-bottom: 50px;
     box-shadow: var(--shadow);
+    border: 1px solid var(--card-border);
+    position: relative;
+    overflow: hidden;
+}
+
+.hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent-dark), var(--accent-light));
 }
 
 .hero h2 {
-    font-family: 'Playfair Display', serif;
-    font-size: 2.2rem;
-    margin-bottom: 20px;
+    font-size: 2.4rem;
+    margin-bottom: 25px;
 }
 
 .hero p {
     max-width: 800px;
-    margin: 0 auto 30px;
-    font-size: 1.1rem;
-    line-height: 1.7;
-}
-
-.btn-primary {
-    background-color: var(--accent-color);
-    color: white;
-    border: none;
-    padding: 14px 32px;
-    font-size: 1.1rem;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    font-weight: 500;
-}
-
-.btn-primary:hover {
-    background-color: var(--accent-light);
-    transform: translateY(-2px);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+    margin: 0 auto 35px;
+    font-size: 1.2rem;
+    line-height: 1.8;
+    color: var(--text-secondary);
 }
 
 .features {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 30px;
-    margin-bottom: 40px;
+    margin-bottom: 60px;
 }
 
 .feature-card {
     background-color: var(--card-bg);
     border-radius: 10px;
-    padding: 30px;
+    padding: 40px 30px;
     box-shadow: var(--shadow);
-    transition: transform 0.3s ease;
+    transition: var(--transition);
+    border: 1px solid var(--card-border);
+    text-align: center;
+    height: 100%;
 }
 
 .feature-card:hover {
-    transform: translateY(-5px);
+    transform: translateY(-10px);
+    box-shadow: var(--shadow-hover);
+    border-color: var(--accent-dark);
 }
 
 .feature-icon {
-    font-size: 2.5rem;
-    color: var(--accent-color);
-    margin-bottom: 20px;
+    font-size: 3rem;
+    color: var(--accent-light);
+    margin-bottom: 25px;
+    transition: var(--transition);
+}
+
+.feature-card:hover .feature-icon {
+    transform: scale(1.1);
+    color: var(--accent-dark);
 }
 
 .feature-card h3 {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.5rem;
-    margin-bottom: 15px;
+    font-size: 1.6rem;
+    margin-bottom: 20px;
+}
+
+.feature-card p {
+    color: var(--text-secondary);
+    line-height: 1.7;
 }
 
 .quote {
     text-align: center;
-    padding: 40px;
+    padding: 50px;
     background-color: var(--darker-bg);
     border-radius: 10px;
-    margin-top: 40px;
-    border-left: 5px solid var(--accent-color);
+    margin-top: 60px;
+    position: relative;
+    border-left: 5px solid var(--accent-dark);
+    box-shadow: var(--shadow);
+}
+
+.quote::before {
+    content: '"';
+    position: absolute;
+    top: 20px;
+    left: 30px;
+    font-size: 8rem;
+    font-family: 'Playfair Display', serif;
+    color: var(--accent-dark);
+    opacity: 0.2;
+    line-height: 1;
 }
 
 .quote-text {
-    font-size: 1.8rem;
+    font-size: 2rem;
     font-style: italic;
-    margin-bottom: 15px;
-    color: var(--light-text);
+    margin-bottom: 20px;
+    color: var(--text-primary);
+    line-height: 1.5;
+    position: relative;
+    z-index: 1;
 }
 
 .quote-author {
-    font-size: 1.2rem;
-    color: var(--gray-text);
+    font-size: 1.3rem;
+    color: var(--text-secondary);
+    font-weight: 500;
 }
 
 /* Управление экспонатами */
@@ -276,9 +404,14 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 30px;
+    margin-bottom: 40px;
     flex-wrap: wrap;
     gap: 20px;
+    padding: 20px;
+    background-color: var(--card-bg);
+    border-radius: 10px;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--card-border);
 }
 
 .search-box {
@@ -289,20 +422,28 @@ body {
 
 .search-box i {
     position: absolute;
-    left: 15px;
+    left: 18px;
     top: 50%;
     transform: translateY(-50%);
-    color: var(--gray-text);
+    color: var(--text-secondary);
+    font-size: 1.1rem;
 }
 
 .search-box input {
     width: 100%;
-    padding: 14px 20px 14px 45px;
-    background-color: var(--card-bg);
-    border: 1px solid var(--border-color);
-    border-radius: 5px;
-    color: var(--light-text);
+    padding: 16px 20px 16px 50px;
+    background-color: var(--darker-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 6px;
+    color: var(--text-primary);
     font-size: 1rem;
+    transition: var(--transition);
+}
+
+.search-box input:focus {
+    outline: none;
+    border-color: var(--accent-light);
+    box-shadow: 0 0 0 3px rgba(139, 0, 0, 0.1);
 }
 
 .filter-controls {
@@ -312,30 +453,35 @@ body {
 }
 
 .filter-btn {
-    padding: 10px 20px;
-    background-color: var(--card-bg);
-    border: 1px solid var(--border-color);
-    color: var(--light-text);
-    border-radius: 5px;
+    padding: 12px 24px;
+    background-color: var(--darker-bg);
+    border: 1px solid var(--card-border);
+    color: var(--text-secondary);
+    border-radius: 6px;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: var(--transition);
+    font-weight: 500;
 }
 
 .filter-btn:hover {
-    background-color: rgba(139, 0, 0, 0.2);
+    background-color: rgba(139, 0, 0, 0.1);
+    color: var(--text-primary);
+    border-color: var(--accent-dark);
 }
 
 .filter-btn.active {
-    background-color: var(--accent-color);
-    border-color: var(--accent-color);
+    background: linear-gradient(135deg, var(--accent-dark), var(--accent-light));
+    color: white;
+    border-color: transparent;
+    box-shadow: 0 4px 12px rgba(139, 0, 0, 0.3);
 }
 
 /* Сетка экспонатов */
 .exhibits-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 25px;
-    margin-bottom: 40px;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 30px;
+    margin-bottom: 50px;
 }
 
 .exhibit-card {
@@ -343,54 +489,92 @@ body {
     border-radius: 10px;
     overflow: hidden;
     box-shadow: var(--shadow);
-    transition: all 0.3s ease;
+    transition: var(--transition);
     cursor: pointer;
     height: 100%;
     display: flex;
     flex-direction: column;
+    border: 1px solid var(--card-border);
 }
 
 .exhibit-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-hover);
+    border-color: var(--accent-dark);
 }
 
 .exhibit-image-container {
-    height: 220px;
+    height: 240px;
     overflow: hidden;
+    position: relative;
+    background-color: var(--darker-bg);
+}
+
+.exhibit-image-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     position: relative;
 }
 
-.exhibit-image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.5s ease;
+.image-counter {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: var(--text-primary);
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 5px;
 }
 
-.exhibit-card:hover .exhibit-image {
-    transform: scale(1.05);
+.exhibit-date {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    background-color: rgba(139, 0, 0, 0.8);
+    color: white;
+    padding: 6px 12px;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.folder-name {
+    font-family: monospace;
+    font-size: 1.2rem;
+    color: var(--text-secondary);
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 8px 15px;
+    border-radius: 4px;
+    margin-top: 10px;
 }
 
 .exhibit-content {
-    padding: 20px;
+    padding: 25px;
     flex-grow: 1;
     display: flex;
     flex-direction: column;
 }
 
 .exhibit-title {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.3rem;
-    margin-bottom: 10px;
-    color: var(--light-text);
+    font-size: 1.4rem;
+    margin-bottom: 15px;
+    color: var(--text-primary);
+    line-height: 1.4;
 }
 
 .exhibit-description-preview {
-    color: var(--gray-text);
-    font-size: 0.95rem;
-    line-height: 1.5;
-    margin-bottom: 15px;
+    color: var(--text-secondary);
+    font-size: 1rem;
+    line-height: 1.6;
+    margin-bottom: 20px;
     flex-grow: 1;
 }
 
@@ -399,28 +583,34 @@ body {
     justify-content: space-between;
     align-items: center;
     margin-top: auto;
+    padding-top: 15px;
+    border-top: 1px solid var(--card-border);
 }
 
 .exhibit-category {
-    background-color: rgba(139, 0, 0, 0.2);
-    color: var(--accent-light);
-    padding: 5px 10px;
+    padding: 6px 14px;
     border-radius: 20px;
-    font-size: 0.8rem;
+    font-size: 0.85rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
 .exhibit-id {
-    color: var(--gray-text);
-    font-size: 0.8rem;
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    font-family: monospace;
 }
 
 .exhibit-counter {
     text-align: center;
-    padding: 15px;
+    padding: 20px;
     background-color: var(--darker-bg);
-    border-radius: 5px;
-    font-size: 1.1rem;
-    margin-bottom: 40px;
+    border-radius: 10px;
+    font-size: 1.2rem;
+    margin-bottom: 50px;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--card-border);
 }
 
 /* Хронология */
@@ -428,6 +618,7 @@ body {
     position: relative;
     max-width: 900px;
     margin: 0 auto;
+    padding: 40px 0;
 }
 
 .timeline::before {
@@ -437,12 +628,13 @@ body {
     transform: translateX(-50%);
     width: 3px;
     height: 100%;
-    background-color: var(--accent-color);
+    background: linear-gradient(to bottom, var(--accent-dark), var(--accent-light));
+    box-shadow: 0 0 10px rgba(139, 0, 0, 0.5);
 }
 
 .timeline-item {
     display: flex;
-    margin-bottom: 40px;
+    margin-bottom: 60px;
     position: relative;
 }
 
@@ -452,21 +644,53 @@ body {
 
 .timeline-date {
     width: 45%;
-    padding: 15px;
+    padding: 20px;
     background-color: var(--card-bg);
     border-radius: 10px;
     font-weight: 700;
-    color: var(--accent-color);
+    color: var(--accent-light);
     text-align: center;
     box-shadow: var(--shadow);
+    border: 1px solid var(--card-border);
+    font-size: 1.2rem;
+    position: relative;
+}
+
+.timeline-item:nth-child(odd) .timeline-date {
+    margin-right: 5%;
+}
+
+.timeline-item:nth-child(even) .timeline-date {
+    margin-left: 5%;
+}
+
+.timeline-date::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    width: 20px;
+    height: 20px;
+    background-color: var(--accent-dark);
+    border-radius: 50%;
+    transform: translateY(-50%);
+    box-shadow: 0 0 10px rgba(139, 0, 0, 0.8);
+}
+
+.timeline-item:nth-child(odd) .timeline-date::after {
+    right: -10px;
+}
+
+.timeline-item:nth-child(even) .timeline-date::after {
+    left: -10px;
 }
 
 .timeline-content {
     width: 45%;
-    padding: 20px;
+    padding: 25px;
     background-color: var(--card-bg);
     border-radius: 10px;
     box-shadow: var(--shadow);
+    border: 1px solid var(--card-border);
 }
 
 .timeline-item:nth-child(even) .timeline-content {
@@ -478,9 +702,14 @@ body {
 }
 
 .timeline-content h3 {
-    font-family: 'Playfair Display', serif;
-    margin-bottom: 10px;
-    color: var(--light-text);
+    font-size: 1.4rem;
+    margin-bottom: 15px;
+    color: var(--text-primary);
+}
+
+.timeline-content p {
+    color: var(--text-secondary);
+    line-height: 1.7;
 }
 
 /* Истории */
@@ -495,17 +724,32 @@ body {
     border-radius: 10px;
     overflow: hidden;
     box-shadow: var(--shadow);
-    transition: transform 0.3s ease;
+    transition: var(--transition);
+    border: 1px solid var(--card-border);
+    height: 100%;
 }
 
 .story-card:hover {
-    transform: translateY(-5px);
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-hover);
+    border-color: var(--accent-dark);
 }
 
 .story-image {
-    height: 200px;
+    height: 220px;
     background-size: cover;
     background-position: center;
+    position: relative;
+}
+
+.story-image::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 50%;
+    background: linear-gradient(to top, rgba(10, 10, 10, 0.9), transparent);
 }
 
 .story-content {
@@ -513,23 +757,29 @@ body {
 }
 
 .story-content h3 {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.4rem;
+    font-size: 1.5rem;
     margin-bottom: 15px;
-    color: var(--light-text);
+    color: var(--text-primary);
+}
+
+.story-content p {
+    color: var(--text-secondary);
+    line-height: 1.7;
+    margin-bottom: 20px;
 }
 
 .read-more {
-    display: inline-block;
-    margin-top: 15px;
-    color: var(--accent-color);
-    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--accent-light);
     font-weight: 500;
-    transition: color 0.3s ease;
+    transition: var(--transition);
 }
 
 .read-more:hover {
-    color: var(--accent-light);
+    color: var(--text-primary);
+    gap: 12px;
 }
 
 /* О музее */
@@ -537,28 +787,95 @@ body {
     display: grid;
     grid-template-columns: 2fr 1fr;
     gap: 40px;
-    margin-bottom: 40px;
+    margin-bottom: 50px;
+}
+
+.about-text {
+    padding-right: 20px;
 }
 
 .about-text p {
-    margin-bottom: 20px;
-    line-height: 1.7;
+    margin-bottom: 25px;
+    color: var(--text-secondary);
+    line-height: 1.8;
+}
+
+.about-info {
+    background-color: var(--card-bg);
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--card-border);
 }
 
 .about-info h3 {
-    font-family: 'Playfair Display', serif;
-    margin-bottom: 20px;
-    color: var(--light-text);
+    margin-bottom: 25px;
+    color: var(--text-primary);
 }
 
 .about-info ul {
-    list-style-position: inside;
-    color: var(--gray-text);
+    list-style: none;
 }
 
 .about-info li {
-    margin-bottom: 10px;
-    padding-left: 10px;
+    margin-bottom: 15px;
+    padding-left: 25px;
+    position: relative;
+    color: var(--text-secondary);
+    line-height: 1.6;
+}
+
+.about-info li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: var(--accent-light);
+    font-weight: bold;
+}
+
+.instruction {
+    background-color: var(--darker-bg);
+    padding: 30px;
+    border-radius: 10px;
+    margin-top: 40px;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--card-border);
+}
+
+.instruction h3 {
+    margin-bottom: 20px;
+    color: var(--text-primary);
+}
+
+.instruction ol {
+    margin-left: 20px;
+    margin-bottom: 20px;
+}
+
+.instruction li {
+    margin-bottom: 15px;
+    color: var(--text-secondary);
+    line-height: 1.7;
+}
+
+.instruction pre {
+    background-color: var(--dark-bg);
+    padding: 15px;
+    border-radius: 6px;
+    margin: 10px 0;
+    overflow-x: auto;
+    color: var(--text-secondary);
+    font-family: monospace;
+    font-size: 0.9rem;
+    border: 1px solid var(--card-border);
+}
+
+.instruction code {
+    background-color: rgba(139, 0, 0, 0.1);
+    padding: 2px 6px;
+    border-radius: 4px;
+    color: var(--accent-light);
+    font-family: monospace;
 }
 
 .contact-info {
@@ -566,20 +883,27 @@ body {
     padding: 30px;
     border-radius: 10px;
     box-shadow: var(--shadow);
+    border: 1px solid var(--card-border);
+    margin-top: 40px;
 }
 
 .contact-info h3 {
-    font-family: 'Playfair Display', serif;
-    margin-bottom: 15px;
-    color: var(--light-text);
+    margin-bottom: 20px;
+    color: var(--text-primary);
+}
+
+.contact-info p {
+    color: var(--text-secondary);
 }
 
 .contact-info a {
-    color: var(--accent-color);
+    color: var(--accent-light);
     text-decoration: none;
+    transition: var(--transition);
 }
 
 .contact-info a:hover {
+    color: var(--text-primary);
     text-decoration: underline;
 }
 
@@ -591,72 +915,100 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.85);
+    background-color: rgba(5, 5, 5, 0.95);
     z-index: 1000;
     overflow-y: auto;
+    backdrop-filter: blur(5px);
 }
 
 .modal-content {
     background-color: var(--darker-bg);
     margin: 50px auto;
-    width: 90%;
-    max-width: 1200px;
-    border-radius: 10px;
+    width: 95%;
+    max-width: 1300px;
+    border-radius: 12px;
     overflow: hidden;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8);
+    border: 1px solid var(--card-border);
+    animation: modalSlideIn 0.4s ease;
+}
+
+@keyframes modalSlideIn {
+    from { opacity: 0; transform: translateY(-50px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
 .modal-header {
-    padding: 25px 30px;
-    background-color: var(--accent-color);
+    padding: 25px 35px;
+    background: linear-gradient(90deg, var(--accent-dark), var(--accent-light));
     display: flex;
     justify-content: space-between;
     align-items: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .modal-header h2 {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.8rem;
+    font-size: 1.9rem;
     color: white;
+    margin: 0;
+}
+
+.modal-header h2::after {
+    display: none;
 }
 
 .close-modal {
     background: none;
     border: none;
     color: white;
-    font-size: 2rem;
+    font-size: 2.5rem;
     cursor: pointer;
     line-height: 1;
+    transition: var(--transition);
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+}
+
+.close-modal:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    transform: rotate(90deg);
 }
 
 .modal-body {
-    padding: 30px;
+    padding: 35px;
 }
 
 .exhibit-viewer {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 30px;
+    gap: 40px;
 }
 
 .viewer-container {
-    position: relative;
-    background-color: var(--card-bg);
+    background-color: var(--dark-bg);
     border-radius: 10px;
-    padding: 20px;
+    padding: 25px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    min-height: 400px;
+    min-height: 500px;
+    border: 1px solid var(--card-border);
+    box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.5);
 }
 
 #exhibit-canvas {
     width: 100%;
-    height: 350px;
-    background-color: #2a2a2a;
-    border-radius: 5px;
+    height: 400px;
+    background-color: #151515;
+    border-radius: 8px;
     cursor: grab;
+    border: 1px solid var(--card-border);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.7);
 }
 
 #exhibit-canvas:active {
@@ -665,77 +1017,311 @@ body {
 
 .viewer-controls {
     display: flex;
-    gap: 10px;
-    margin-top: 20px;
+    gap: 15px;
+    margin-top: 25px;
+    flex-wrap: wrap;
+    justify-content: center;
 }
 
 .viewer-controls button {
     background-color: var(--card-bg);
-    border: 1px solid var(--border-color);
-    color: var(--light-text);
-    width: 40px;
-    height: 40px;
+    border: 1px solid var(--card-border);
+    color: var(--text-primary);
+    width: 45px;
+    height: 45px;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: var(--transition);
+    font-size: 1.1rem;
 }
 
 .viewer-controls button:hover {
-    background-color: var(--accent-color);
-    border-color: var(--accent-color);
+    background-color: var(--accent-dark);
+    border-color: var(--accent-dark);
+    transform: scale(1.1);
+    box-shadow: 0 4px 12px rgba(139, 0, 0, 0.3);
 }
 
 .viewer-instruction {
-    margin-top: 15px;
-    color: var(--gray-text);
-    font-size: 0.9rem;
+    margin-top: 20px;
+    color: var(--text-secondary);
+    font-size: 0.95rem;
     text-align: center;
+    font-style: italic;
 }
 
 .exhibit-info {
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 25px;
 }
 
 .exhibit-meta {
     display: flex;
     justify-content: space-between;
-}
-
-.exhibit-category {
-    background-color: rgba(139, 0, 0, 0.2);
-    color: var(--accent-light);
-    padding: 8px 15px;
-    border-radius: 20px;
-    font-size: 0.9rem;
-}
-
-.exhibit-id {
-    color: var(--gray-text);
-    font-size: 0.9rem;
+    align-items: center;
+    padding: 15px 20px;
+    background-color: var(--card-bg);
+    border-radius: 8px;
+    border: 1px solid var(--card-border);
 }
 
 .exhibit-description {
     background-color: var(--card-bg);
-    padding: 20px;
+    padding: 25px;
     border-radius: 10px;
-    line-height: 1.7;
+    line-height: 1.8;
+    color: var(--text-secondary);
+    border: 1px solid var(--card-border);
 }
 
 .exhibit-details {
     background-color: var(--card-bg);
-    padding: 20px;
+    padding: 25px;
     border-radius: 10px;
+    border: 1px solid var(--card-border);
 }
 
 .exhibit-details h3 {
-    font-family: 'Playfair Display', serif;
-    margin-bottom: 15px;
-    color: var(--light-text);
+    margin-bottom: 20px;
+    color: var(--text-primary);
 }
 
-/* Футер
+.exhibit-details p {
+    color: var(--text-secondary);
+    line-height: 1.8;
+}
+
+/* Футер */
+.footer {
+    background-color: var(--darker-bg);
+    margin-top: 80px;
+    padding: 50px 0 30px;
+    border-top: 3px solid var(--accent-dark);
+}
+
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    margin-bottom: 40px;
+}
+
+.footer-logo h3 {
+    font-size: 1.8rem;
+    margin-bottom: 10px;
+    color: var(--text-primary);
+}
+
+.footer-logo p {
+    color: var(--text-secondary);
+    font-size: 1.1rem;
+}
+
+.footer-links {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    align-items: flex-end;
+}
+
+.footer-links a {
+    color: var(--text-secondary);
+    transition: var(--transition);
+}
+
+.footer-links a:hover {
+    color: var(--accent-light);
+    transform: translateX(-5px);
+}
+
+.footer-copyright {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding-top: 30px;
+    border-top: 1px solid var(--card-border);
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    line-height: 1.6;
+}
+
+/* Сообщения о состоянии */
+.loading, .error, .no-results {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 60px 20px;
+    background-color: var(--card-bg);
+    border-radius: 10px;
+    color: var(--text-secondary);
+    font-size: 1.2rem;
+    border: 1px solid var(--card-border);
+}
+
+.error {
+    color: #ff6b6b;
+}
+
+/* Адаптивность */
+@media (max-width: 1100px) {
+    .exhibit-viewer {
+        grid-template-columns: 1fr;
+    }
+    
+    .about-content {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 900px) {
+    .museum-title {
+        font-size: 2.8rem;
+    }
+    
+    .header {
+        height: 400px;
+    }
+    
+    .stats {
+        gap: 30px;
+    }
+    
+    .stat-number {
+        font-size: 2.5rem;
+    }
+    
+    .timeline::before {
+        left: 30px;
+    }
+    
+    .timeline-item {
+        flex-direction: row !important;
+        margin-left: 60px;
+    }
+    
+    .timeline-date, .timeline-content {
+        width: 100%;
+        margin: 0 0 20px 0 !important;
+    }
+    
+    .timeline-date::after {
+        left: -40px !important;
+        right: auto !important;
+    }
+}
+
+@media (max-width: 768px) {
+    .nav-list {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .nav-link {
+        justify-content: center;
+        margin: 5px 0;
+    }
+    
+    .features {
+        grid-template-columns: 1fr;
+    }
+    
+    .controls {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .search-box {
+        max-width: 100%;
+    }
+    
+    .filter-controls {
+        justify-content: center;
+    }
+    
+    .footer-content {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+    
+    .footer-links {
+        align-items: center;
+    }
+}
+
+@media (max-width: 600px) {
+    .museum-title {
+        font-size: 2.2rem;
+    }
+    
+    .museum-subtitle {
+        font-size: 1.1rem;
+    }
+    
+    .header {
+        height: 350px;
+    }
+    
+    h2 {
+        font-size: 2rem;
+    }
+    
+    .section-header h2 {
+        font-size: 2.2rem;
+    }
+    
+    .exhibits-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .stories-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .modal-content {
+        margin: 20px auto;
+        width: 98%;
+    }
+    
+    .modal-body {
+        padding: 20px;
+    }
+}
+
+/* Плавная прокрутка для всего сайта */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Стили для выделения текста */
+::selection {
+    background-color: rgba(139, 0, 0, 0.5);
+    color: white;
+}
+
+::-moz-selection {
+    background-color: rgba(139, 0, 0, 0.5);
+    color: white;
+}
+
+/* Стили для скроллбара */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--darker-bg);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--accent-dark);
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--accent-light);
+}
