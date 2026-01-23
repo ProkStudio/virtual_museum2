@@ -1,1 +1,9 @@
-
+{
+  "exhibits": [
+    {
+      "folder": "object_1",
+      "manifest": "object_1/manifest.json"
+    }
+    // Добавляйте новые экспонаты здесь
+  ]
+}
