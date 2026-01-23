@@ -104,6 +104,23 @@
                         <button class="filter-btn" data-filter="photo">Фотографии</button>
                         <button class="filter-btn" data-filter="object">Предметы</button>
                     </div>
+                    <div class="controls">
+    <div class="search-box">
+        <i class="fas fa-search"></i>
+        <input type="text" id="search" placeholder="Поиск экспонатов...">
+    </div>
+    <div class="sort-controls">
+        <button id="refresh-collection" class="refresh-btn" title="Обновить коллекцию">
+            <i class="fas fa-sync-alt"></i>
+        </button>
+        <span>Сортировка:</span>
+        <select id="sort-by">
+            <option value="name">По названию</option>
+            <option value="newest">Сначала новые</option>
+            <option value="oldest">Сначала старые</option>
+        </select>
+    </div>
+</div>
                 </div>
                 
                 <div class="exhibits-grid" id="exhibits-container">
