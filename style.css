@@ -1,81 +1,741 @@
-body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background: #0e0e0e;
-    color: #e0e0e0;
+/* Базовые стили */
+:root {
+    --dark-bg: #121212;
+    --darker-bg: #0a0a0a;
+    --light-text: #f0f0f0;
+    --accent-color: #8b0000;
+    --accent-light: #a52a2a;
+    --gray-text: #aaa;
+    --card-bg: #1e1e1e;
+    --border-color: #333;
+    --shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
 }
 
-header {
-    background: #111;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: var(--dark-bg);
+    color: var(--light-text);
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Шапка */
+.header {
+    position: relative;
+    height: 400px;
+    background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.9)), 
+                url('https://images.unsplash.com/photo-1546900706-ca4183256b62?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    margin-bottom: 30px;
+    border-radius: 0 0 10px 10px;
+    overflow: hidden;
+}
+
+.header-content {
+    position: relative;
+    z-index: 2;
     padding: 20px;
+}
+
+.museum-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 3.5rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+}
+
+.museum-subtitle {
+    font-size: 1.3rem;
+    margin-bottom: 30px;
+    color: var(--gray-text);
+}
+
+.stats {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    margin-top: 30px;
+}
+
+.stat-item {
+    display: flex;
+    flex-direction: column;
+}
+
+.stat-number {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--accent-color);
+}
+
+.stat-label {
+    font-size: 1rem;
+    color: var(--gray-text);
+    margin-top: 5px;
+}
+
+.header-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, rgba(139, 0, 0, 0.2), rgba(0, 0, 0, 0.8));
+    z-index: 1;
+}
+
+/* Навигация */
+.nav {
+    background-color: var(--darker-bg);
+    border-radius: 10px;
+    margin-bottom: 30px;
+    padding: 10px;
+    box-shadow: var(--shadow);
+}
+
+.nav-list {
+    display: flex;
+    justify-content: center;
+    list-style: none;
+    flex-wrap: wrap;
+}
+
+.nav-link {
+    color: var(--light-text);
+    text-decoration: none;
+    padding: 15px 25px;
+    margin: 0 5px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    transition: all 0.3s ease;
+    font-weight: 500;
+}
+
+.nav-link i {
+    margin-right: 8px;
+    font-size: 1.1rem;
+}
+
+.nav-link:hover {
+    background-color: rgba(139, 0, 0, 0.2);
+    color: var(--accent-light);
+}
+
+.nav-link.active {
+    background-color: var(--accent-color);
+    color: white;
+}
+
+/* Основной контент */
+.content-section {
+    display: none;
+    animation: fadeIn 0.5s ease;
+}
+
+.content-section.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.section-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.section-header h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.5rem;
+    margin-bottom: 15px;
+    color: var(--light-text);
+}
+
+.section-header p {
+    max-width: 800px;
+    margin: 0 auto;
+    color: var(--gray-text);
+}
+
+/* Главная страница */
+.hero {
+    text-align: center;
+    padding: 40px 20px;
+    background-color: var(--card-bg);
+    border-radius: 10px;
+    margin-bottom: 40px;
+    box-shadow: var(--shadow);
+}
+
+.hero h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.2rem;
+    margin-bottom: 20px;
+}
+
+.hero p {
+    max-width: 800px;
+    margin: 0 auto 30px;
+    font-size: 1.1rem;
+    line-height: 1.7;
+}
+
+.btn-primary {
+    background-color: var(--accent-color);
+    color: white;
+    border: none;
+    padding: 14px 32px;
+    font-size: 1.1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 500;
+}
+
+.btn-primary:hover {
+    background-color: var(--accent-light);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+.features {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    margin-bottom: 40px;
+}
+
+.feature-card {
+    background-color: var(--card-bg);
+    border-radius: 10px;
+    padding: 30px;
+    box-shadow: var(--shadow);
+    transition: transform 0.3s ease;
+}
+
+.feature-card:hover {
+    transform: translateY(-5px);
+}
+
+.feature-icon {
+    font-size: 2.5rem;
+    color: var(--accent-color);
+    margin-bottom: 20px;
+}
+
+.feature-card h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+}
+
+.quote {
+    text-align: center;
+    padding: 40px;
+    background-color: var(--darker-bg);
+    border-radius: 10px;
+    margin-top: 40px;
+    border-left: 5px solid var(--accent-color);
+}
+
+.quote-text {
+    font-size: 1.8rem;
+    font-style: italic;
+    margin-bottom: 15px;
+    color: var(--light-text);
+}
+
+.quote-author {
+    font-size: 1.2rem;
+    color: var(--gray-text);
+}
+
+/* Управление экспонатами */
+.controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.search-box {
+    position: relative;
+    flex-grow: 1;
+    max-width: 400px;
+}
+
+.search-box i {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--gray-text);
+}
+
+.search-box input {
+    width: 100%;
+    padding: 14px 20px 14px 45px;
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    color: var(--light-text);
+    font-size: 1rem;
+}
+
+.filter-controls {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.filter-btn {
+    padding: 10px 20px;
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    color: var(--light-text);
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.filter-btn:hover {
+    background-color: rgba(139, 0, 0, 0.2);
+}
+
+.filter-btn.active {
+    background-color: var(--accent-color);
+    border-color: var(--accent-color);
+}
+
+/* Сетка экспонатов */
+.exhibits-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 25px;
+    margin-bottom: 40px;
+}
+
+.exhibit-card {
+    background-color: var(--card-bg);
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    transition: all 0.3s ease;
+    cursor: pointer;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.exhibit-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+}
+
+.exhibit-image-container {
+    height: 220px;
+    overflow: hidden;
+    position: relative;
+}
+
+.exhibit-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.exhibit-card:hover .exhibit-image {
+    transform: scale(1.05);
+}
+
+.exhibit-content {
+    padding: 20px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.exhibit-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
+    margin-bottom: 10px;
+    color: var(--light-text);
+}
+
+.exhibit-description-preview {
+    color: var(--gray-text);
+    font-size: 0.95rem;
+    line-height: 1.5;
+    margin-bottom: 15px;
+    flex-grow: 1;
+}
+
+.exhibit-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: auto;
+}
+
+.exhibit-category {
+    background-color: rgba(139, 0, 0, 0.2);
+    color: var(--accent-light);
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+}
+
+.exhibit-id {
+    color: var(--gray-text);
+    font-size: 0.8rem;
+}
+
+.exhibit-counter {
+    text-align: center;
+    padding: 15px;
+    background-color: var(--darker-bg);
+    border-radius: 5px;
+    font-size: 1.1rem;
+    margin-bottom: 40px;
+}
+
+/* Хронология */
+.timeline {
+    position: relative;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.timeline::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 3px;
+    height: 100%;
+    background-color: var(--accent-color);
+}
+
+.timeline-item {
+    display: flex;
+    margin-bottom: 40px;
+    position: relative;
+}
+
+.timeline-item:nth-child(odd) {
+    flex-direction: row-reverse;
+}
+
+.timeline-date {
+    width: 45%;
+    padding: 15px;
+    background-color: var(--card-bg);
+    border-radius: 10px;
+    font-weight: 700;
+    color: var(--accent-color);
+    text-align: center;
+    box-shadow: var(--shadow);
+}
+
+.timeline-content {
+    width: 45%;
+    padding: 20px;
+    background-color: var(--card-bg);
+    border-radius: 10px;
+    box-shadow: var(--shadow);
+}
+
+.timeline-item:nth-child(even) .timeline-content {
+    margin-left: 5%;
+}
+
+.timeline-item:nth-child(odd) .timeline-content {
+    margin-right: 5%;
+}
+
+.timeline-content h3 {
+    font-family: 'Playfair Display', serif;
+    margin-bottom: 10px;
+    color: var(--light-text);
+}
+
+/* Истории */
+.stories-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 30px;
+}
+
+.story-card {
+    background-color: var(--card-bg);
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    transition: transform 0.3s ease;
+}
+
+.story-card:hover {
+    transform: translateY(-5px);
+}
+
+.story-image {
+    height: 200px;
+    background-size: cover;
+    background-position: center;
+}
+
+.story-content {
+    padding: 25px;
+}
+
+.story-content h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    margin-bottom: 15px;
+    color: var(--light-text);
+}
+
+.read-more {
+    display: inline-block;
+    margin-top: 15px;
+    color: var(--accent-color);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.read-more:hover {
+    color: var(--accent-light);
+}
+
+/* О музее */
+.about-content {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 40px;
+    margin-bottom: 40px;
+}
+
+.about-text p {
+    margin-bottom: 20px;
+    line-height: 1.7;
+}
+
+.about-info h3 {
+    font-family: 'Playfair Display', serif;
+    margin-bottom: 20px;
+    color: var(--light-text);
+}
+
+.about-info ul {
+    list-style-position: inside;
+    color: var(--gray-text);
+}
+
+.about-info li {
+    margin-bottom: 10px;
+    padding-left: 10px;
+}
+
+.contact-info {
+    background-color: var(--card-bg);
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: var(--shadow);
+}
+
+.contact-info h3 {
+    font-family: 'Playfair Display', serif;
+    margin-bottom: 15px;
+    color: var(--light-text);
+}
+
+.contact-info a {
+    color: var(--accent-color);
+    text-decoration: none;
+}
+
+.contact-info a:hover {
+    text-decoration: underline;
+}
+
+/* Модальное окно */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.85);
+    z-index: 1000;
+    overflow-y: auto;
+}
+
+.modal-content {
+    background-color: var(--darker-bg);
+    margin: 50px auto;
+    width: 90%;
+    max-width: 1200px;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
+}
+
+.modal-header {
+    padding: 25px 30px;
+    background-color: var(--accent-color);
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
-nav a {
-    color: #bbb;
-    margin-left: 20px;
-    text-decoration: none;
+.modal-header h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem;
+    color: white;
 }
 
-nav a:hover {
-    color: #fff;
+.close-modal {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 2rem;
+    cursor: pointer;
+    line-height: 1;
 }
 
-.hero {
-    padding: 60px 20px;
-    text-align: center;
-    background: radial-gradient(circle, #1a1a1a, #0e0e0e);
+.modal-body {
+    padding: 30px;
 }
 
-section {
-    padding: 40px 20px;
-    max-width: 1200px;
-    margin: auto;
-}
-
-#museum {
+.exhibit-viewer {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    grid-template-columns: 1fr 1fr;
     gap: 30px;
 }
 
-.object {
-    background: #141414;
-    border-radius: 12px;
-    padding: 15px;
+.viewer-container {
+    position: relative;
+    background-color: var(--card-bg);
+    border-radius: 10px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 400px;
 }
 
-.viewer {
+#exhibit-canvas {
     width: 100%;
-    height: 280px;
-    background: #000;
-    border-radius: 10px;
-    overflow: hidden;
+    height: 350px;
+    background-color: #2a2a2a;
+    border-radius: 5px;
     cursor: grab;
 }
 
-.viewer img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
+#exhibit-canvas:active {
+    cursor: grabbing;
 }
 
-.title {
-    font-size: 20px;
+.viewer-controls {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.viewer-controls button {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    color: var(--light-text);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.viewer-controls button:hover {
+    background-color: var(--accent-color);
+    border-color: var(--accent-color);
+}
+
+.viewer-instruction {
     margin-top: 15px;
-}
-
-.description {
-    margin-top: 10px;
-    color: #bbb;
-    white-space: pre-line;
-}
-
-footer {
+    color: var(--gray-text);
+    font-size: 0.9rem;
     text-align: center;
-    padding: 20px;
-    background: #111;
-    color: #666;
 }
+
+.exhibit-info {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.exhibit-meta {
+    display: flex;
+    justify-content: space-between;
+}
+
+.exhibit-category {
+    background-color: rgba(139, 0, 0, 0.2);
+    color: var(--accent-light);
+    padding: 8px 15px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+}
+
+.exhibit-id {
+    color: var(--gray-text);
+    font-size: 0.9rem;
+}
+
+.exhibit-description {
+    background-color: var(--card-bg);
+    padding: 20px;
+    border-radius: 10px;
+    line-height: 1.7;
+}
+
+.exhibit-details {
+    background-color: var(--card-bg);
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.exhibit-details h3 {
+    font-family: 'Playfair Display', serif;
+    margin-bottom: 15px;
+    color: var(--light-text);
+}
+
+/* Футер
