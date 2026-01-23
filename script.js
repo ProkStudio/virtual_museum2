@@ -1,491 +1,703 @@
-// Основные переменные
-let exhibits = [];
-let filteredExhibits = [];
-let currentRotation = 0;
-let currentScale = 1;
-let isDragging = false;
-let lastMouseX = 0;
-let lastMouseY = 0;
-let currentExhibit = null;
+// Конфигурация
+const CONFIG = {
+    repoOwner: 'ProkStudio', // Замените на ваше имя пользователя
+    repoName: 'virtual_museum2', // Замените на название репозитория
+    objectsPath: 'objects'
+};
 
-// Категории экспонатов
-const categories = [
-    { id: 'document', name: 'Документы', color: '#8b0000' },
-    { id: 'photo', name: 'Фотографии', color: '#006400' },
-    { id: 'object', name: 'Предметы', color: '#4b0082' },
-    { id: 'art', name: 'Произведения искусства', color: '#8b4513' }
-];
+// Основной объект музея
+const museum = {
+    objects: [],
+    currentObject: null,
+    currentImageIndex: 0,
+    isRotating: true,
+    rotationX: 0,
+    rotationY: 0,
+    isDragging: false,
+    lastX: 0,
+    lastY: 0,
+    scale: 1,
+    autoRotateInterval: null
+};
 
 // DOM элементы
-const exhibitsContainer = document.getElementById('exhibits-container');
-const searchInput = document.getElementById('search-input');
-const filterButtons = document.querySelectorAll('.filter-btn');
-const modal = document.getElementById('exhibit-modal');
-const closeModal = document.querySelector('.close-modal');
-const exhibitCanvas = document.getElementById('exhibit-canvas');
-const modalTitle = document.getElementById('modal-title');
-const modalCategory = document.getElementById('modal-category');
-const modalDescription = document.getElementById('modal-description');
-const modalDetails = document.getElementById('modal-details');
-const modalId = document.getElementById('modal-id');
-const totalExhibitsElement = document.getElementById('total-exhibits');
-const totalExhibitsCounter = document.getElementById('total-exhibits-counter');
-const shownExhibitsElement = document.getElementById('shown-exhibits');
-const startExploringBtn = document.getElementById('start-exploring');
-const navLinks = document.querySelectorAll('.nav-link');
+const elements = {
+    exhibitsContainer: document.getElementById('exhibits-container'),
+    searchInput: document.getElementById('search'),
+    sortSelect: document.getElementById('sort-by'),
+    totalImages: document.getElementById('total-images'),
+    totalObjects: document.getElementById('total-objects'),
+    totalPhotos: document.getElementById('total-photos'),
+    avgPhotos: document.getElementById('avg-photos'),
+    modal: document.getElementById('exhibit-modal'),
+    modalTitle: document.getElementById('modal-title'),
+    modalFolder: document.getElementById('modal-folder'),
+    modalImagesCount: document.getElementById('modal-images-count'),
+    modalDescription: document.getElementById('modal-description'),
+    image3d: document.getElementById('image-3d'),
+    currentImg: document.getElementById('current-img'),
+    totalImgs: document.getElementById('total-imgs'),
+    prevImgBtn: document.getElementById('prev-img'),
+    nextImgBtn: document.getElementById('next-img'),
+    rotateToggle: document.getElementById('rotate-toggle'),
+    closeModal: document.querySelector('.close-modal')
+};
 
 // Инициализация
-document.addEventListener('DOMContentLoaded', function() {
-    initMuseum();
-    setupEventListeners();
+document.addEventListener('DOMContentLoaded', () => {
+    initNavigation();
+    initEventListeners();
+    loadObjectsFromGitHub();
 });
 
-// Инициализация музея
-async function initMuseum() {
+// Инициализация навигации
+function initNavigation() {
+    const navLinks = document.querySelectorAll('.nav-link');
+    const pages = document.querySelectorAll('.page');
+    
+    navLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            const targetId = link.getAttribute('href').substring(1);
+            
+            // Обновляем активные элементы навигации
+            navLinks.forEach(l => l.classList.remove('active'));
+            link.classList.add('active');
+            
+            // Показываем выбранную страницу
+            pages.forEach(page => {
+                page.classList.remove('active');
+                if (page.id === targetId) {
+                    page.classList.add('active');
+                }
+            });
+            
+            // Прокручиваем к верху страницы
+            window.scrollTo(0, 0);
+        });
+    });
+}
+
+// Загрузка объектов из GitHub
+async function loadObjectsFromGitHub() {
     try {
-        // Загружаем экспонаты из папок
-        exhibits = await loadExhibits();
+        showLoading(true);
         
-        // Обновляем счетчики
-        updateExhibitCounters();
+        // Получаем список папок с объектами
+        const folders = await fetchGitHubContents(CONFIG.objectsPath);
         
-        // Отображаем все экспонаты
-        filteredExhibits = [...exhibits];
-        displayExhibits(filteredExhibits);
+        if (!folders || folders.length === 0) {
+            showNoObjects();
+            return;
+        }
         
-        console.log(`Загружено ${exhibits.length} экспонатов`);
+        // Загружаем информацию о каждом объекте
+        const objects = [];
+        for (const folder of folders) {
+            if (folder.type === 'dir') {
+                try {
+                    const object = await loadObjectInfo(folder.name);
+                    if (object) {
+                        objects.push(object);
+                    }
+                } catch (error) {
+                    console.error(`Ошибка загрузки объекта ${folder.name}:`, error);
+                }
+            }
+        }
+        
+        museum.objects = objects;
+        displayObjects(objects);
+        updateStatistics(objects);
+        initChart(objects);
+        
     } catch (error) {
-        console.error('Ошибка при загрузке экспонатов:', error);
-        exhibitsContainer.innerHTML = '<div class="error">Не удалось загрузить экспонаты. Пожалуйста, проверьте структуру папок.</div>';
+        console.error('Ошибка загрузки объектов:', error);
+        showError('Ошибка загрузки экспонатов. Проверьте настройки репозитория.');
+    } finally {
+        showLoading(false);
     }
 }
 
-// Загрузка экспонатов из папок
-async function loadExhibits() {
-    return [
-        {
-            id: 'object_1',
-            folder: 'object_1',
-            name: 'Блокадный паёк',
-            description: 'Хлебная карточка и норма хлеба на день для жителя блокадного Ленинграда в ноябре 1941 года.',
-            details: 'Подробное описание...',
-            category: 'document',
-            images: 4, // Укажите сколько реально файлов
-            date: 'ноябрь 1941',
-            imagePaths: [
-                'objects/object_1/img_1.jpg',
-                'objects/object_1/img_2.jpg', 
-                'objects/object_1/img_3.jpg',
-                'objects/object_1/img_4.jpg'
-            ]
+// Получение содержимого папки через GitHub API
+async function fetchGitHubContents(path) {
+    const apiUrl = `https://api.github.com/repos/${CONFIG.repoOwner}/${CONFIG.repoName}/contents/${path}`;
+    
+    const response = await fetch(apiUrl, {
+        headers: {
+            'Accept': 'application/vnd.github.v3+json'
         }
-    ];
+    });
+    
+    if (!response.ok) {
+        throw new Error(`GitHub API error: ${response.status}`);
+    }
+    
+    return await response.json();
 }
 
-// Отображение экспонатов в сетке
-function displayExhibits(exhibitsToShow) {
-    if (exhibitsToShow.length === 0) {
-        exhibitsContainer.innerHTML = '<div class="no-results">Экспонаты по вашему запросу не найдены.</div>';
-        updateShownCounter(0);
+// Загрузка информации об объекте
+async function loadObjectInfo(folderName) {
+    // Получаем содержимое папки объекта
+    const contents = await fetchGitHubContents(`${CONFIG.objectsPath}/${folderName}`);
+    
+    // Ищем файл info.txt и изображения
+    let infoFile = null;
+    const images = [];
+    
+    for (const file of contents) {
+        if (file.name.toLowerCase() === 'info.txt') {
+            infoFile = file;
+        } else if (file.name.match(/\.(jpg|jpeg|png|gif|webp)$/i)) {
+            images.push({
+                name: file.name,
+                url: file.download_url,
+                size: file.size
+            });
+        }
+    }
+    
+    // Сортируем изображения по имени
+    images.sort((a, b) => {
+        const numA = extractNumber(a.name);
+        const numB = extractNumber(b.name);
+        return numA - numB;
+    });
+    
+    // Загружаем информацию из info.txt
+    let name = folderName;
+    let description = 'Описание отсутствует';
+    
+    if (infoFile) {
+        try {
+            const infoResponse = await fetch(infoFile.download_url);
+            const infoText = await infoResponse.text();
+            const lines = infoText.split('\n').filter(line => line.trim() !== '');
+            
+            if (lines.length > 0) {
+                name = lines[0].trim();
+                description = lines.slice(1).join('\n').trim();
+            }
+        } catch (error) {
+            console.error(`Ошибка чтения info.txt для ${folderName}:`, error);
+        }
+    }
+    
+    return {
+        id: folderName,
+        name: name,
+        description: description,
+        images: images,
+        folder: folderName,
+        imageCount: images.length,
+        previewImage: images.length > 0 ? images[0].url : null
+    };
+}
+
+// Извлечение числа из имени файла
+function extractNumber(filename) {
+    const match = filename.match(/(\d+)/);
+    return match ? parseInt(match[1]) : 0;
+}
+
+// Отображение объектов на странице
+function displayObjects(objects) {
+    elements.exhibitsContainer.innerHTML = '';
+    
+    if (objects.length === 0) {
+        elements.exhibitsContainer.innerHTML = `
+            <div class="no-results">
+                <i class="fas fa-search"></i>
+                <h3>Экспонаты не найдены</h3>
+                <p>В папке objects пока нет экспонатов</p>
+            </div>
+        `;
         return;
     }
     
-    let html = '';
-    
-    exhibitsToShow.forEach(exhibit => {
-        const categoryInfo = categories.find(c => c.id === exhibit.category) || categories[0];
+    objects.forEach(obj => {
+        const exhibitCard = document.createElement('div');
+        exhibitCard.className = 'exhibit-card';
+        exhibitCard.dataset.id = obj.id;
         
-        html += `
-            <div class="exhibit-card" data-id="${exhibit.id}">
-                <div class="exhibit-image-container">
-                    <div class="exhibit-image-placeholder" style="background-color: ${categoryInfo.color}20">
-                        <div class="image-counter">
-                            <i class="fas fa-images"></i> ${exhibit.images} изображений
-                        </div>
-                        <div class="exhibit-date">${exhibit.date}</div>
-                        <div class="folder-name">${exhibit.folder}</div>
-                    </div>
-                </div>
-                <div class="exhibit-content">
-                    <h3 class="exhibit-title">${exhibit.name}</h3>
-                    <p class="exhibit-description-preview">${exhibit.description}</p>
-                    <div class="exhibit-footer">
-                        <span class="exhibit-category" style="background-color: ${categoryInfo.color}20; color: ${categoryInfo.color}">
-                            ${categoryInfo.name}
-                        </span>
-                        <span class="exhibit-id">${exhibit.id}</span>
-                    </div>
+        // Используем превью изображение или заглушку
+        const imageUrl = obj.previewImage || `https://via.placeholder.com/400x300/333/8b0000?text=${encodeURIComponent(obj.name)}`;
+        const shortDescription = obj.description.length > 120 ? 
+            obj.description.substring(0, 120) + '...' : obj.description;
+        
+        exhibitCard.innerHTML = `
+            <div class="exhibit-img-container">
+                <img src="${imageUrl}" alt="${obj.name}" class="exhibit-img" loading="lazy">
+                ${obj.imageCount > 1 ? `<div class="image-badge">${obj.imageCount} фото</div>` : ''}
+            </div>
+            <div class="exhibit-info-card">
+                <h3>${obj.name}</h3>
+                <p>${shortDescription}</p>
+                <div class="exhibit-meta-card">
+                    <span><i class="fas fa-folder"></i> ${obj.folder}</span>
+                    <span><i class="fas fa-calendar"></i> ${new Date().toLocaleDateString()}</span>
                 </div>
             </div>
         `;
-    });
-    
-    exhibitsContainer.innerHTML = html;
-    updateShownCounter(exhibitsToShow.length);
-    
-    // Добавляем обработчики кликов на карточки
-    document.querySelectorAll('.exhibit-card').forEach(card => {
-        card.addEventListener('click', function() {
-            const exhibitId = this.getAttribute('data-id');
-            openExhibitModal(exhibitId);
-        });
+        
+        exhibitCard.addEventListener('click', () => openExhibitModal(obj));
+        elements.exhibitsContainer.appendChild(exhibitCard);
     });
 }
 
-// Обновление счетчиков
-function updateExhibitCounters() {
-    totalExhibitsElement.textContent = exhibits.length;
-    totalExhibitsCounter.textContent = exhibits.length;
+// Показать/скрыть индикатор загрузки
+function showLoading(show) {
+    if (show) {
+        elements.exhibitsContainer.innerHTML = `
+            <div class="loading">
+                <div class="spinner"></div>
+                <p>Загрузка экспонатов...</p>
+            </div>
+        `;
+    }
 }
 
-function updateShownCounter(count) {
-    shownExhibitsElement.textContent = count;
+// Показать сообщение об отсутствии объектов
+function showNoObjects() {
+    elements.exhibitsContainer.innerHTML = `
+        <div class="no-objects">
+            <i class="fas fa-archive"></i>
+            <h3>Папка objects пуста</h3>
+            <p>Добавьте папки с экспонатами в директорию objects/</p>
+            <div class="instructions">
+                <p><strong>Структура папки:</strong></p>
+                <ul>
+                    <li>object_1/</li>
+                    <li>├── img_1.jpg</li>
+                    <li>├── img_2.jpg</li>
+                    <li>└── info.txt</li>
+                </ul>
+            </div>
+        </div>
+    `;
+}
+
+// Показать сообщение об ошибке
+function showError(message) {
+    elements.exhibitsContainer.innerHTML = `
+        <div class="error-message">
+            <i class="fas fa-exclamation-triangle"></i>
+            <h3>Ошибка загрузки</h3>
+            <p>${message}</p>
+            <p>Проверьте настройки в файле script.js:</p>
+            <pre>const CONFIG = {
+    repoOwner: 'ВАШ_GITHUB_USERNAME',
+    repoName: 'ВАШ_REPO_NAME',
+    objectsPath: 'objects'
+};</pre>
+        </div>
+    `;
+}
+
+// Обновление статистики
+function updateStatistics(objects) {
+    const totalImages = objects.reduce((sum, obj) => sum + obj.imageCount, 0);
+    const avgPhotos = totalImages / objects.length || 0;
+    
+    elements.totalImages.textContent = totalImages;
+    elements.totalObjects.textContent = objects.length;
+    elements.totalPhotos.textContent = totalImages;
+    elements.avgPhotos.textContent = avgPhotos.toFixed(1);
+}
+
+// Инициализация графика
+function initChart(objects) {
+    const ctx = document.getElementById('photosChart');
+    if (!ctx) return;
+    
+    // Удаляем предыдущий график если есть
+    if (museum.chart) {
+        museum.chart.destroy();
+    }
+    
+    const labels = objects.map(obj => 
+        obj.name.length > 15 ? obj.name.substring(0, 15) + '...' : obj.name
+    );
+    const data = objects.map(obj => obj.imageCount);
+    
+    museum.chart = new Chart(ctx.getContext('2d'), {
+        type: 'doughnut',
+        data: {
+            labels: labels,
+            datasets: [{
+                data: data,
+                backgroundColor: [
+                    '#8b0000', '#a52a2a', '#dc143c', 
+                    '#b22222', '#cd5c5c', '#f08080',
+                    '#8b4513', '#a0522d', '#d2691e'
+                ],
+                borderWidth: 2,
+                borderColor: '#121212'
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: true,
+            plugins: {
+                legend: {
+                    position: 'right',
+                    labels: {
+                        color: '#e0e0e0',
+                        font: {
+                            size: 12
+                        }
+                    }
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            return `${context.label}: ${context.raw} фото`;
+                        }
+                    }
+                }
+            }
+        }
+    });
 }
 
 // Открытие модального окна с экспонатом
-function openExhibitModal(exhibitId) {
-    currentExhibit = exhibits.find(e => e.id === exhibitId);
-    if (!currentExhibit) return;
+function openExhibitModal(object) {
+    museum.currentObject = object;
+    museum.currentImageIndex = 0;
+    museum.rotationX = 0;
+    museum.rotationY = 0;
+    museum.scale = 1;
     
-    // Обновляем информацию в модальном окне
-    modalTitle.textContent = currentExhibit.name;
-    modalDescription.textContent = currentExhibit.description;
-    modalDetails.textContent = currentExhibit.details;
-    modalId.textContent = `ID: ${currentExhibit.id}`;
+    elements.modalTitle.textContent = object.name;
+    elements.modalFolder.textContent = object.folder;
+    elements.modalImagesCount.textContent = object.imageCount;
+    elements.modalDescription.textContent = object.description;
     
-    const categoryInfo = categories.find(c => c.id === currentExhibit.category) || categories[0];
-    modalCategory.textContent = categoryInfo.name;
-    modalCategory.style.backgroundColor = `${categoryInfo.color}20`;
-    modalCategory.style.color = categoryInfo.color;
+    elements.currentImg.textContent = '1';
+    elements.totalImgs.textContent = object.imageCount;
     
-    // Сброс параметров просмотра
-    currentRotation = 0;
-    currentScale = 1;
-    
-    // Имитация загрузки изображений из папки
-    loadExhibitImages(currentExhibit);
-    
-    // Показываем модальное окно
-    modal.style.display = 'block';
+    loadExhibitImage();
+    elements.modal.classList.add('active');
     document.body.style.overflow = 'hidden';
+    
+    // Запускаем автоматическое вращение
+    startAutoRotation();
 }
 
-// Загрузка изображений экспоната (имитация)
-function loadExhibitImages(exhibit) {
-    const ctx = exhibitCanvas.getContext('2d');
-    const width = exhibitCanvas.width;
-    const height = exhibitCanvas.height;
+// Загрузка изображения экспоната
+function loadExhibitImage() {
+    elements.image3d.innerHTML = '';
     
-    // Очистка canvas
-    ctx.clearRect(0, 0, width, height);
-    
-    // Создание фона
-    ctx.fillStyle = '#2a2a2a';
-    ctx.fillRect(0, 0, width, height);
-    
-    // Рисуем рамку
-    ctx.strokeStyle = '#444';
-    ctx.lineWidth = 2;
-    ctx.strokeRect(10, 10, width - 20, height - 20);
-    
-    // Текст информации о загрузке изображений
-    ctx.fillStyle = '#fff';
-    ctx.font = '18px Arial';
-    ctx.textAlign = 'center';
-    ctx.fillText(`Загрузка изображений из папки:`, width / 2, height / 2 - 30);
-    ctx.fillText(`${exhibit.folder}/`, width / 2, height / 2);
-    ctx.fillText(`(${exhibit.images} изображений)`, width / 2, height / 2 + 30);
-    
-    // Имитация миниатюр
-    drawThumbnails(ctx, exhibit);
-}
-
-// Рисование миниатюр изображений
-function drawThumbnails(ctx, exhibit) {
-    const width = exhibitCanvas.width;
-    const height = exhibitCanvas.height;
-    const imageCount = exhibit.images;
-    
-    // Рисуем "миниатюры" изображений
-    for (let i = 0; i < Math.min(imageCount, 4); i++) {
-        const x = 50 + (i % 2) * 200;
-        const y = 150 + Math.floor(i / 2) * 100;
-        
-        // Рамка миниатюры
-        ctx.fillStyle = '#3a3a3a';
-        ctx.fillRect(x, y, 150, 80);
-        
-        // Номер изображения
-        ctx.fillStyle = '#8b0000';
-        ctx.font = 'bold 14px Arial';
-        ctx.textAlign = 'center';
-        ctx.fillText(`img_${i+1}.jpg`, x + 75, y + 40);
-        
-        // Информация о файле
-        ctx.fillStyle = '#aaa';
-        ctx.font = '10px Arial';
-        ctx.fillText(`${exhibit.folder}/img_${i+1}.jpg`, x + 75, y + 60);
+    if (!museum.currentObject || museum.currentObject.images.length === 0) {
+        elements.image3d.innerHTML = `
+            <div class="no-image">
+                <i class="fas fa-image"></i>
+                <p>Изображение не найдено</p>
+            </div>
+        `;
+        return;
     }
     
-    // Информация о структуре папки
-    ctx.fillStyle = '#666';
-    ctx.font = '12px Arial';
-    ctx.textAlign = 'left';
-    ctx.fillText(`Структура папки:`, 30, height - 60);
-    ctx.fillText(`museum/objects/${exhibit.folder}/`, 30, height - 40);
-    ctx.fillText(`info.txt - содержит название и описание экспоната`, 30, height - 20);
+    const currentImage = museum.currentObject.images[museum.currentImageIndex];
+    const img = document.createElement('img');
+    
+    img.src = currentImage.url;
+    img.alt = `${museum.currentObject.name} - фото ${museum.currentImageIndex + 1}`;
+    img.style.transform = `rotateX(${museum.rotationX}deg) rotateY(${museum.rotationY}deg) scale(${museum.scale})`;
+    img.loading = 'eager';
+    
+    // Добавляем обработчики для 3D вращения
+    img.addEventListener('mousedown', startDrag);
+    img.addEventListener('wheel', handleZoom);
+    
+    // Обработка ошибки загрузки изображения
+    img.onerror = () => {
+        img.src = `https://via.placeholder.com/800x600/222/8b0000?text=${encodeURIComponent(museum.currentObject.name)}+${museum.currentImageIndex + 1}`;
+    };
+    
+    elements.image3d.appendChild(img);
 }
 
-// Настройка вращения изображения мышью
-function setupCanvasInteraction() {
-    exhibitCanvas.addEventListener('mousedown', function(e) {
-        isDragging = true;
-        lastMouseX = e.clientX;
-        lastMouseY = e.clientY;
-        exhibitCanvas.style.cursor = 'grabbing';
-    });
+// Начало перетаскивания для вращения
+function startDrag(e) {
+    if (!museum.isRotating) return;
     
-    document.addEventListener('mousemove', function(e) {
-        if (!isDragging) return;
-        
-        const deltaX = e.clientX - lastMouseX;
-        const deltaY = e.clientY - lastMouseY;
-        
-        // Обновляем вращение на основе движения мыши
-        currentRotation += deltaX * 0.5;
-        
-        // Перерисовываем canvas с новым вращением
-        redrawCanvasWithRotation();
-        
-        lastMouseX = e.clientX;
-        lastMouseY = e.clientY;
-    });
+    museum.isDragging = true;
+    museum.lastX = e.clientX;
+    museum.lastY = e.clientY;
     
-    document.addEventListener('mouseup', function() {
-        isDragging = false;
-        exhibitCanvas.style.cursor = 'grab';
-    });
+    document.addEventListener('mousemove', doDrag);
+    document.addEventListener('mouseup', stopDrag);
     
-    // Обработчики кнопок управления
-    document.getElementById('rotate-left').addEventListener('click', function() {
-        currentRotation -= 15;
-        redrawCanvasWithRotation();
-    });
-    
-    document.getElementById('rotate-right').addEventListener('click', function() {
-        currentRotation += 15;
-        redrawCanvasWithRotation();
-    });
-    
-    document.getElementById('reset-rotation').addEventListener('click', function() {
-        currentRotation = 0;
-        currentScale = 1;
-        redrawCanvasWithRotation();
-    });
-    
-    document.getElementById('zoom-in').addEventListener('click', function() {
-        currentScale = Math.min(currentScale * 1.2, 3);
-        redrawCanvasWithRotation();
-    });
-    
-    document.getElementById('zoom-out').addEventListener('click', function() {
-        currentScale = Math.max(currentScale * 0.8, 0.5);
-        redrawCanvasWithRotation();
-    });
+    e.preventDefault();
 }
 
-// Перерисовка canvas с учетом вращения и масштаба
-function redrawCanvasWithRotation() {
-    if (!currentExhibit) return;
+// Вращение при перетаскивании
+function doDrag(e) {
+    if (!museum.isDragging || !museum.isRotating) return;
     
-    const ctx = exhibitCanvas.getContext('2d');
-    const width = exhibitCanvas.width;
-    const height = exhibitCanvas.height;
+    const deltaX = e.clientX - museum.lastX;
+    const deltaY = e.clientY - museum.lastY;
     
-    // Очистка canvas
-    ctx.clearRect(0, 0, width, height);
+    museum.rotationY += deltaX * 0.5;
+    museum.rotationX -= deltaY * 0.5;
     
-    // Сохраняем текущее состояние контекста
-    ctx.save();
+    museum.lastX = e.clientX;
+    museum.lastY = e.clientY;
     
-    // Перемещаем начало координат в центр canvas
-    ctx.translate(width / 2, height / 2);
-    
-    // Применяем вращение
-    ctx.rotate(currentRotation * Math.PI / 180);
-    
-    // Применяем масштаб
-    ctx.scale(currentScale, currentScale);
-    
-    // Возвращаем начало координат обратно
-    ctx.translate(-width / 2, -height / 2);
-    
-    // Рисуем содержимое
-    loadExhibitImages(currentExhibit);
-    
-    // Восстанавливаем состояние контекста
-    ctx.restore();
-    
-    // Отображаем текущий угол вращения
-    ctx.fillStyle = '#8b0000';
-    ctx.font = '12px Arial';
-    ctx.textAlign = 'right';
-    ctx.fillText(`Вращение: ${Math.round(currentRotation)}°`, width - 20, height - 30);
-    ctx.fillText(`Масштаб: ${currentScale.toFixed(1)}x`, width - 20, height - 10);
+    updateImageTransform();
 }
 
-// Настройка обработчиков событий
-function setupEventListeners() {
-    // Навигация
-    navLinks.forEach(link => {
-        link.addEventListener('click', function(e) {
-            e.preventDefault();
-            
-            // Убираем активный класс у всех ссылок
-            navLinks.forEach(l => l.classList.remove('active'));
-            
-            // Добавляем активный класс текущей ссылке
-            this.classList.add('active');
-            
-            // Показываем соответствующий раздел
-            const sectionId = this.getAttribute('data-section');
-            document.querySelectorAll('.content-section').forEach(section => {
-                section.classList.remove('active');
-            });
-            document.getElementById(sectionId).classList.add('active');
-        });
-    });
+// Остановка перетаскивания
+function stopDrag() {
+    museum.isDragging = false;
+    document.removeEventListener('mousemove', doDrag);
+    document.removeEventListener('mouseup', stopDrag);
+}
+
+// Масштабирование колесиком мыши
+function handleZoom(e) {
+    e.preventDefault();
     
+    const delta = e.deltaY > 0 ? -0.1 : 0.1;
+    museum.scale = Math.max(0.5, Math.min(3, museum.scale + delta));
+    
+    updateImageTransform();
+}
+
+// Обновление трансформации изображения
+function updateImageTransform() {
+    const img = elements.image3d.querySelector('img');
+    if (img) {
+        img.style.transform = `rotateX(${museum.rotationX}deg) rotateY(${museum.rotationY}deg) scale(${museum.scale})`;
+        img.style.transition = museum.isDragging ? 'none' : 'transform 0.3s';
+    }
+}
+
+// Автоматическое вращение
+function startAutoRotation() {
+    if (museum.autoRotateInterval) {
+        clearInterval(museum.autoRotateInterval);
+    }
+    
+    if (museum.isRotating) {
+        museum.autoRotateInterval = setInterval(() => {
+            if (!museum.isDragging && museum.isRotating) {
+                museum.rotationY += 0.5;
+                updateImageTransform();
+            }
+        }, 50);
+    }
+}
+
+// Инициализация обработчиков событий
+function initEventListeners() {
     // Поиск
-    searchInput.addEventListener('input', function() {
-        filterExhibits();
+    elements.searchInput.addEventListener('input', () => {
+        const searchTerm = elements.searchInput.value.toLowerCase();
+        const filteredObjects = museum.objects.filter(obj => 
+            obj.name.toLowerCase().includes(searchTerm) || 
+            obj.description.toLowerCase().includes(searchTerm) ||
+            obj.folder.toLowerCase().includes(searchTerm)
+        );
+        displayObjects(filteredObjects);
     });
     
-    // Фильтрация по категориям
-    filterButtons.forEach(button => {
-        button.addEventListener('click', function() {
-            // Убираем активный класс у всех кнопок фильтра
-            filterButtons.forEach(btn => btn.classList.remove('active'));
-            
-            // Добавляем активный класс текущей кнопке
-            this.classList.add('active');
-            
-            // Фильтруем экспонаты
-            filterExhibits();
-        });
+    // Сортировка
+    elements.sortSelect.addEventListener('change', () => {
+        const sortedObjects = [...museum.objects];
+        
+        switch (elements.sortSelect.value) {
+            case 'name':
+                sortedObjects.sort((a, b) => a.name.localeCompare(b.name));
+                break;
+            case 'newest':
+                // Сортировка по алфавиту в обратном порядке (как пример)
+                sortedObjects.sort((a, b) => b.folder.localeCompare(a.folder));
+                break;
+            case 'oldest':
+                sortedObjects.sort((a, b) => a.folder.localeCompare(b.folder));
+                break;
+        }
+        
+        displayObjects(sortedObjects);
     });
     
-    // Закрытие модального окна
-    closeModal.addEventListener('click', closeExhibitModal);
-    
-    // Закрытие модального окна при клике вне его
-    modal.addEventListener('click', function(e) {
-        if (e.target === modal) {
-            closeExhibitModal();
+    // Навигация по изображениям в модальном окне
+    elements.prevImgBtn.addEventListener('click', () => {
+        if (museum.currentObject && museum.currentObject.images.length > 0) {
+            museum.currentImageIndex = (museum.currentImageIndex - 1 + museum.currentObject.images.length) % museum.currentObject.images.length;
+            elements.currentImg.textContent = museum.currentImageIndex + 1;
+            loadExhibitImage();
         }
     });
     
-    // Кнопка "Начать просмотр экспонатов"
-    startExploringBtn.addEventListener('click', function() {
-        // Переключаемся на раздел экспонатов
-        navLinks.forEach(l => l.classList.remove('active'));
-        document.querySelector('.nav-link[data-section="exhibits"]').classList.add('active');
-        
-        document.querySelectorAll('.content-section').forEach(section => {
-            section.classList.remove('active');
-        });
-        document.getElementById('exhibits').classList.add('active');
-        
-        // Прокручиваем к началу экспонатов
-        document.getElementById('exhibits').scrollIntoView({ behavior: 'smooth' });
+    elements.nextImgBtn.addEventListener('click', () => {
+        if (museum.currentObject && museum.currentObject.images.length > 0) {
+            museum.currentImageIndex = (museum.currentImageIndex + 1) % museum.currentObject.images.length;
+            elements.currentImg.textContent = museum.currentImageIndex + 1;
+            loadExhibitImage();
+        }
     });
     
-    // Настройка взаимодействия с canvas
-    setupCanvasInteraction();
-}
-
-// Фильтрация экспонатов
-function filterExhibits() {
-    const searchTerm = searchInput.value.toLowerCase();
-    const activeFilter = document.querySelector('.filter-btn.active').getAttribute('data-filter');
-    
-    filteredExhibits = exhibits.filter(exhibit => {
-        // Проверяем соответствие поисковому запросу
-        const matchesSearch = searchTerm === '' || 
-            exhibit.name.toLowerCase().includes(searchTerm) ||
-            exhibit.description.toLowerCase().includes(searchTerm) ||
-            exhibit.details.toLowerCase().includes(searchTerm);
+    // Переключение вращения
+    elements.rotateToggle.addEventListener('click', () => {
+        museum.isRotating = !museum.isRotating;
+        const span = elements.rotateToggle.querySelector('span');
+        span.textContent = museum.isRotating ? 'Вращение: ВКЛ' : 'Вращение: ВЫКЛ';
         
-        // Проверяем соответствие фильтру
-        const matchesFilter = activeFilter === 'all' || exhibit.category === activeFilter;
-        
-        return matchesSearch && matchesFilter;
+        if (museum.isRotating) {
+            startAutoRotation();
+        } else {
+            clearInterval(museum.autoRotateInterval);
+        }
     });
     
-    displayExhibits(filteredExhibits);
+    // Закрытие модального окна
+    elements.closeModal.addEventListener('click', () => {
+        closeModal();
+    });
+    
+    // Закрытие модального окна при клике на фон
+    elements.modal.addEventListener('click', (e) => {
+        if (e.target === elements.modal) {
+            closeModal();
+        }
+    });
+    
+    // Закрытие модального окна клавишей ESC
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && elements.modal.classList.contains('active')) {
+            closeModal();
+        }
+    });
+    
+    // Кнопка "Исследовать экспонаты"
+    document.querySelector('.btn-explore').addEventListener('click', (e) => {
+        e.preventDefault();
+        document.querySelector('a[href="#exhibits"]').click();
+    });
+    
+    // Обновление коллекции
+    document.getElementById('refresh-collection')?.addEventListener('click', () => {
+        loadObjectsFromGitHub();
+    });
 }
 
 // Закрытие модального окна
-function closeExhibitModal() {
-    modal.style.display = 'none';
+function closeModal() {
+    elements.modal.classList.remove('active');
     document.body.style.overflow = 'auto';
+    
+    if (museum.autoRotateInterval) {
+        clearInterval(museum.autoRotateInterval);
+        museum.autoRotateInterval = null;
+    }
 }
 
-// Добавляем информацию о структуре папок в интерфейс
-document.addEventListener('DOMContentLoaded', function() {
-    // Добавляем информацию о структуре в раздел "О музее"
-    const aboutText = document.querySelector('.about-text');
-    if (aboutText) {
-        aboutText.innerHTML += `
-            <h3>Структура данных музея</h3>
-            <p>Все экспонаты хранятся в папке <code>objects/</code> в следующем формате:</p>
-            <pre>
-museum/
-├── index.html
-├── style.css
-├── script.js
-│
-└── objects/
-    ├── object_1/
-    │   ├── img_1.jpg
-    │   ├── img_2.jpg
-    │   ├── img_3.jpg
-    │   └── info.txt
-    │
-    ├── object_2/
-    │   ├── img_1.jpg
-    │   ├── img_2.jpg
-    │   └── info.txt
-    └── ...
-            </pre>
-            <p>Чтобы добавить новый экспонат, достаточно создать новую папку в формате <code>object_N/</code>, добавить в неё изображения с именами <code>img_1.jpg</code>, <code>img_2.jpg</code> и т.д., и файл <code>info.txt</code> с названием и описанием экспоната.</p>
-        `;
-    }
-});
+// Добавьте стиль для бейджа с количеством фото в style.css:
+const additionalCSS = `
+.image-badge {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: var(--accent);
+    color: white;
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
 
-// Добавляем инструкцию по добавлению экспонатов
-const instructionHTML = `
-<div class="instruction">
-    <h3>Как добавить новый экспонат:</h3>
-    <ol>
-        <li>Создайте папку в директории <code>objects/</code> с именем <code>object_X/</code> (где X - следующий номер)</li>
-        <li>Поместите в папку изображения с именами <code>img_1.jpg</code>, <code>img_2.jpg</code> и т.д.</li>
-        <li>Создайте файл <code>info.txt</code> с содержимым:
-            <pre>
-Название экспоната
-Описание экспоната
-Подробная историческая справка
-            </pre>
-        </li>
-        <li>Система автоматически обнаружит новый экспонат при следующей загрузке</li>
-    </ol>
-</div>
+.no-objects, .error-message {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 50px;
+    background-color: var(--card-bg);
+    border-radius: 10px;
+    border: 1px solid var(--card-border);
+}
+
+.no-objects i, .error-message i {
+    font-size: 3rem;
+    color: var(--accent);
+    margin-bottom: 20px;
+}
+
+.no-objects h3, .error-message h3 {
+    margin-bottom: 15px;
+    color: var(--text);
+}
+
+.no-objects p, .error-message p {
+    margin-bottom: 15px;
+    color: var(--text-light);
+}
+
+.instructions {
+    text-align: left;
+    max-width: 400px;
+    margin: 20px auto;
+    background-color: rgba(0, 0, 0, 0.3);
+    padding: 20px;
+    border-radius: 8px;
+    border-left: 4px solid var(--accent);
+}
+
+.instructions ul {
+    list-style-type: none;
+    margin-top: 10px;
+    font-family: monospace;
+    color: var(--text-light);
+}
+
+.instructions li {
+    margin-bottom: 5px;
+    padding-left: 20px;
+}
+
+.error-message pre {
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 15px;
+    border-radius: 5px;
+    overflow-x: auto;
+    text-align: left;
+    margin-top: 20px;
+    color: var(--accent-light);
+    font-size: 0.9rem;
+}
+
+.no-image {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    color: var(--text-light);
+}
+
+.no-image i {
+    font-size: 4rem;
+    margin-bottom: 20px;
+    color: var(--card-border);
+}
 `;
 
-// Вставляем инструкцию в раздел "О музее" после загрузки страницы
-setTimeout(() => {
-    const aboutInfo = document.querySelector('.about-info');
-    if (aboutInfo) {
-        aboutInfo.insertAdjacentHTML('afterend', instructionHTML);
-    }
-}, 1000);
+// Добавляем дополнительные стили к существующим
+document.addEventListener('DOMContentLoaded', () => {
+    const style = document.createElement('style');
+    style.textContent = additionalCSS;
+    document.head.appendChild(style);
+});
+
+// Функция для ручного обновления (добавьте кнопку в интерфейс если нужно)
+function refreshCollection() {
+    loadObjectsFromGitHub();
+}
+
+// Экспортируем функции для глобального доступа
+window.museumApp = {
+    refreshCollection,
+    openExhibitModal,
+    closeModal
+};
