@@ -111,6 +111,26 @@ a:hover {
     box-shadow: var(--shadow-hover);
 }
 
+.refresh-btn {
+    background-color: var(--card-bg);
+    border: 1px solid var(--card-border);
+    color: var(--text);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition);
+}
+
+.refresh-btn:hover {
+    background-color: var(--accent);
+    border-color: var(--accent);
+    transform: rotate(180deg);
+}
+
 /* Шапка */
 .header {
     position: relative;
