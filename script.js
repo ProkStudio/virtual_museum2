@@ -1,703 +1,975 @@
-// Конфигурация
-const CONFIG = {
-    repoOwner: 'ProkStudio', // Замените на ваше имя пользователя
-    repoName: 'virtual_museum2', // Замените на название репозитория
-    objectsPath: 'objects'
+// МОДЕЛЬ ДАННЫХ ЭКСПОНАТОВ
+// ========================
+// Здесь вы добавляете свои экспонаты с путями к локальным изображениям
+// Структура папок на GitHub должна быть:
+// - /images/exhibits/ - для изображений экспонатов
+// - /images/gallery/ - для изображений галереи
+
+const museumExhibits = [
+    {
+        id: 1,
+        title: "Блокадный паек",
+        description: "Хлебная карточка на ноябрь 1941 года. По этой карточке житель блокадного Ленинграда получал 125 грамм хлеба в сутки.",
+        category: "document",
+        year: "1941",
+        // ПУТЬ К ИЗОБРАЖЕНИЯМ: относительный путь от корня сайта
+        images: [
+            "images/exhibits/bread_card_1.jpg",
+            "images/exhibits/bread_card_2.jpg",
+            "images/exhibits/bread_card_3.jpg"
+        ]
+    },
+    {
+        id: 2,
+        title: "Дневник Тани Савичевой",
+        description: "Страницы из дневника ленинградской школьницы Тани Савичевой, в котором она записывала даты смерти своих родных.",
+        category: "document",
+        year: "1941-1942",
+        images: [
+            "images/exhibits/tanya_diary_1.jpg",
+            "images/exhibits/tanya_diary_2.jpg"
+        ]
+    },
+    {
+        id: 3,
+        title: "Буржуйка",
+        description: "Железная печь-буржуйка, которую использовали для обогрева и приготовления пищи в блокадном Ленинграде.",
+        category: "object",
+        year: "1941",
+        images: [
+            "images/exhibits/stove_1.jpg",
+            "images/exhibits/stove_2.jpg",
+            "images/exhibits/stove_3.jpg"
+        ]
+    },
+    {
+        id: 4,
+        title: "Письмо с фронта",
+        description: "Треугольное письмо, которое солдат отправил своей семье в блокадный Ленинград.",
+        category: "personal",
+        year: "1942",
+        images: [
+            "images/exhibits/letter_1.jpg",
+            "images/exhibits/letter_2.jpg"
+        ]
+    },
+    {
+        id: 5,
+        title: "Ленинград в блокаде",
+        description: "Фотография Невского проспекта в блокадном Ленинграде. Видны баррикады и противотанковые ежи.",
+        category: "photo",
+        year: "1942",
+        images: [
+            "images/exhibits/nevsky_1.jpg",
+            "images/exhibits/nevsky_2.jpg",
+            "images/exhibits/nevsky_3.jpg"
+        ]
+    },
+    {
+        id: 6,
+        title: "Медаль 'За оборону Ленинграда'",
+        description: "Награда, учрежденная в 1942 году для награждения защитников и жителей блокадного Ленинграда.",
+        category: "object",
+        year: "1942",
+        images: [
+            "images/exhibits/medal_1.jpg",
+            "images/exhibits/medal_2.jpg"
+        ]
+    },
+    {
+        id: 7,
+        title: "Блокадная ласточка",
+        description: "Жетон с изображением ласточки с письмом в клюве, который носили ленинградцы как символ надежды на хорошие вести.",
+        category: "personal",
+        year: "1942",
+        images: [
+            "images/exhibits/swallow_1.jpg",
+            "images/exhibits/swallow_2.jpg",
+            "images/exhibits/swallow_3.jpg"
+        ]
+    },
+    {
+        id: 8,
+        title: "Прорыв блокады",
+        description: "Фотография, сделанная в январе 1943 года, когда блокада Ленинграда была прорвана советскими войсками.",
+        category: "photo",
+        year: "1943",
+        images: [
+            "images/exhibits/breakthrough_1.jpg",
+            "images/exhibits/breakthrough_2.jpg"
+        ]
+    }
+    // ДОБАВЛЯЙТЕ НОВЫЕ ЭКСПОНАТЫ ЗДЕСЬ
+    // Просто скопируйте и вставьте следующий шаблон:
+    /*
+    {
+        id: 9, // Увеличьте ID на 1
+        title: "Название экспоната",
+        description: "Описание экспоната",
+        category: "document", // или "photo", "object", "personal"
+        year: "1941",
+        images: [
+            "images/exhibits/ваше_изображение_1.jpg",
+            "images/exhibits/ваше_изображение_2.jpg"
+        ]
+    },
+    */
+];
+
+// МОДЕЛЬ ДАННЫХ ГАЛЕРЕИ
+// =====================
+const galleryImages = [
+    {
+        id: 1,
+        title: "Дорога жизни",
+        description: "Автомобили, идущие по льду Ладожского озера - единственной связи блокадного Ленинграда с большой землей.",
+        date: "Зима 1942",
+        // ПУТЬ К ИЗОБРАЖЕНИЮ: относительный путь от корня сайта
+        image: "images/gallery/road_of_life.jpg"
+    },
+    {
+        id: 2,
+        title: "Блокадный хлеб",
+        description: "Хлеб, выпекавшийся в блокадном Ленинграде. Состоял из пищевой целлюлозы, жмыха, обойной пыли и хвои.",
+        date: "1941-1942",
+        image: "images/gallery/blockade_bread.jpg"
+    },
+    {
+        id: 3,
+        title: "Артиллерийский обстрел",
+        description: "Ленинградцы во время артиллерийского обстрела. За время блокады город подвергался обстрелам 611 дней.",
+        date: "1942",
+        image: "images/gallery/shelling.jpg"
+    },
+    {
+        id: 4,
+        title: "Дети блокады",
+        description: "Дети в бомбоубежище во время воздушной тревоги. За время блокады погибло около 400 тысяч детей.",
+        date: "1942",
+        image: "images/gallery/children.jpg"
+    },
+    {
+        id: 5,
+        title: "Работа на заводе",
+        description: "Подростки, работающие на заводе. В блокадном Ленинграде к станкам вставали даже дети.",
+        date: "1942",
+        image: "images/gallery/factory.jpg"
+    },
+    {
+        id: 6,
+        title: "Салют в честь снятия блокады",
+        description: "Салют 27 января 1944 года в честь полного освобождения Ленинграда от блокады.",
+        date: "27 января 1944",
+        image: "images/gallery/fireworks.jpg"
+    }
+    // ДОБАВЛЯЙТЕ НОВЫЕ ИЗОБРАЖЕНИЯ В ГАЛЕРЕЮ ЗДЕСЬ
+    /*
+    {
+        id: 7,
+        title: "Название изображения",
+        description: "Описание изображения",
+        date: "1942",
+        image: "images/gallery/ваше_изображение.jpg"
+    },
+    */
+];
+
+// ГЛОБАЛЬНЫЕ ПЕРЕМЕННЫЕ
+// =====================
+let currentExhibit = null;
+let currentImageIndex = 0; // Текущий индекс изображения в галерее экспоната
+let scene, camera, renderer, object, controls;
+let autoRotate = false;
+let animationId = null;
+
+// ЗАГРУЗОЧНЫЕ ИЗОБРАЖЕНИЯ (на случай если ваши изображения не загрузились)
+const placeholderImages = {
+    exhibits: [
+        "https://images.unsplash.com/photo-1588666309990-d68f08e3d4c6?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+        "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+        "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80"
+    ],
+    gallery: "https://images.unsplash.com/photo-1542744095-fcf48d80b0fd?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80"
 };
 
-// Основной объект музея
-const museum = {
-    objects: [],
-    currentObject: null,
-    currentImageIndex: 0,
-    isRotating: true,
-    rotationX: 0,
-    rotationY: 0,
-    isDragging: false,
-    lastX: 0,
-    lastY: 0,
-    scale: 1,
-    autoRotateInterval: null
-};
-
-// DOM элементы
-const elements = {
-    exhibitsContainer: document.getElementById('exhibits-container'),
-    searchInput: document.getElementById('search'),
-    sortSelect: document.getElementById('sort-by'),
-    totalImages: document.getElementById('total-images'),
-    totalObjects: document.getElementById('total-objects'),
-    totalPhotos: document.getElementById('total-photos'),
-    avgPhotos: document.getElementById('avg-photos'),
-    modal: document.getElementById('exhibit-modal'),
-    modalTitle: document.getElementById('modal-title'),
-    modalFolder: document.getElementById('modal-folder'),
-    modalImagesCount: document.getElementById('modal-images-count'),
-    modalDescription: document.getElementById('modal-description'),
-    image3d: document.getElementById('image-3d'),
-    currentImg: document.getElementById('current-img'),
-    totalImgs: document.getElementById('total-imgs'),
-    prevImgBtn: document.getElementById('prev-img'),
-    nextImgBtn: document.getElementById('next-img'),
-    rotateToggle: document.getElementById('rotate-toggle'),
-    closeModal: document.querySelector('.close-modal')
-};
-
-// Инициализация
-document.addEventListener('DOMContentLoaded', () => {
+// ИНИЦИАЛИЗАЦИЯ ПРИ ЗАГРУЗКЕ СТРАНИЦЫ
+// ====================================
+document.addEventListener('DOMContentLoaded', function() {
+    console.log("Инициализация виртуального музея...");
+    console.log("Всего экспонатов:", museumExhibits.length);
+    console.log("Всего изображений в галерее:", galleryImages.length);
+    
+    // Инициализация экспонатов
+    renderExhibits();
+    updateExhibitCount();
+    
+    // Инициализация галереи
+    renderGallery();
+    updateGalleryCount();
+    
+    // Инициализация статистики
+    animateStatistics();
+    
+    // Инициализация навигации
     initNavigation();
-    initEventListeners();
-    loadObjectsFromGitHub();
+    
+    // Инициализация поиска и фильтрации
+    initSearchAndFilter();
+    
+    // Инициализация модального окна
+    initModal();
+    
+    // Инициализация кнопок
+    initButtons();
+    
+    // Инициализация 3D просмотра
+    init3DViewer();
+    
+    // Прокрутка к разделу при клике на кнопку
+    document.getElementById('exploreBtn').addEventListener('click', function() {
+        document.getElementById('exhibits').scrollIntoView({ behavior: 'smooth' });
+    });
+    
+    console.log("Инициализация завершена");
 });
 
-// Инициализация навигации
+// ФУНКЦИИ ДЛЯ РАБОТЫ С ЭКСПОНАТАМИ
+// ================================
+
+// Отображение экспонатов
+function renderExhibits(filter = 'all', searchTerm = '') {
+    const container = document.getElementById('exhibitsContainer');
+    container.innerHTML = '';
+    
+    let filteredExhibits = museumExhibits;
+    
+    // Применение фильтра по категории
+    if (filter !== 'all') {
+        filteredExhibits = museumExhibits.filter(exhibit => exhibit.category === filter);
+    }
+    
+    // Применение поиска
+    if (searchTerm) {
+        const term = searchTerm.toLowerCase();
+        filteredExhibits = filteredExhibits.filter(exhibit => 
+            exhibit.title.toLowerCase().includes(term) || 
+            exhibit.description.toLowerCase().includes(term) ||
+            exhibit.year.toLowerCase().includes(term)
+        );
+    }
+    
+    // Отображение отфильтрованных экспонатов
+    filteredExhibits.forEach(exhibit => {
+        const exhibitCard = createExhibitCard(exhibit);
+        container.appendChild(exhibitCard);
+    });
+    
+    // Обновление счетчика
+    updateExhibitCount(filteredExhibits.length);
+}
+
+// Создание карточки экспоната
+function createExhibitCard(exhibit) {
+    const card = document.createElement('div');
+    card.className = 'exhibit-card';
+    card.dataset.id = exhibit.id;
+    card.dataset.category = exhibit.category;
+    
+    // Используем первое изображение для превью
+    const previewImage = exhibit.images && exhibit.images.length > 0 
+        ? exhibit.images[0] 
+        : placeholderImages.exhibits[exhibit.id % placeholderImages.exhibits.length];
+    
+    // Проверяем, локальный ли это путь
+    const imageSrc = isLocalPath(previewImage) ? previewImage : previewImage;
+    
+    card.innerHTML = `
+        <div class="exhibit-image">
+            <img src="${imageSrc}" alt="${exhibit.title}" onerror="this.src='${placeholderImages.exhibits[exhibit.id % placeholderImages.exhibits.length]}'">
+            <div class="image-counter">
+                <i class="fas fa-images"></i> ${exhibit.images ? exhibit.images.length : 0}
+            </div>
+        </div>
+        <div class="exhibit-info">
+            <h3 class="exhibit-title">${exhibit.title}</h3>
+            <p class="exhibit-description">${exhibit.description}</p>
+            <div class="exhibit-meta">
+                <span class="exhibit-category">${getCategoryName(exhibit.category)}</span>
+                <span class="exhibit-year">${exhibit.year}</span>
+            </div>
+        </div>
+    `;
+    
+    // Добавление обработчика клика для 3D просмотра
+    card.addEventListener('click', function() {
+        setCurrentExhibit(exhibit);
+        update3DViewer();
+        
+        // Прокрутка к 3D просмотру
+        document.getElementById('viewer').scrollIntoView({ behavior: 'smooth' });
+    });
+    
+    return card;
+}
+
+// Проверка, является ли путь локальным
+function isLocalPath(path) {
+    return !path.startsWith('http') && !path.startsWith('//');
+}
+
+// Получение названия категории
+function getCategoryName(category) {
+    const categories = {
+        'document': 'Документ',
+        'photo': 'Фотография',
+        'object': 'Предмет',
+        'personal': 'Личная вещь'
+    };
+    
+    return categories[category] || 'Другое';
+}
+
+// Обновление счетчика экспонатов
+function updateExhibitCount(count = null) {
+    const countElement = document.getElementById('exhibitCount');
+    if (count !== null) {
+        countElement.textContent = count;
+    } else {
+        countElement.textContent = museumExhibits.length;
+    }
+}
+
+// Установка текущего экспоната для 3D просмотра
+function setCurrentExhibit(exhibit) {
+    currentExhibit = exhibit;
+    currentImageIndex = 0; // Сбрасываем индекс изображения
+    
+    // Обновление информации об экспонате
+    document.getElementById('currentExhibitTitle').textContent = exhibit.title;
+    document.getElementById('currentExhibitDesc').textContent = exhibit.description;
+    
+    // Обновление информации в 3D просмотре
+    updateExhibitInfo();
+    
+    // Обновление галереи изображений для этого экспоната
+    updateExhibitGallery();
+}
+
+// Обновление информации об экспонате в 3D просмотре
+function updateExhibitInfo() {
+    if (!currentExhibit) return;
+    
+    const info = `
+        <strong>${currentExhibit.title}</strong><br>
+        ${currentExhibit.description}<br>
+        <br>
+        <strong>Год:</strong> ${currentExhibit.year}<br>
+        <strong>Категория:</strong> ${getCategoryName(currentExhibit.category)}<br>
+        <strong>Изображений:</strong> ${currentExhibit.images ? currentExhibit.images.length : 0}<br>
+        <br>
+        <em>Используйте мышь для вращения объекта</em>
+    `;
+    
+    document.getElementById('viewerExhibitInfo').innerHTML = info;
+}
+
+// Обновление галереи изображений для текущего экспоната
+function updateExhibitGallery() {
+    const galleryContainer = document.querySelector('.viewer-display');
+    
+    // Удаляем старую галерею, если есть
+    const oldGallery = document.getElementById('exhibitImageGallery');
+    if (oldGallery) {
+        oldGallery.remove();
+    }
+    
+    if (!currentExhibit || !currentExhibit.images || currentExhibit.images.length <= 1) {
+        return;
+    }
+    
+    // Создаем контейнер для галереи
+    const gallery = document.createElement('div');
+    gallery.id = 'exhibitImageGallery';
+    gallery.className = 'exhibit-gallery';
+    
+    gallery.innerHTML = `
+        <div class="gallery-header">
+            <h4><i class="fas fa-images"></i> Изображения экспоната (${currentExhibit.images.length})</h4>
+            <div class="gallery-nav">
+                <button id="prevImageBtn" class="gallery-nav-btn"><i class="fas fa-chevron-left"></i></button>
+                <span id="currentImageIndex">1 / ${currentExhibit.images.length}</span>
+                <button id="nextImageBtn" class="gallery-nav-btn"><i class="fas fa-chevron-right"></i></button>
+            </div>
+        </div>
+        <div class="gallery-images">
+            ${currentExhibit.images.map((img, index) => `
+                <div class="gallery-thumb ${index === 0 ? 'active' : ''}" data-index="${index}">
+                    <img src="${isLocalPath(img) ? img : img}" alt="Изображение ${index + 1}" 
+                         onerror="this.src='${placeholderImages.exhibits[index % placeholderImages.exhibits.length]}'">
+                </div>
+            `).join('')}
+        </div>
+    `;
+    
+    // Добавляем галерею после 3D просмотра
+    const viewerCanvas = document.getElementById('viewerCanvas');
+    viewerCanvas.parentNode.insertBefore(gallery, viewerCanvas.nextSibling);
+    
+    // Добавляем стили для галереи
+    addGalleryStyles();
+    
+    // Инициализируем навигацию по галерее
+    initGalleryNavigation();
+}
+
+// Добавление стилей для галереи изображений
+function addGalleryStyles() {
+    if (document.getElementById('exhibitGalleryStyles')) return;
+    
+    const style = document.createElement('style');
+    style.id = 'exhibitGalleryStyles';
+    style.textContent = `
+        .exhibit-gallery {
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-top: 1.5rem;
+            border: 1px solid var(--border-color);
+        }
+        
+        .gallery-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        
+        .gallery-header h4 {
+            color: var(--accent-color);
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .gallery-nav {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .gallery-nav-btn {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.3s ease;
+        }
+        
+        .gallery-nav-btn:hover {
+            background-color: var(--accent-light);
+        }
+        
+        #currentImageIndex {
+            color: var(--text-color);
+            font-weight: bold;
+            min-width: 60px;
+            text-align: center;
+        }
+        
+        .gallery-images {
+            display: flex;
+            gap: 10px;
+            overflow-x: auto;
+            padding-bottom: 10px;
+        }
+        
+        .gallery-thumb {
+            width: 80px;
+            height: 80px;
+            border-radius: 5px;
+            overflow: hidden;
+            cursor: pointer;
+            border: 2px solid transparent;
+            flex-shrink: 0;
+        }
+        
+        .gallery-thumb.active {
+            border-color: var(--accent-color);
+        }
+        
+        .gallery-thumb img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        /* Стили для мобильных устройств */
+        @media (max-width: 768px) {
+            .gallery-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+            
+            .gallery-nav {
+                align-self: flex-end;
+            }
+        }
+    `;
+    
+    document.head.appendChild(style);
+}
+
+// Инициализация навигации по галерее изображений
+function initGalleryNavigation() {
+    const prevBtn = document.getElementById('prevImageBtn');
+    const nextBtn = document.getElementById('nextImageBtn');
+    const thumbs = document.querySelectorAll('.gallery-thumb');
+    const currentIndexElement = document.getElementById('currentImageIndex');
+    
+    if (!prevBtn || !nextBtn) return;
+    
+    // Обработчик для кнопки "назад"
+    prevBtn.addEventListener('click', function() {
+        if (currentImageIndex > 0) {
+            currentImageIndex--;
+            updateGalleryView();
+        }
+    });
+    
+    // Обработчик для кнопки "вперед"
+    nextBtn.addEventListener('click', function() {
+        if (currentExhibit && currentExhibit.images && currentImageIndex < currentExhibit.images.length - 1) {
+            currentImageIndex++;
+            updateGalleryView();
+        }
+    });
+    
+    // Обработчики для миниатюр
+    thumbs.forEach(thumb => {
+        thumb.addEventListener('click', function() {
+            const index = parseInt(this.dataset.index);
+            currentImageIndex = index;
+            updateGalleryView();
+        });
+    });
+    
+    // Функция обновления вида галереи
+    function updateGalleryView() {
+        // Обновляем активную миниатюру
+        thumbs.forEach(thumb => {
+            const index = parseInt(thumb.dataset.index);
+            if (index === currentImageIndex) {
+                thumb.classList.add('active');
+            } else {
+                thumb.classList.remove('active');
+            }
+        });
+        
+        // Обновляем счетчик
+        if (currentIndexElement) {
+            currentIndexElement.textContent = `${currentImageIndex + 1} / ${currentExhibit.images.length}`;
+        }
+        
+        // Обновляем главное изображение (в 3D просмотре можно обновить текстуру)
+        update3DTexture();
+    }
+}
+
+// Обновление текстуры 3D объекта
+function update3DTexture() {
+    if (!currentExhibit || !currentExhibit.images || !object) return;
+    
+    const imageUrl = currentExhibit.images[currentImageIndex];
+    
+    // Загружаем новую текстуру
+    const textureLoader = new THREE.TextureLoader();
+    textureLoader.load(
+        isLocalPath(imageUrl) ? imageUrl : imageUrl,
+        function(texture) {
+            if (object.material) {
+                object.material.map = texture;
+                object.material.needsUpdate = true;
+            }
+        },
+        undefined,
+        function(err) {
+            console.error('Ошибка загрузки текстуры:', err);
+        }
+    );
+}
+
+// ФУНКЦИИ ДЛЯ РАБОТЫ С ГАЛЕРЕЕЙ
+// ==============================
+
+// Отображение галереи
+function renderGallery() {
+    const container = document.getElementById('galleryContainer');
+    container.innerHTML = '';
+    
+    galleryImages.forEach(image => {
+        const galleryItem = createGalleryItem(image);
+        container.appendChild(galleryItem);
+    });
+}
+
+// Создание элемента галереи
+function createGalleryItem(image) {
+    const galleryItem = document.createElement('div');
+    galleryItem.className = 'gallery-item';
+    galleryItem.dataset.id = image.id;
+    
+    // Проверяем, локальный ли это путь
+    const imageSrc = isLocalPath(image.image) ? image.image : image.image;
+    
+    galleryItem.innerHTML = `
+        <div class="gallery-image">
+            <img src="${imageSrc}" alt="${image.title}" 
+                 onerror="this.src='${placeholderImages.gallery}'">
+        </div>
+        <div class="gallery-caption">${image.title}</div>
+    `;
+    
+    // Добавление обработчика клика для открытия модального окна
+    galleryItem.addEventListener('click', function() {
+        openModal(image);
+    });
+    
+    return galleryItem;
+}
+
+// Обновление счетчика галереи
+function updateGalleryCount() {
+    const countElement = document.getElementById('galleryCount');
+    countElement.textContent = galleryImages.length;
+}
+
+// ОТКРЫТИЕ МОДАЛЬНОГО ОКНА
+// ========================
+function openModal(image) {
+    const modal = document.getElementById('imageModal');
+    const modalImage = document.getElementById('modalImage');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalDescription = document.getElementById('modalDescription');
+    const modalDate = document.getElementById('modalDate');
+    
+    // Проверяем, локальный ли это путь
+    const imageSrc = isLocalPath(image.image) ? image.image : image.image;
+    
+    modalImage.src = imageSrc;
+    modalImage.alt = image.title;
+    modalTitle.textContent = image.title;
+    modalDescription.textContent = image.description;
+    modalDate.textContent = image.date;
+    
+    modal.style.display = 'block';
+}
+
+// АНИМАЦИЯ СТАТИСТИКИ
+// ===================
+function animateStatistics() {
+    const statNumbers = document.querySelectorAll('.stat-number');
+    
+    statNumbers.forEach(statNumber => {
+        const target = parseInt(statNumber.dataset.target);
+        const increment = target / 100;
+        let current = 0;
+        
+        const timer = setInterval(() => {
+            current += increment;
+            if (current >= target) {
+                current = target;
+                clearInterval(timer);
+            }
+            statNumber.textContent = Math.floor(current).toLocaleString();
+        }, 20);
+    });
+}
+
+// ИНИЦИАЛИЗАЦИЯ НАВИГАЦИИ
+// =======================
 function initNavigation() {
-    const navLinks = document.querySelectorAll('.nav-link');
-    const pages = document.querySelectorAll('.page');
+    const navLinks = document.querySelectorAll('.nav-links a');
     
     navLinks.forEach(link => {
-        link.addEventListener('click', (e) => {
+        link.addEventListener('click', function(e) {
             e.preventDefault();
-            const targetId = link.getAttribute('href').substring(1);
             
-            // Обновляем активные элементы навигации
-            navLinks.forEach(l => l.classList.remove('active'));
-            link.classList.add('active');
+            // Удаление активного класса у всех ссылок
+            navLinks.forEach(link => link.classList.remove('active'));
             
-            // Показываем выбранную страницу
-            pages.forEach(page => {
-                page.classList.remove('active');
-                if (page.id === targetId) {
-                    page.classList.add('active');
+            // Добавление активного класса текущей ссылке
+            this.classList.add('active');
+            
+            // Прокрутка к разделу
+            const targetId = this.getAttribute('href');
+            if (targetId !== '#') {
+                const targetSection = document.querySelector(targetId);
+                if (targetSection) {
+                    targetSection.scrollIntoView({ behavior: 'smooth' });
                 }
-            });
+            }
+        });
+    });
+    
+    // Обновление активной ссылки при прокрутке
+    window.addEventListener('scroll', function() {
+        const sections = document.querySelectorAll('section');
+        const navHeight = document.querySelector('header').offsetHeight;
+        
+        let currentSection = '';
+        
+        sections.forEach(section => {
+            const sectionTop = section.offsetTop - navHeight - 100;
+            const sectionHeight = section.clientHeight;
             
-            // Прокручиваем к верху страницы
-            window.scrollTo(0, 0);
+            if (scrollY >= sectionTop && scrollY < sectionTop + sectionHeight) {
+                currentSection = section.getAttribute('id');
+            }
+        });
+        
+        navLinks.forEach(link => {
+            link.classList.remove('active');
+            if (link.getAttribute('href') === `#${currentSection}`) {
+                link.classList.add('active');
+            }
         });
     });
 }
 
-// Загрузка объектов из GitHub
-async function loadObjectsFromGitHub() {
-    try {
-        showLoading(true);
-        
-        // Получаем список папок с объектами
-        const folders = await fetchGitHubContents(CONFIG.objectsPath);
-        
-        if (!folders || folders.length === 0) {
-            showNoObjects();
-            return;
-        }
-        
-        // Загружаем информацию о каждом объекте
-        const objects = [];
-        for (const folder of folders) {
-            if (folder.type === 'dir') {
-                try {
-                    const object = await loadObjectInfo(folder.name);
-                    if (object) {
-                        objects.push(object);
-                    }
-                } catch (error) {
-                    console.error(`Ошибка загрузки объекта ${folder.name}:`, error);
-                }
-            }
-        }
-        
-        museum.objects = objects;
-        displayObjects(objects);
-        updateStatistics(objects);
-        initChart(objects);
-        
-    } catch (error) {
-        console.error('Ошибка загрузки объектов:', error);
-        showError('Ошибка загрузки экспонатов. Проверьте настройки репозитория.');
-    } finally {
-        showLoading(false);
-    }
-}
-
-// Получение содержимого папки через GitHub API
-async function fetchGitHubContents(path) {
-    const apiUrl = `https://api.github.com/repos/${CONFIG.repoOwner}/${CONFIG.repoName}/contents/${path}`;
+// ИНИЦИАЛИЗАЦИЯ ПОИСКА И ФИЛЬТРАЦИИ
+// ==================================
+function initSearchAndFilter() {
+    const searchInput = document.getElementById('searchInput');
+    const filterButtons = document.querySelectorAll('.filter-btn');
     
-    const response = await fetch(apiUrl, {
-        headers: {
-            'Accept': 'application/vnd.github.v3+json'
-        }
-    });
-    
-    if (!response.ok) {
-        throw new Error(`GitHub API error: ${response.status}`);
-    }
-    
-    return await response.json();
-}
-
-// Загрузка информации об объекте
-async function loadObjectInfo(folderName) {
-    // Получаем содержимое папки объекта
-    const contents = await fetchGitHubContents(`${CONFIG.objectsPath}/${folderName}`);
-    
-    // Ищем файл info.txt и изображения
-    let infoFile = null;
-    const images = [];
-    
-    for (const file of contents) {
-        if (file.name.toLowerCase() === 'info.txt') {
-            infoFile = file;
-        } else if (file.name.match(/\.(jpg|jpeg|png|gif|webp)$/i)) {
-            images.push({
-                name: file.name,
-                url: file.download_url,
-                size: file.size
-            });
-        }
-    }
-    
-    // Сортируем изображения по имени
-    images.sort((a, b) => {
-        const numA = extractNumber(a.name);
-        const numB = extractNumber(b.name);
-        return numA - numB;
-    });
-    
-    // Загружаем информацию из info.txt
-    let name = folderName;
-    let description = 'Описание отсутствует';
-    
-    if (infoFile) {
-        try {
-            const infoResponse = await fetch(infoFile.download_url);
-            const infoText = await infoResponse.text();
-            const lines = infoText.split('\n').filter(line => line.trim() !== '');
-            
-            if (lines.length > 0) {
-                name = lines[0].trim();
-                description = lines.slice(1).join('\n').trim();
-            }
-        } catch (error) {
-            console.error(`Ошибка чтения info.txt для ${folderName}:`, error);
-        }
-    }
-    
-    return {
-        id: folderName,
-        name: name,
-        description: description,
-        images: images,
-        folder: folderName,
-        imageCount: images.length,
-        previewImage: images.length > 0 ? images[0].url : null
-    };
-}
-
-// Извлечение числа из имени файла
-function extractNumber(filename) {
-    const match = filename.match(/(\d+)/);
-    return match ? parseInt(match[1]) : 0;
-}
-
-// Отображение объектов на странице
-function displayObjects(objects) {
-    elements.exhibitsContainer.innerHTML = '';
-    
-    if (objects.length === 0) {
-        elements.exhibitsContainer.innerHTML = `
-            <div class="no-results">
-                <i class="fas fa-search"></i>
-                <h3>Экспонаты не найдены</h3>
-                <p>В папке objects пока нет экспонатов</p>
-            </div>
-        `;
-        return;
-    }
-    
-    objects.forEach(obj => {
-        const exhibitCard = document.createElement('div');
-        exhibitCard.className = 'exhibit-card';
-        exhibitCard.dataset.id = obj.id;
-        
-        // Используем превью изображение или заглушку
-        const imageUrl = obj.previewImage || `https://via.placeholder.com/400x300/333/8b0000?text=${encodeURIComponent(obj.name)}`;
-        const shortDescription = obj.description.length > 120 ? 
-            obj.description.substring(0, 120) + '...' : obj.description;
-        
-        exhibitCard.innerHTML = `
-            <div class="exhibit-img-container">
-                <img src="${imageUrl}" alt="${obj.name}" class="exhibit-img" loading="lazy">
-                ${obj.imageCount > 1 ? `<div class="image-badge">${obj.imageCount} фото</div>` : ''}
-            </div>
-            <div class="exhibit-info-card">
-                <h3>${obj.name}</h3>
-                <p>${shortDescription}</p>
-                <div class="exhibit-meta-card">
-                    <span><i class="fas fa-folder"></i> ${obj.folder}</span>
-                    <span><i class="fas fa-calendar"></i> ${new Date().toLocaleDateString()}</span>
-                </div>
-            </div>
-        `;
-        
-        exhibitCard.addEventListener('click', () => openExhibitModal(obj));
-        elements.exhibitsContainer.appendChild(exhibitCard);
-    });
-}
-
-// Показать/скрыть индикатор загрузки
-function showLoading(show) {
-    if (show) {
-        elements.exhibitsContainer.innerHTML = `
-            <div class="loading">
-                <div class="spinner"></div>
-                <p>Загрузка экспонатов...</p>
-            </div>
-        `;
-    }
-}
-
-// Показать сообщение об отсутствии объектов
-function showNoObjects() {
-    elements.exhibitsContainer.innerHTML = `
-        <div class="no-objects">
-            <i class="fas fa-archive"></i>
-            <h3>Папка objects пуста</h3>
-            <p>Добавьте папки с экспонатами в директорию objects/</p>
-            <div class="instructions">
-                <p><strong>Структура папки:</strong></p>
-                <ul>
-                    <li>object_1/</li>
-                    <li>├── img_1.jpg</li>
-                    <li>├── img_2.jpg</li>
-                    <li>└── info.txt</li>
-                </ul>
-            </div>
-        </div>
-    `;
-}
-
-// Показать сообщение об ошибке
-function showError(message) {
-    elements.exhibitsContainer.innerHTML = `
-        <div class="error-message">
-            <i class="fas fa-exclamation-triangle"></i>
-            <h3>Ошибка загрузки</h3>
-            <p>${message}</p>
-            <p>Проверьте настройки в файле script.js:</p>
-            <pre>const CONFIG = {
-    repoOwner: 'ВАШ_GITHUB_USERNAME',
-    repoName: 'ВАШ_REPO_NAME',
-    objectsPath: 'objects'
-};</pre>
-        </div>
-    `;
-}
-
-// Обновление статистики
-function updateStatistics(objects) {
-    const totalImages = objects.reduce((sum, obj) => sum + obj.imageCount, 0);
-    const avgPhotos = totalImages / objects.length || 0;
-    
-    elements.totalImages.textContent = totalImages;
-    elements.totalObjects.textContent = objects.length;
-    elements.totalPhotos.textContent = totalImages;
-    elements.avgPhotos.textContent = avgPhotos.toFixed(1);
-}
-
-// Инициализация графика
-function initChart(objects) {
-    const ctx = document.getElementById('photosChart');
-    if (!ctx) return;
-    
-    // Удаляем предыдущий график если есть
-    if (museum.chart) {
-        museum.chart.destroy();
-    }
-    
-    const labels = objects.map(obj => 
-        obj.name.length > 15 ? obj.name.substring(0, 15) + '...' : obj.name
-    );
-    const data = objects.map(obj => obj.imageCount);
-    
-    museum.chart = new Chart(ctx.getContext('2d'), {
-        type: 'doughnut',
-        data: {
-            labels: labels,
-            datasets: [{
-                data: data,
-                backgroundColor: [
-                    '#8b0000', '#a52a2a', '#dc143c', 
-                    '#b22222', '#cd5c5c', '#f08080',
-                    '#8b4513', '#a0522d', '#d2691e'
-                ],
-                borderWidth: 2,
-                borderColor: '#121212'
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: true,
-            plugins: {
-                legend: {
-                    position: 'right',
-                    labels: {
-                        color: '#e0e0e0',
-                        font: {
-                            size: 12
-                        }
-                    }
-                },
-                tooltip: {
-                    callbacks: {
-                        label: function(context) {
-                            return `${context.label}: ${context.raw} фото`;
-                        }
-                    }
-                }
-            }
-        }
-    });
-}
-
-// Открытие модального окна с экспонатом
-function openExhibitModal(object) {
-    museum.currentObject = object;
-    museum.currentImageIndex = 0;
-    museum.rotationX = 0;
-    museum.rotationY = 0;
-    museum.scale = 1;
-    
-    elements.modalTitle.textContent = object.name;
-    elements.modalFolder.textContent = object.folder;
-    elements.modalImagesCount.textContent = object.imageCount;
-    elements.modalDescription.textContent = object.description;
-    
-    elements.currentImg.textContent = '1';
-    elements.totalImgs.textContent = object.imageCount;
-    
-    loadExhibitImage();
-    elements.modal.classList.add('active');
-    document.body.style.overflow = 'hidden';
-    
-    // Запускаем автоматическое вращение
-    startAutoRotation();
-}
-
-// Загрузка изображения экспоната
-function loadExhibitImage() {
-    elements.image3d.innerHTML = '';
-    
-    if (!museum.currentObject || museum.currentObject.images.length === 0) {
-        elements.image3d.innerHTML = `
-            <div class="no-image">
-                <i class="fas fa-image"></i>
-                <p>Изображение не найдено</p>
-            </div>
-        `;
-        return;
-    }
-    
-    const currentImage = museum.currentObject.images[museum.currentImageIndex];
-    const img = document.createElement('img');
-    
-    img.src = currentImage.url;
-    img.alt = `${museum.currentObject.name} - фото ${museum.currentImageIndex + 1}`;
-    img.style.transform = `rotateX(${museum.rotationX}deg) rotateY(${museum.rotationY}deg) scale(${museum.scale})`;
-    img.loading = 'eager';
-    
-    // Добавляем обработчики для 3D вращения
-    img.addEventListener('mousedown', startDrag);
-    img.addEventListener('wheel', handleZoom);
-    
-    // Обработка ошибки загрузки изображения
-    img.onerror = () => {
-        img.src = `https://via.placeholder.com/800x600/222/8b0000?text=${encodeURIComponent(museum.currentObject.name)}+${museum.currentImageIndex + 1}`;
-    };
-    
-    elements.image3d.appendChild(img);
-}
-
-// Начало перетаскивания для вращения
-function startDrag(e) {
-    if (!museum.isRotating) return;
-    
-    museum.isDragging = true;
-    museum.lastX = e.clientX;
-    museum.lastY = e.clientY;
-    
-    document.addEventListener('mousemove', doDrag);
-    document.addEventListener('mouseup', stopDrag);
-    
-    e.preventDefault();
-}
-
-// Вращение при перетаскивании
-function doDrag(e) {
-    if (!museum.isDragging || !museum.isRotating) return;
-    
-    const deltaX = e.clientX - museum.lastX;
-    const deltaY = e.clientY - museum.lastY;
-    
-    museum.rotationY += deltaX * 0.5;
-    museum.rotationX -= deltaY * 0.5;
-    
-    museum.lastX = e.clientX;
-    museum.lastY = e.clientY;
-    
-    updateImageTransform();
-}
-
-// Остановка перетаскивания
-function stopDrag() {
-    museum.isDragging = false;
-    document.removeEventListener('mousemove', doDrag);
-    document.removeEventListener('mouseup', stopDrag);
-}
-
-// Масштабирование колесиком мыши
-function handleZoom(e) {
-    e.preventDefault();
-    
-    const delta = e.deltaY > 0 ? -0.1 : 0.1;
-    museum.scale = Math.max(0.5, Math.min(3, museum.scale + delta));
-    
-    updateImageTransform();
-}
-
-// Обновление трансформации изображения
-function updateImageTransform() {
-    const img = elements.image3d.querySelector('img');
-    if (img) {
-        img.style.transform = `rotateX(${museum.rotationX}deg) rotateY(${museum.rotationY}deg) scale(${museum.scale})`;
-        img.style.transition = museum.isDragging ? 'none' : 'transform 0.3s';
-    }
-}
-
-// Автоматическое вращение
-function startAutoRotation() {
-    if (museum.autoRotateInterval) {
-        clearInterval(museum.autoRotateInterval);
-    }
-    
-    if (museum.isRotating) {
-        museum.autoRotateInterval = setInterval(() => {
-            if (!museum.isDragging && museum.isRotating) {
-                museum.rotationY += 0.5;
-                updateImageTransform();
-            }
-        }, 50);
-    }
-}
-
-// Инициализация обработчиков событий
-function initEventListeners() {
     // Поиск
-    elements.searchInput.addEventListener('input', () => {
-        const searchTerm = elements.searchInput.value.toLowerCase();
-        const filteredObjects = museum.objects.filter(obj => 
-            obj.name.toLowerCase().includes(searchTerm) || 
-            obj.description.toLowerCase().includes(searchTerm) ||
-            obj.folder.toLowerCase().includes(searchTerm)
-        );
-        displayObjects(filteredObjects);
+    searchInput.addEventListener('input', function() {
+        const activeFilter = document.querySelector('.filter-btn.active').dataset.filter;
+        renderExhibits(activeFilter, this.value);
     });
     
-    // Сортировка
-    elements.sortSelect.addEventListener('change', () => {
-        const sortedObjects = [...museum.objects];
-        
-        switch (elements.sortSelect.value) {
-            case 'name':
-                sortedObjects.sort((a, b) => a.name.localeCompare(b.name));
-                break;
-            case 'newest':
-                // Сортировка по алфавиту в обратном порядке (как пример)
-                sortedObjects.sort((a, b) => b.folder.localeCompare(a.folder));
-                break;
-            case 'oldest':
-                sortedObjects.sort((a, b) => a.folder.localeCompare(b.folder));
-                break;
-        }
-        
-        displayObjects(sortedObjects);
+    // Фильтрация
+    filterButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            // Удаление активного класса у всех кнопок
+            filterButtons.forEach(btn => btn.classList.remove('active'));
+            
+            // Добавление активного класса текущей кнопке
+            this.classList.add('active');
+            
+            // Применение фильтра
+            const filter = this.dataset.filter;
+            const searchTerm = searchInput.value;
+            renderExhibits(filter, searchTerm);
+        });
     });
-    
-    // Навигация по изображениям в модальном окне
-    elements.prevImgBtn.addEventListener('click', () => {
-        if (museum.currentObject && museum.currentObject.images.length > 0) {
-            museum.currentImageIndex = (museum.currentImageIndex - 1 + museum.currentObject.images.length) % museum.currentObject.images.length;
-            elements.currentImg.textContent = museum.currentImageIndex + 1;
-            loadExhibitImage();
-        }
-    });
-    
-    elements.nextImgBtn.addEventListener('click', () => {
-        if (museum.currentObject && museum.currentObject.images.length > 0) {
-            museum.currentImageIndex = (museum.currentImageIndex + 1) % museum.currentObject.images.length;
-            elements.currentImg.textContent = museum.currentImageIndex + 1;
-            loadExhibitImage();
-        }
-    });
-    
-    // Переключение вращения
-    elements.rotateToggle.addEventListener('click', () => {
-        museum.isRotating = !museum.isRotating;
-        const span = elements.rotateToggle.querySelector('span');
-        span.textContent = museum.isRotating ? 'Вращение: ВКЛ' : 'Вращение: ВЫКЛ';
-        
-        if (museum.isRotating) {
-            startAutoRotation();
-        } else {
-            clearInterval(museum.autoRotateInterval);
-        }
-    });
+}
+
+// ИНИЦИАЛИЗАЦИЯ МОДАЛЬНОГО ОКНА
+// ==============================
+function initModal() {
+    const modal = document.getElementById('imageModal');
+    const closeBtn = document.querySelector('.close-modal');
     
     // Закрытие модального окна
-    elements.closeModal.addEventListener('click', () => {
-        closeModal();
+    closeBtn.addEventListener('click', function() {
+        modal.style.display = 'none';
     });
     
-    // Закрытие модального окна при клике на фон
-    elements.modal.addEventListener('click', (e) => {
-        if (e.target === elements.modal) {
-            closeModal();
+    // Закрытие при клике вне изображения
+    window.addEventListener('click', function(e) {
+        if (e.target === modal) {
+            modal.style.display = 'none';
         }
     });
     
-    // Закрытие модального окна клавишей ESC
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && elements.modal.classList.contains('active')) {
-            closeModal();
+    // Закрытие по клавише ESC
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && modal.style.display === 'block') {
+            modal.style.display = 'none';
         }
-    });
-    
-    // Кнопка "Исследовать экспонаты"
-    document.querySelector('.btn-explore').addEventListener('click', (e) => {
-        e.preventDefault();
-        document.querySelector('a[href="#exhibits"]').click();
-    });
-    
-    // Обновление коллекции
-    document.getElementById('refresh-collection')?.addEventListener('click', () => {
-        loadObjectsFromGitHub();
     });
 }
 
-// Закрытие модального окна
-function closeModal() {
-    elements.modal.classList.remove('active');
-    document.body.style.overflow = 'auto';
+// ИНИЦИАЛИЗАЦИЯ КНОПОК
+// =====================
+function initButtons() {
+    // Кнопка сброса вида в 3D просмотре
+    document.getElementById('resetViewBtn').addEventListener('click', function() {
+        if (controls) {
+            controls.reset();
+        }
+    });
     
-    if (museum.autoRotateInterval) {
-        clearInterval(museum.autoRotateInterval);
-        museum.autoRotateInterval = null;
+    // Кнопка автоповорота в 3D просмотре
+    document.getElementById('toggleAutoRotateBtn').addEventListener('click', function() {
+        autoRotate = !autoRotate;
+        
+        if (controls) {
+            controls.autoRotate = autoRotate;
+        }
+        
+        this.innerHTML = autoRotate ? 
+            '<i class="fas fa-stop"></i> Остановить автоповорот' : 
+            '<i class="fas fa-sync"></i> Автоповорот';
+    });
+}
+
+// 3D ПРОСМОТР
+// ===========
+
+// Инициализация 3D просмотра
+function init3DViewer() {
+    const container = document.getElementById('viewerCanvas');
+    
+    // Проверяем, поддерживает ли браузер WebGL
+    if (!WebGLRenderingContext) {
+        container.innerHTML = '<div class="webgl-error"><p>Ваш браузер не поддерживает 3D просмотр. Пожалуйста, обновите браузер.</p></div>';
+        return;
+    }
+    
+    try {
+        // Создание сцены
+        scene = new THREE.Scene();
+        scene.background = new THREE.Color(0x1a1a1a);
+        
+        // Создание камеры
+        camera = new THREE.PerspectiveCamera(50, container.clientWidth / container.clientHeight, 0.1, 1000);
+        camera.position.z = 5;
+        
+        // Создание рендерера
+        renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+        renderer.setSize(container.clientWidth, container.clientHeight);
+        renderer.setClearColor(0x000000, 0);
+        container.appendChild(renderer.domElement);
+        
+        // Добавление освещения
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
+        scene.add(ambientLight);
+        
+        const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
+        directionalLight.position.set(5, 10, 7);
+        scene.add(directionalLight);
+        
+        // Создание простого объекта по умолчанию
+        createDefaultObject();
+        
+        // Создание OrbitControls для вращения мышью
+        // В реальном проекте подключите OrbitControls из three.js
+        // Для простоты создаем упрощенную версию
+        initOrbitControls();
+        
+        // Анимация
+        function animate() {
+            animationId = requestAnimationFrame(animate);
+            
+            if (object && autoRotate) {
+                object.rotation.y += 0.005;
+            }
+            
+            renderer.render(scene, camera);
+        }
+        
+        animate();
+        
+        // Обработка изменения размера окна
+        window.addEventListener('resize', function() {
+            camera.aspect = container.clientWidth / container.clientHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(container.clientWidth, container.clientHeight);
+        });
+        
+    } catch (error) {
+        console.error("Ошибка при инициализации 3D просмотра:", error);
+        container.innerHTML = '<div class="webgl-error"><p>Ошибка при загрузке 3D просмотра. Пожалуйста, обновите страницу.</p></div>';
     }
 }
 
-// Добавьте стиль для бейджа с количеством фото в style.css:
-const additionalCSS = `
-.image-badge {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    background-color: var(--accent);
-    color: white;
-    padding: 4px 8px;
-    border-radius: 12px;
-    font-size: 0.8rem;
-    font-weight: 600;
-}
-
-.no-objects, .error-message {
-    grid-column: 1 / -1;
-    text-align: center;
-    padding: 50px;
-    background-color: var(--card-bg);
-    border-radius: 10px;
-    border: 1px solid var(--card-border);
-}
-
-.no-objects i, .error-message i {
-    font-size: 3rem;
-    color: var(--accent);
-    margin-bottom: 20px;
-}
-
-.no-objects h3, .error-message h3 {
-    margin-bottom: 15px;
-    color: var(--text);
-}
-
-.no-objects p, .error-message p {
-    margin-bottom: 15px;
-    color: var(--text-light);
-}
-
-.instructions {
-    text-align: left;
-    max-width: 400px;
-    margin: 20px auto;
-    background-color: rgba(0, 0, 0, 0.3);
-    padding: 20px;
-    border-radius: 8px;
-    border-left: 4px solid var(--accent);
-}
-
-.instructions ul {
-    list-style-type: none;
-    margin-top: 10px;
-    font-family: monospace;
-    color: var(--text-light);
-}
-
-.instructions li {
-    margin-bottom: 5px;
-    padding-left: 20px;
-}
-
-.error-message pre {
-    background-color: rgba(0, 0, 0, 0.5);
-    padding: 15px;
-    border-radius: 5px;
-    overflow-x: auto;
-    text-align: left;
-    margin-top: 20px;
-    color: var(--accent-light);
-    font-size: 0.9rem;
-}
-
-.no-image {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
-    color: var(--text-light);
-}
-
-.no-image i {
-    font-size: 4rem;
-    margin-bottom: 20px;
-    color: var(--card-border);
-}
-`;
-
-// Добавляем дополнительные стили к существующим
-document.addEventListener('DOMContentLoaded', () => {
-    const style = document.createElement('style');
-    style.textContent = additionalCSS;
-    document.head.appendChild(style);
-});
-
-// Функция для ручного обновления (добавьте кнопку в интерфейс если нужно)
-function refreshCollection() {
-    loadObjectsFromGitHub();
-}
-
-// Экспортируем функции для глобального доступа
-window.museumApp = {
-    refreshCollection,
-    openExhibitModal,
-    closeModal
-};
+// Упрощенная версия OrbitControls
+function initOrbitControls() {
+    const canvas = document.querySelector('#viewerCanvas canvas');
+    let isDragging = false;
+    let previousMousePosition = { x: 0, y: 0 };
+    
+    canvas.addEventListener('mousedown', function(e) {
+        isDragging = true;
+        previousMousePosition = {
+            x: e.clientX,
+            y: e.clientY
+        };
+    });
+    
+    canvas.addEventListener('mousemove', function(e) {
+        if (!isDragging || !object) return;
+        
+        const deltaMove = {
+            x: e.clientX - previousMousePosition.x,
+            y: e.clientY - previousMousePosition.y
+        };
+        
+        // Вращение объекта
+        object.rotation.y += deltaMove.x * 0.01;
+        object.rotation.x += deltaMove.y * 0.01;
+        
+        previousMousePosition = {
+            x: e.clientX,
+            y: e.clientY
+        };
+    });
+    
+    canvas.addEventListener('mouseup', function() {
+        isDragging = false;
+    });
+    
+    canvas.addEventListener('mouseleave', function() {
+        isDragging = false;
+    });
+    
+    // Зум колесиком мыши
+    canvas.addEventListener('wheel', function(e) {
+        e.preventDefault();
+        
+        if (!camera) return;
+        
+        const zoomSpeed = 0.1;
+        camera.position.z += e.deltaY * zoomSpeed;
+        
+        // Ограничиваем зум
+        camera.position.z = Math.max(2, Math.min(10, camera.position.z));
+    });
+    
+    // Для сенсорных устройств
+    canvas.addEventListener('touchstart', function(e) {
+        if (e.touches.length === 1) {
+            isDragging = true;
+            previousMousePosition = {
+                x: e.touches[0].clientX,
+                y: e.touches[0].clientY
+            };
+        }
+    });
+    
+    canvas.addEventListener('touchmove', function(e) {
+        if (!isDragging || e.touches.length !== 1 || !object) return;
+        
+        e.preventDefault();
+        
+        const deltaMove = {
+            x: e.touches[0].clientX - previousMousePosition.x,
+            y: e.touches[0].clientY - previousMousePosition.y
+        };
+        
+        // Вращение объекта
+        object.rotation.y += deltaMove.x * 0.01;
+        object.rotation.x += deltaMove.y * 0.01;
+        
+        previousMousePosition = {
+            x: e.touches[0].client
