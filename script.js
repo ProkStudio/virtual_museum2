@@ -36,6 +36,23 @@ const museumExhibits = [
             "objects/object_2/img_3.png",
             "objects/object_2/img_4.png"
         ]
+    },
+    {
+        id: 3,
+        title: "Бидон",
+        description: "Там водичка буль-буль-буль",
+        fullDescription: "Буль-буль-буль карасики утонули в тазике",
+        category: "photo",
+        year: "1941",
+        author: "Неизвестен",
+        location: "Ленинград",
+        // ПУТИ К ИЗОБРАЖЕНИЯМ - ЗАМЕНИТЕ НА СВОИ!
+        images: [
+            "objects/object_3/img_1.png",
+            "objects/object_3/img_2.png", 
+            "objects/object_3/img_3.png",
+            "objects/object_3/img_4.png"
+        ]
     }
     // ДОБАВЛЯЙТЕ НОВЫЕ ЭКСПОНАТЫ ЗДЕСЬ
 ];
