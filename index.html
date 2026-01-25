@@ -8,289 +8,198 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="container">
-        <!-- Шапка -->
-        <header class="header">
-            <div class="header-content">
-                <h1 class="museum-title">Виртуальный музей блокады Ленинграда</h1>
-                <p class="museum-subtitle">900 дней мужества, стойкости и памяти</p>
-                <div class="stats">
-                    <div class="stat-item">
-                        <span class="stat-number" id="total-exhibits">0</span>
-                        <span class="stat-label">экспонатов</span>
-                    </div>
-                    <div class="stat-item">
-                        <span class="stat-number">872</span>
-                        <span class="stat-label">дня блокады</span>
-                    </div>
-                    <div class="stat-item">
-                        <span class="stat-number">1941-1944</span>
-                        <span class="stat-label">годы</span>
-                    </div>
+    <!-- Навигация -->
+    <header>
+        <nav>
+            <div class="logo">
+                <i class="fas fa-landmark"></i>
+                <span>Блокада Ленинграда</span>
+            </div>
+            <div class="nav-links">
+                <a href="#home" class="active">Главная</a>
+                <a href="#about">О музее</a>
+                <a href="#exhibits">Экспонаты</a>
+                <a href="#gallery">Галерея</a>
+                <a href="#stats">Статистика</a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Главная секция -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1>Виртуальный музей блокады Ленинграда</h1>
+            <p>900 дней мужества, стойкости и непокоренности. Посетите виртуальную экспозицию, посвященную одной из самых трагических страниц Великой Отечественной войны.</p>
+            <button id="exploreBtn" class="cta-button">Начать экскурсию</button>
+        </div>
+        <div class="scroll-indicator">
+            <i class="fas fa-chevron-down"></i>
+        </div>
+    </section>
+
+    <!-- О музее -->
+    <section id="about" class="about-section">
+        <h2 class="section-title">О музее</h2>
+        <div class="about-content">
+            <div class="about-text">
+                <p>Наш виртуальный музей создан для сохранения памяти о героизме и трагедии жителей Ленинграда в годы блокады 1941-1944 годов.</p>
+                <p>Экспозиция включает подлинные документы, фотографии, предметы быта и личные вещи блокадников, которые помогают понять масштаб трагедии и силу человеческого духа.</p>
+                <p>Все представленные материалы являются историческими свидетельствами одного из самых тяжелых испытаний в истории человечества.</p>
+            </div>
+            <div class="about-image">
+                <div class="image-placeholder">
+                    <i class="fas fa-history"></i>
+                    <p>Память поколений</p>
                 </div>
             </div>
-            <div class="header-overlay"></div>
-        </header>
+        </div>
+    </section>
 
-        <!-- Навигация -->
-        <nav class="nav">
-            <ul class="nav-list">
-                <li><a href="#" class="nav-link active" data-section="home"><i class="fas fa-home"></i> Главная</a></li>
-                <li><a href="#" class="nav-link" data-section="exhibits"><i class="fas fa-images"></i> Экспонаты</a></li>
-                <li><a href="#" class="nav-link" data-section="chronology"><i class="fas fa-clock"></i> Хронология</a></li>
-                <li><a href="#" class="nav-link" data-section="stories"><i class="fas fa-book"></i> Истории</a></li>
-                <li><a href="#" class="nav-link" data-section="about"><i class="fas fa-info-circle"></i> О музее</a></li>
-            </ul>
-        </nav>
+    <!-- Экспонаты -->
+    <section id="exhibits" class="exhibits-section">
+        <h2 class="section-title">Экспонаты музея</h2>
+        <div class="exhibits-controls">
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="Поиск экспонатов...">
+                <i class="fas fa-search"></i>
+            </div>
+            <div class="filter-buttons">
+                <button class="filter-btn active" data-filter="all">Все</button>
+                <button class="filter-btn" data-filter="document">Документы</button>
+                <button class="filter-btn" data-filter="photo">Фотографии</button>
+                <button class="filter-btn" data-filter="object">Предметы</button>
+                <button class="filter-btn" data-filter="personal">Личные вещи</button>
+            </div>
+        </div>
+        
+        <div class="exhibits-container" id="exhibitsContainer">
+            <!-- Экспонаты будут добавлены через JavaScript -->
+        </div>
+        
+        <div class="exhibit-counter">
+            <span id="exhibitCount">0</span> экспонатов в коллекции
+        </div>
+    </section>
 
-        <!-- Основной контент -->
-        <main class="main-content">
-            <!-- Главная страница -->
-            <section id="home" class="content-section active">
-                <div class="hero">
-                    <h2>Память о блокаде</h2>
-                    <p>Этот виртуальный музей посвящен подвигу жителей и защитников Ленинграда в годы Великой Отечественной войны. Здесь собраны цифровые копии артефактов, документов и фотографий, которые рассказывают историю 872 дней блокады.</p>
-                    <button class="btn-primary" id="start-exploring">Начать просмотр экспонатов</button>
+    <!-- 3D просмотр -->
+    <section id="viewer" class="viewer-section">
+        <h2 class="section-title">3D просмотр экспонатов</h2>
+        <div class="viewer-container">
+            <div class="viewer-controls">
+                <h3 id="currentExhibitTitle">Выберите экспонат</h3>
+                <p id="currentExhibitDesc">Нажмите на экспонат из коллекции для 3D просмотра</p>
+                <div class="viewer-instructions">
+                    <p><i class="fas fa-mouse-pointer"></i> Перетаскивайте мышью для вращения</p>
+                    <p><i class="fas fa-mouse"></i> Колесико мыши для приближения</p>
                 </div>
-                
-                <div class="features">
-                    <div class="feature-card">
-                        <div class="feature-icon">
-                            <i class="fas fa-history"></i>
-                        </div>
-                        <h3>Хронология событий</h3>
-                        <p>Погрузитесь в историю блокады день за днем, от начала до полного освобождения Ленинграда.</p>
-                    </div>
-                    <div class="feature-card">
-                        <div class="feature-icon">
-                            <i class="fas fa-user-friends"></i>
-                        </div>
-                        <h3>Личные истории</h3>
-                        <p>Узнайте о судьбах людей, переживших блокаду, через их дневники, письма и воспоминания.</p>
-                    </div>
-                    <div class="feature-card">
-                        <div class="feature-icon">
-                            <i class="fas fa-search"></i>
-                        </div>
-                        <h3>Исследование</h3>
-                        <p>Изучайте экспонаты в деталях с помощью интерактивного просмотра и вращения объектов.</p>
-                    </div>
+                <div class="viewer-buttons">
+                    <button id="resetViewBtn" class="viewer-btn">
+                        <i class="fas fa-redo"></i> Сбросить вид
+                    </button>
+                    <button id="toggleAutoRotateBtn" class="viewer-btn">
+                        <i class="fas fa-sync"></i> Автоповорот
+                    </button>
                 </div>
-                
-                <div class="quote">
-                    <p class="quote-text">"Никто не забыт и ничто не забыто"</p>
-                    <p class="quote-author">— Ольга Берггольц</p>
-                </div>
-            </section>
-
-            <!-- Экспонаты -->
-            <section id="exhibits" class="content-section">
-                <div class="section-header">
-                    <h2>Коллекция экспонатов</h2>
-                    <p>Исследуйте коллекцию предметов блокадного времени. Наведите курсор на экспонат и вращайте его с помощью мыши для детального изучения.</p>
-                </div>
-                
-                <div class="controls">
-                    <div class="search-box">
-                        <i class="fas fa-search"></i>
-                        <input type="text" id="search-input" placeholder="Поиск экспонатов...">
-                    </div>
-                    <div class="filter-controls">
-                        <button class="filter-btn active" data-filter="all">Все</button>
-                        <button class="filter-btn" data-filter="document">Документы</button>
-                        <button class="filter-btn" data-filter="photo">Фотографии</button>
-                        <button class="filter-btn" data-filter="object">Предметы</button>
-                    </div>
-                    <div class="controls">
-    <div class="search-box">
-        <i class="fas fa-search"></i>
-        <input type="text" id="search" placeholder="Поиск экспонатов...">
-    </div>
-    <div class="sort-controls">
-        <button id="refresh-collection" class="refresh-btn" title="Обновить коллекцию">
-            <i class="fas fa-sync-alt"></i>
-        </button>
-        <span>Сортировка:</span>
-        <select id="sort-by">
-            <option value="name">По названию</option>
-            <option value="newest">Сначала новые</option>
-            <option value="oldest">Сначала старые</option>
-        </select>
-    </div>
-</div>
-                </div>
-                
-                <div class="exhibits-grid" id="exhibits-container">
-                    <!-- Экспонаты будут загружаться здесь динамически -->
-                    <div class="loading">Загрузка экспонатов...</div>
-                </div>
-                
-                <div class="exhibit-counter">
-                    <span id="shown-exhibits">0</span> из <span id="total-exhibits-counter">0</span> экспонатов
-                </div>
-            </section>
-
-            <!-- Хронология -->
-            <section id="chronology" class="content-section">
-                <h2>Хронология блокады Ленинграда</h2>
-                <div class="timeline">
-                    <div class="timeline-item">
-                        <div class="timeline-date">8 сентября 1941</div>
-                        <div class="timeline-content">
-                            <h3>Начало блокады</h3>
-                            <p>Немецкие войска захватили Шлиссельбург, взяв под контроль исток Невы и окружив Ленинград с суши.</p>
-                        </div>
-                    </div>
-                    <div class="timeline-item">
-                        <div class="timeline-date">ноябрь 1941</div>
-                        <div class="timeline-content">
-                            <h3>Установление норм хлеба</h3>
-                            <p>Нормы выдачи хлеба для жителей Ленинграда снижены до 125 граммов в день для иждивенцев.</p>
-                        </div>
-                    </div>
-                    <div class="timeline-item">
-                        <div class="timeline-date">22 ноября 1941</div>
-                        <div class="timeline-content">
-                            <h3>Дорога жизни</h3>
-                            <p>Начала действовать ледовая трасса через Ладожское озеро — "Дорога жизни".</p>
-                        </div>
-                    </div>
-                    <div class="timeline-item">
-                        <div class="timeline-date">18 января 1943</div>
-                        <div class="timeline-content">
-                            <h3>Прорыв блокады</h3>
-                            <p>Войска Ленинградского и Волховского фронтов соединились, прорвав блокаду Ленинграда.</p>
-                        </div>
-                    </div>
-                    <div class="timeline-item">
-                        <div class="timeline-date">27 января 1944</div>
-                        <div class="timeline-content">
-                            <h3>Полное освобождение</h3>
-                            <p>Ленинград полностью освобожден от блокады, которая длилась 872 дня.</p>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Истории -->
-            <section id="stories" class="content-section">
-                <h2>Истории блокады</h2>
-                <div class="stories-grid">
-                    <div class="story-card">
-                        <div class="story-image" style="background-image: url('https://images.unsplash.com/photo-1589998059171-988d887df646?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80');"></div>
-                        <div class="story-content">
-                            <h3>Дневник Тани Савичевой</h3>
-                            <p>История самой известной блокадной девочки, чей дневник стал символом блокады Ленинграда.</p>
-                            <a href="#" class="read-more">Читать историю →</a>
-                        </div>
-                    </div>
-                    <div class="story-card">
-                        <div class="story-image" style="background-image: url('https://images.unsplash.com/photo-1546900706-c5aad3d8af74?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80');"></div>
-                        <div class="story-content">
-                            <h3>Седьмая симфония Шостаковича</h3>
-                            <p>История создания и исполнения в блокадном Ленинграде одного из величайших музыкальных произведений XX века.</p>
-                            <a href="#" class="read-more">Читать историю →</a>
-                        </div>
-                    </div>
-                    <div class="story-card">
-                        <div class="story-image" style="background-image: url('https://images.unsplash.com/photo-1584132905271-512c9585a6fa?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80');"></div>
-                        <div class="story-content">
-                            <h3>Подвиг ученых</h3>
-                            <p>Как в осажденном городе продолжали работать научные институты, сохраняя уникальные коллекции и продолжая исследования.</p>
-                            <a href="#" class="read-more">Читать историю →</a>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- О музее -->
-            <section id="about" class="content-section">
-                <h2>О виртуальном музее</h2>
-                <div class="about-content">
-                    <div class="about-text">
-                        <p>Этот виртуальный музей создан с целью сохранения памяти о подвиге жителей и защитников блокадного Ленинграда. Мы стремимся сделать историю доступной для всех, независимо от географического положения.</p>
-                        <p>Музей постоянно пополняется новыми экспонатами. Если у вас есть материалы, связанные с блокадой Ленинграда, и вы хотите поделиться ими, свяжитесь с нами.</p>
-                        <p>Все представленные материалы предназначены исключительно для образовательных целей и сохранения исторической памяти.</p>
-                    </div>
-                    <div class="about-info">
-                        <h3>Технические возможности</h3>
-                        <ul>
-                            <li>Автоматическая загрузка новых экспонатов</li>
-                            <li>Интерактивный просмотр объектов с вращением</li>
-                            <li>Фильтрация по категориям</li>
-                            <li>Поиск по коллекции</li>
-                            <li>Адаптивный дизайн для всех устройств</li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="contact-info">
-                    <h3>Контакты</h3>
-                    <p>По вопросам сотрудничества: <a href="mailto:museum@leningrad900.ru">museum@leningrad900.ru</a></p>
-                </div>
-            </section>
-        </main>
-
-        <!-- Модальное окно экспоната -->
-        <div class="modal" id="exhibit-modal">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h2 id="modal-title">Название экспоната</h2>
-                    <button class="close-modal">&times;</button>
-                </div>
-                <div class="modal-body">
-                    <div class="exhibit-viewer">
-                        <div class="viewer-container">
-                            <canvas id="exhibit-canvas"></canvas>
-                            <div class="viewer-controls">
-                                <button id="rotate-left" title="Повернуть влево"><i class="fas fa-undo"></i></button>
-                                <button id="reset-rotation" title="Сбросить вращение"><i class="fas fa-sync-alt"></i></button>
-                                <button id="rotate-right" title="Повернуть вправо"><i class="fas fa-redo"></i></button>
-                                <button id="zoom-in" title="Увеличить"><i class="fas fa-search-plus"></i></button>
-                                <button id="zoom-out" title="Уменьшить"><i class="fas fa-search-minus"></i></button>
-                            </div>
-                            <div class="viewer-instruction">Используйте мышь для вращения экспоната</div>
-                        </div>
-                        <div class="exhibit-info">
-                            <div class="exhibit-meta">
-                                <span id="modal-category" class="exhibit-category">Категория</span>
-                                <span id="modal-id" class="exhibit-id">ID: 000</span>
-                            </div>
-                            <div class="exhibit-description" id="modal-description">
-                                Описание экспоната появится здесь.
-                            </div>
-                            <div class="exhibit-details">
-                                <h3>Историческая справка</h3>
-                                <p id="modal-details">Дополнительная информация об экспонате и его значении в истории блокады Ленинграда.</p>
-                            </div>
-                        </div>
+            </div>
+            <div class="viewer-display">
+                <div id="viewerCanvas"></div>
+                <div class="viewer-info">
+                    <div class="info-box">
+                        <h4><i class="fas fa-info-circle"></i> Информация об экспонате</h4>
+                        <p id="viewerExhibitInfo">Информация появится после выбора экспоната</p>
                     </div>
                 </div>
             </div>
         </div>
+    </section>
 
-        <!-- Футер -->
-        <footer class="footer">
-            <div class="footer-content">
-                <div class="footer-logo">
-                    <h3>Виртуальный музей блокады Ленинграда</h3>
-                    <p>Память поколений</p>
+    <!-- Галерея -->
+    <section id="gallery" class="gallery-section">
+        <h2 class="section-title">Фотогалерея</h2>
+        <div class="gallery-container" id="galleryContainer">
+            <!-- Галерея будет добавлена через JavaScript -->
+        </div>
+        <div class="gallery-counter">
+            <span id="galleryCount">0</span> фотографий в галерее
+        </div>
+    </section>
+
+    <!-- Статистика -->
+    <section id="stats" class="stats-section">
+        <h2 class="section-title">Статистика блокады</h2>
+        <div class="stats-container">
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-calendar-day"></i>
                 </div>
-                <div class="footer-links">
-                    <a href="#">Политика конфиденциальности</a>
-                    <a href="#">Доступность</a>
-                    <a href="#">Помощь проекту</a>
-                </div>
-                <div class="footer-copyright">
-                    <p>&copy; 2023 Виртуальный музей блокады Ленинграда. Все права защищены.</p>
-                    <p>Сайт создан в образовательных целях.</p>
-                </div>
+                <div class="stat-number" data-target="872">0</div>
+                <div class="stat-label">дней блокады</div>
             </div>
-        </footer>
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-users"></i>
+                </div>
+                <div class="stat-number" data-target="1500000">0</div>
+                <div class="stat-label">жителей в начале блокады</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-bread-slice"></i>
+                </div>
+                <div class="stat-number" data-target="125">0</div>
+                <div class="stat-label">грамм хлеба в сутки (ноябрь 1941)</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-road"></i>
+                </div>
+                <div class="stat-number" data-target="48">0</div>
+                <div class="stat-label">километров Дороги жизни</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Футер -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Виртуальный музей блокады Ленинграда</h3>
+                <p>Проект посвящен памяти защитников и жителей блокадного Ленинграда</p>
+            </div>
+            <div class="footer-section">
+                <h3>Контакты</h3>
+                <p><i class="fas fa-envelope"></i> museum@blockade.ru</p>
+                <p><i class="fas fa-phone"></i> +7 (812) 123-45-67</p>
+            </div>
+            <div class="footer-section">
+                <h3>Поддержать проект</h3>
+                <p>Мы рады помощи в развитии музея</p>
+                <button class="support-btn">Поддержать</button>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2023 Виртуальный музей блокады Ленинграда. Все права защищены.</p>
+            <p>Сайт создан для сохранения исторической памяти</p>
+        </div>
+    </footer>
+
+    <!-- Модальное окно для изображений -->
+    <div id="imageModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <img id="modalImage" src="" alt="">
+            <div class="modal-info">
+                <h3 id="modalTitle"></h3>
+                <p id="modalDescription"></p>
+                <p class="modal-date" id="modalDate"></p>
+            </div>
+        </div>
     </div>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
