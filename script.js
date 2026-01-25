@@ -14,10 +14,10 @@ const museumExhibits = [
         location: "Ленинград",
         // ПУТИ К ИЗОБРАЖЕНИЯМ - ЗАМЕНИТЕ НА СВОИ!
         images: [
-            "objects/object_1/img_1.jpg",
+            "objects/object_1/img_1.png",
             "objects/object_1/img_2.jpg", 
-            "objects/object_1/img_3.jpg",
-            "objects/object_1/img_4.jpg"
+            "objects/object_1/img_3.png",
+            "objects/object_1/img_4.png"
         ]
     }
     // ДОБАВЛЯЙТЕ НОВЫЕ ЭКСПОНАТЫ ЗДЕСЬ
