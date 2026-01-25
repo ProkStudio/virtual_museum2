@@ -14,9 +14,10 @@ const museumExhibits = [
         year: "1941",
         // ПУТЬ К ИЗОБРАЖЕНИЯМ: относительный путь от корня сайта
         images: [
-            "images/exhibits/bread_card_1.jpg",
-            "images/exhibits/bread_card_2.jpg",
-            "images/exhibits/bread_card_3.jpg"
+            "objects/object1/img_1.jpg",
+            "objects/object1/img_2.jpg",
+            "objects/object1/img_3.jpg",
+            "objects/object1/img_4.jpg"
         ]
     },
     {
