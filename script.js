@@ -126,7 +126,7 @@ const galleryImages = [
         description: "Автомобили, идущие по льду Ладожского озера - единственной связи блокадного Ленинграда с большой землей.",
         date: "Зима 1942",
         // ПУТЬ К ИЗОБРАЖЕНИЮ: относительный путь от корня сайта
-        image: "images/gallery/road_of_life.jpg"
+        image: "objects/object_1/img_1.jpg"
     },
     {
         id: 2,
