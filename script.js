@@ -10,14 +10,14 @@ const museumExhibits = [
         id: 1,
         title: "Блокадный паек",
         description: "Хлебная карточка на ноябрь 1941 года. По этой карточке житель блокадного Ленинграда получал 125 грамм хлеба в сутки.",
-        category: "document",
+        category: "object",
         year: "1941",
         // ПУТЬ К ИЗОБРАЖЕНИЯМ: относительный путь от корня сайта
         images: [
-            "objects/object1/img_1.jpg",
-            "objects/object1/img_2.jpg",
-            "objects/object1/img_3.jpg",
-            "objects/object1/img_4.jpg"
+            "objects/object_1/img_1.jpg",
+            "objects/object_1/img_2.jpg",
+            "objects/object_1/img_3.jpg",
+            "objects/object_1/img_4.jpg"
         ]
     },
     {
