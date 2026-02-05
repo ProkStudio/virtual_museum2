@@ -1013,7 +1013,7 @@ function openTourViewer(tour) {
     currentStepIndex = 0;
     isTourOpen = true;
     
-    // Создаем HTML для просмотрщика экскурсии
+    // Создаем HTML для просмотрщика экскурсии (полноэкранный)
     const viewerHTML = `
         <div class="tour-viewer-overlay" id="tourViewer">
             <div class="tour-viewer-container">
@@ -1086,7 +1086,7 @@ function renderCurrentStep() {
                     <div class="tour-step-image">
                         <img src="${img}" alt="Шаг ${step.step}" 
                              onerror="this.src='${getPlaceholderImage()}'"
-                             style="object-fit: cover;">
+                             style="max-width: 100%; height: auto; object-fit: contain;">
                     </div>
                 `).join('')}
             </div>
@@ -1235,7 +1235,7 @@ function addTourViewerStyles() {
                 justify-content: center;
                 align-items: center;
                 animation: fadeIn 0.3s ease;
-                padding: 20px;
+                padding: 0;
             }
             
             @keyframes fadeIn {
@@ -1246,26 +1246,27 @@ function addTourViewerStyles() {
             .tour-viewer-container {
                 background-color: var(--card-bg);
                 width: 100%;
-                max-width: 1000px;
-                max-height: 90vh;
-                border-radius: 15px;
+                height: 100%;
+                max-width: 100%;
+                max-height: 100%;
+                border-radius: 0;
                 overflow: hidden;
                 position: relative;
-                border: 1px solid var(--border-color);
-                box-shadow: 0 10px 40px rgba(0, 0, 0, 0.7);
+                border: none;
+                box-shadow: none;
             }
             
             .close-tour-btn {
-                position: absolute;
-                top: 15px;
-                right: 15px;
+                position: fixed;
+                top: 25px;
+                right: 25px;
                 background: rgba(0, 0, 0, 0.7);
                 border: none;
                 color: white;
-                width: 40px;
-                height: 40px;
+                width: 50px;
+                height: 50px;
                 border-radius: 50%;
-                font-size: 1.2rem;
+                font-size: 1.5rem;
                 cursor: pointer;
                 z-index: 10;
                 transition: all 0.3s ease;
@@ -1285,29 +1286,32 @@ function addTourViewerStyles() {
             
             .tour-step-content {
                 flex: 1;
-                padding: 40px;
+                padding: 50px;
                 overflow-y: auto;
+                max-width: 1200px;
+                margin: 0 auto;
+                width: 100%;
             }
             
             .tour-step-number {
                 display: inline-block;
                 background: var(--accent-color);
                 color: white;
-                width: 50px;
-                height: 50px;
+                width: 60px;
+                height: 60px;
                 border-radius: 50%;
                 display: flex;
                 align-items: center;
                 justify-content: center;
                 font-weight: bold;
-                font-size: 1.5rem;
-                margin-bottom: 20px;
+                font-size: 1.8rem;
+                margin-bottom: 30px;
             }
             
             .tour-step-title {
                 color: white;
-                font-size: 2.2rem;
-                margin-bottom: 25px;
+                font-size: 2.8rem;
+                margin-bottom: 30px;
                 font-family: 'Playfair Display', serif;
                 line-height: 1.3;
             }
@@ -1315,86 +1319,88 @@ function addTourViewerStyles() {
             .tour-step-description {
                 color: #ccc;
                 line-height: 1.8;
-                font-size: 1.1rem;
-                margin-bottom: 30px;
+                font-size: 1.3rem;
+                margin-bottom: 40px;
                 white-space: pre-line;
             }
             
             .tour-step-images {
                 display: grid;
-                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-                gap: 20px;
-                margin: 30px 0;
+                grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+                gap: 30px;
+                margin: 40px 0;
             }
             
             .tour-step-image {
-                border-radius: 10px;
+                border-radius: 15px;
                 overflow: hidden;
-                border: 1px solid var(--border-color);
-                height: 250px;
+                border: 2px solid var(--border-color);
                 position: relative;
+                background: var(--secondary-dark);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding: 20px;
+                min-height: 300px;
             }
             
             .tour-step-image img {
-                width: 100%;
-                height: 100%;
-                object-fit: cover;
+                max-width: 100%;
+                max-height: 500px;
+                height: auto;
+                object-fit: contain;
                 display: block;
-                transition: transform 0.3s ease;
-            }
-            
-            .tour-step-image:hover img {
-                transform: scale(1.05);
+                border-radius: 10px;
             }
             
             .tour-step-nav {
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
-                padding: 25px 40px;
+                padding: 30px 50px;
                 background: var(--secondary-dark);
-                border-top: 1px solid var(--border-color);
-                gap: 15px;
+                border-top: 2px solid var(--border-color);
+                gap: 20px;
             }
             
             .tour-progress {
                 flex: 1;
-                max-width: 300px;
+                max-width: 400px;
             }
             
             .progress-bar {
-                height: 6px;
+                height: 8px;
                 background: var(--border-color);
-                border-radius: 3px;
+                border-radius: 4px;
                 overflow: hidden;
-                margin-bottom: 8px;
+                margin-bottom: 10px;
             }
             
             .progress-fill {
                 height: 100%;
                 background: var(--accent-color);
-                border-radius: 3px;
+                border-radius: 4px;
                 transition: width 0.3s ease;
             }
             
             .progress-text {
                 color: var(--text-secondary);
-                font-size: 0.9rem;
+                font-size: 1rem;
                 text-align: center;
             }
             
             .tour-nav-btn {
-                padding: 12px 25px;
+                padding: 15px 30px;
                 border: none;
-                border-radius: 8px;
-                font-size: 1rem;
+                border-radius: 10px;
+                font-size: 1.1rem;
                 font-weight: 600;
                 cursor: pointer;
                 transition: all 0.3s ease;
                 display: flex;
                 align-items: center;
-                gap: 10px;
-                min-width: 140px;
+                gap: 12px;
+                min-width: 160px;
                 justify-content: center;
             }
             
@@ -1437,35 +1443,94 @@ function addTourViewerStyles() {
             
             .tour-current-info {
                 color: var(--text-secondary);
-                font-size: 0.9rem;
+                font-size: 1rem;
                 text-align: center;
             }
             
-            @media (max-width: 768px) {
-                .tour-viewer-container {
-                    max-height: 100vh;
-                    border-radius: 0;
+            @media (max-width: 1200px) {
+                .tour-step-content {
+                    padding: 40px;
                 }
                 
+                .tour-step-title {
+                    font-size: 2.4rem;
+                }
+                
+                .tour-step-images {
+                    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+                }
+            }
+            
+            @media (max-width: 992px) {
                 .tour-step-content {
-                    padding: 25px;
+                    padding: 35px;
+                }
+                
+                .tour-step-title {
+                    font-size: 2rem;
+                }
+                
+                .tour-step-description {
+                    font-size: 1.2rem;
+                }
+                
+                .tour-step-images {
+                    grid-template-columns: 1fr;
+                    gap: 25px;
+                }
+                
+                .tour-step-image {
+                    min-height: 250px;
+                }
+                
+                .tour-step-image img {
+                    max-height: 400px;
+                }
+                
+                .tour-step-nav {
+                    padding: 25px 35px;
+                    gap: 15px;
+                }
+                
+                .tour-nav-btn {
+                    padding: 12px 25px;
+                    min-width: 140px;
+                    font-size: 1rem;
+                }
+            }
+            
+            @media (max-width: 768px) {
+                .tour-step-content {
+                    padding: 30px;
                 }
                 
                 .tour-step-title {
                     font-size: 1.8rem;
                 }
                 
-                .tour-step-images {
-                    grid-template-columns: 1fr;
+                .tour-step-description {
+                    font-size: 1.1rem;
+                }
+                
+                .tour-step-number {
+                    width: 50px;
+                    height: 50px;
+                    font-size: 1.5rem;
                 }
                 
                 .tour-step-image {
-                    height: 200px;
+                    min-height: 200px;
+                    padding: 15px;
+                }
+                
+                .tour-step-image img {
+                    max-height: 350px;
                 }
                 
                 .tour-step-nav {
                     flex-direction: column;
-                    padding: 20px;
+                    padding: 20px 30px;
+                    gap: 15px;
                 }
                 
                 .tour-nav-btn {
@@ -1477,11 +1542,43 @@ function addTourViewerStyles() {
                     max-width: 100%;
                     margin-bottom: 15px;
                 }
+                
+                .close-tour-btn {
+                    top: 20px;
+                    right: 20px;
+                    width: 45px;
+                    height: 45px;
+                }
             }
             
             @media (max-width: 576px) {
+                .tour-step-content {
+                    padding: 25px;
+                }
+                
+                .tour-step-title {
+                    font-size: 1.6rem;
+                }
+                
+                .tour-step-description {
+                    font-size: 1rem;
+                }
+                
                 .tour-step-image {
-                    height: 180px;
+                    min-height: 180px;
+                    padding: 10px;
+                }
+                
+                .tour-step-image img {
+                    max-height: 300px;
+                }
+                
+                .close-tour-btn {
+                    top: 15px;
+                    right: 15px;
+                    width: 40px;
+                    height: 40px;
+                    font-size: 1.3rem;
                 }
             }
         </style>
