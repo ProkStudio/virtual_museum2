@@ -12,7 +12,6 @@ const museumExhibits = [
         year: "1941",
         author: "Неизвестен",
         location: "Ленинград",
-        // ПУТИ К ИЗОБРАЖЕНИЯМ - ЗАМЕНИТЕ НА СВОИ!
         images: [
             "objects/object_1/img_1.png",
             "objects/object_1/img_2.jpg", 
@@ -24,12 +23,11 @@ const museumExhibits = [
         id: 2,
         title: "Пилотка",
         description: "Ее носили солдаты",
-        fullDescription: "Ее носили солдаты во время боев",
-        category: "photo",
+        fullDescription: "Пилотка - головной убор, который носили солдаты Красной Армии во время боев. В блокадном Ленинграде такие пилотки были у всех военнослужащих, защищавших город. Многие бойцы хранили в пилотках фотографии родных, письма от семьи или кусочки хлеба.",
+        category: "object",
         year: "1941",
         author: "Неизвестен",
         location: "Ленинград",
-        // ПУТИ К ИЗОБРАЖЕНИЯМ - ЗАМЕНИТЕ НА СВОИ!
         images: [
             "objects/object_2/img_1.png",
             "objects/object_2/img_2.png", 
@@ -40,13 +38,12 @@ const museumExhibits = [
     {
         id: 3,
         title: "Бидон",
-        description: "Там водичка буль-буль-буль",
-        fullDescription: "Буль-буль-буль карасики утонули в тазике",
-        category: "photo",
+        description: "Блокадный бидон для воды",
+        fullDescription: "Металлический бидон для воды - один из самых важных предметов в блокадном Ленинграде. Когда водопровод перестал работать, люди ходили за водой к Неве, Фонтанке и другим водоемам. В таком бидоне приносили 1-2 ведра воды в день на всю семью.",
+        category: "object",
         year: "1941",
         author: "Неизвестен",
         location: "Ленинград",
-        // ПУТИ К ИЗОБРАЖЕНИЯМ - ЗАМЕНИТЕ НА СВОИ!
         images: [
             "objects/object_3/img_1.png",
             "objects/object_3/img_2.png", 
@@ -54,8 +51,133 @@ const museumExhibits = [
             "objects/object_3/img_4.png"
         ]
     }
-    // ДОБАВЛЯЙТЕ НОВЫЕ ЭКСПОНАТЫ ЗДЕСЬ
 ];
+
+// ================================
+// КОНФИГУРАЦИЯ ЭКСКУРСИЙ
+// ================================
+
+const museumTours = [
+    {
+        id: 1,
+        number: "01",
+        title: "Блокадный быт: жизнь в осажденном городе",
+        description: "Экскурсия о повседневной жизни ленинградцев в условиях блокады: как они выживали, работали, учились и сохраняли человеческое достоинство.",
+        duration: "20-25 минут",
+        steps: 5,
+        image: "https://images.unsplash.com/photo-1542744095-fcf48d80b0fd?w=800",
+        stepsData: [
+            {
+                step: 1,
+                title: "Хлебные карточки и пайки",
+                description: "Система карточного снабжения была введена 18 июля 1941 года. Рабочие получали 250 грамм хлеба в день, служащие, иждивенцы и дети - всего 125 грамм. Этот хлеб наполовину состоял из пищевых суррогатов: целлюлозы, жмыха, обойной пыли, хвои.\n\nПотеря карточки означала верную смерть от голода. Люди берегли их как самую большую ценность, пришивали к одежде, хранили в специальных мешочках.",
+                images: [
+                    "objects/object_1/img_1.png",
+                    "objects/object_1/img_2.jpg"
+                ]
+            },
+            {
+                step: 2,
+                title: "Буржуйки и обогрев",
+                description: "Зимой 1941-1942 годов в Ленинграде не работало отопление. Температура в квартирах опускалась до -5°C. Люди жгли мебель, книги, паркет.\n\n'Буржуйки' - небольшие печки из жести или металлических ведер - стали единственным источником тепла. В них сжигали все, что могло гореть.",
+                images: [
+                    "objects/object_2/img_1.png",
+                    "objects/object_2/img_2.png"
+                ]
+            },
+            {
+                step: 3,
+                title: "Вода и сангигиена",
+                description: "Водопровод не работал. Люди ходили за водой к Неве, Фонтанке, каналам. Очереди у прорубей были длинными, стоять приходилось часами на морозе.\n\nСтандартная норма - 1-2 ведра воды в день на семью. Этой водой и пили, и готовили, и умывались.",
+                images: [
+                    "objects/object_3/img_1.png"
+                ]
+            },
+            {
+                step: 4,
+                title: "Работа в блокадном городе",
+                description: "Несмотря на голод и холод, заводы продолжали работать. Люди падали у станков от истощения, но продолжали выпускать снаряды, ремонтировать танки.\n\nЗавод 'Электросила' выпускал минометы, Кировский завод ремонтировал танки в нескольких километрах от линии фронта.",
+                images: []
+            },
+            {
+                step: 5,
+                title: "Дети блокады",
+                description: "В Ленинграде осталось 400 тысяч детей. Они учились в неотапливаемых классах, многие сидели в шубах и варежках. Учебники часто заменяли газеты.\n\nДети работали наравне со взрослыми: тушили зажигательные бомбы, ухаживали за ранеными, разбирали завалы.",
+                images: [
+                    "https://images.unsplash.com/photo-1509440159596-0249088772ff?w=800"
+                ]
+            }
+        ]
+    },
+    {
+        id: 2,
+        number: "02",
+        title: "Дорога жизни: артерия спасения",
+        description: "История ледовой трассы через Ладожское озеро - единственной связи блокадного Ленинграда с большой землей.",
+        duration: "15-20 минут",
+        steps: 4,
+        image: "https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?w=800",
+        stepsData: [
+            {
+                step: 1,
+                title: "Создание ледовой трассы",
+                description: "22 ноября 1941 года по льду Ладожского озера прошла первая колонна из 60 грузовиков. Лед был тонким - всего 10-15 см, несколько машин ушли под лед.\n\nДорогу обслуживали 350 регулировщиков, которые отмечали безопасный путь вешками.",
+                images: []
+            },
+            {
+                step: 2,
+                title: "Грузы и эвакуация",
+                description: "По Дороге жизни везли муку, крупы, горючее, боеприпасы. Обратно вывозили людей: детей, женщин, стариков, раненых.\n\nВсего было перевезено свыше 1,6 млн тонн грузов и эвакуировано около 1,4 млн человек.",
+                images: []
+            },
+            {
+                step: 3,
+                title: "Опасности пути",
+                description: "Машины шли под обстрелами и бомбежками. Немецкая авиация совершала до 300 вылетов в сутки.\n\nВодители ехали с открытыми дверями, чтобы успеть выпрыгнуть, если машина начнет тонуть. Многие совершали по 2-3 рейса в сутки.",
+                images: []
+            },
+            {
+                step: 4,
+                title: "Подвиг водителей",
+                description: "Зимой 1941-1942 годов по Дороге жизни работало более 4000 машин. Каждый рейс был подвигом.\n\nВодитель Федор Егоров совершил 120 рейсов, перевезя 300 тонн грузов. Его машину несколько раз обстреливали, но он всегда доезжал до Ленинграда.",
+                images: []
+            }
+        ]
+    },
+    {
+        id: 3,
+        number: "03",
+        title: "Искусство и культура в блокаду",
+        description: "Как в осажденном городе продолжали работать театры, филармония, радио и создавались произведения искусства.",
+        duration: "15 минут",
+        steps: 3,
+        image: "https://images.unsplash.com/photo-1511379938547-c1f69419868d?w=800",
+        stepsData: [
+            {
+                step: 1,
+                title: "Ленинградское радио",
+                description: "Радио не замолкало ни на один день. Дикторы читали сводки Совинформбюро, передачи для детей, литературные чтения.\n\n9 августа 1942 года в Большом зале филармонии состоялось исполнение Седьмой симфонии Шостаковича, которую транслировали на весь город.",
+                images: []
+            },
+            {
+                step: 2,
+                title: "Театры и библиотеки",
+                description: "В городе работали 5 театров. Артисты выступали в холодных залах, часто падая в голодные обмороки.\n\nПубличная библиотека выдавала книги даже в самые тяжелые дни. Люди приходили читать при свете коптилок.",
+                images: []
+            },
+            {
+                step: 3,
+                title: "Блокадный дневник",
+                description: "Многие ленинградцы вели дневники. Самый известный - дневник Тани Савичевой, в котором она записывала даты смерти своих родных.\n\n'Савичевы умерли. Умерли все. Осталась одна Таня' - эти слова стали символом блокадной трагедии.",
+                images: []
+            }
+        ]
+    }
+];
+
+// ================================
+// КОНФИГУРАЦИЯ ГАЛЕРЕИ
+// ================================
 
 const galleryImages = [
     {
@@ -81,6 +203,9 @@ const galleryImages = [
 let currentExhibit = null;
 let currentImageIndex = 0;
 let isViewerOpen = false;
+let currentTour = null;
+let currentStepIndex = 0;
+let isTourOpen = false;
 
 // ================================
 // ИНИЦИАЛИЗАЦИЯ САЙТА
@@ -93,6 +218,8 @@ document.addEventListener('DOMContentLoaded', function() {
     initNavigation();
     renderExhibits();
     updateExhibitCount();
+    renderTours();
+    updateTourCount();
     renderGallery();
     updateGalleryCount();
     animateStatistics();
@@ -108,6 +235,9 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Проверка загрузки изображений
     setTimeout(checkImageLoad, 1000);
+    
+    // Инициализация кнопки поддержки
+    initSupportButton();
 });
 
 // ================================
@@ -116,6 +246,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
 function renderExhibits(filter = 'all', searchTerm = '') {
     const container = document.getElementById('exhibitsContainer');
+    if (!container) return;
+    
     container.innerHTML = '';
     
     let filteredExhibits = museumExhibits;
@@ -194,7 +326,9 @@ function createExhibitCard(exhibit) {
 
 function updateExhibitCount(count = null) {
     const counter = document.getElementById('exhibitCount');
-    counter.textContent = count !== null ? count : museumExhibits.length;
+    if (counter) {
+        counter.textContent = count !== null ? count : museumExhibits.length;
+    }
 }
 
 function getCategoryName(category) {
@@ -218,22 +352,25 @@ function initSearchAndFilter() {
     // Поиск
     if (searchInput) {
         searchInput.addEventListener('input', function() {
-            const activeFilter = document.querySelector('.filter-btn.active').dataset.filter;
-            renderExhibits(activeFilter, this.value);
+            const activeFilter = document.querySelector('.filter-btn.active');
+            const filter = activeFilter ? activeFilter.dataset.filter : 'all';
+            renderExhibits(filter, this.value);
         });
     }
     
     // Фильтрация
-    filterButtons.forEach(button => {
-        button.addEventListener('click', function() {
-            filterButtons.forEach(btn => btn.classList.remove('active'));
-            this.classList.add('active');
-            
-            const filter = this.dataset.filter;
-            const searchTerm = searchInput ? searchInput.value : '';
-            renderExhibits(filter, searchTerm);
+    if (filterButtons.length > 0) {
+        filterButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+                this.classList.add('active');
+                
+                const filter = this.dataset.filter;
+                const searchTerm = searchInput ? searchInput.value : '';
+                renderExhibits(filter, searchTerm);
+            });
         });
-    });
+    }
 }
 
 // ================================
@@ -804,11 +941,540 @@ function addViewerStyles() {
 }
 
 // ================================
+// ФУНКЦИИ ДЛЯ ЭКСКУРСИЙ
+// ================================
+
+function renderTours() {
+    const container = document.getElementById('toursContainer');
+    if (!container) return;
+    
+    container.innerHTML = '';
+    
+    museumTours.forEach(tour => {
+        const card = createTourCard(tour);
+        container.appendChild(card);
+    });
+    
+    updateTourCount();
+}
+
+function createTourCard(tour) {
+    const card = document.createElement('div');
+    card.className = 'tour-card';
+    card.dataset.id = tour.id;
+    
+    card.innerHTML = `
+        <div class="tour-image">
+            <img src="${tour.image}" alt="${tour.title}" 
+                 onerror="this.src='${getPlaceholderImage()}'">
+            <div class="tour-number">${tour.number}</div>
+        </div>
+        <div class="tour-info">
+            <h3 class="tour-title">${tour.title}</h3>
+            <p class="tour-description">${tour.description}</p>
+            <div class="tour-meta">
+                <div class="tour-steps">
+                    <i class="fas fa-list-ol"></i>
+                    <span>${tour.steps} шагов</span>
+                </div>
+                <div class="tour-duration">
+                    <i class="fas fa-clock"></i>
+                    <span>${tour.duration}</span>
+                </div>
+            </div>
+            <button class="start-tour-btn" data-id="${tour.id}">
+                <i class="fas fa-play-circle"></i> Начать экскурсию
+            </button>
+        </div>
+    `;
+    
+    const startBtn = card.querySelector('.start-tour-btn');
+    startBtn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        openTourViewer(tour);
+    });
+    
+    card.addEventListener('click', function() {
+        openTourViewer(tour);
+    });
+    
+    return card;
+}
+
+function updateTourCount() {
+    const counter = document.getElementById('tourCount');
+    if (counter) {
+        counter.textContent = museumTours.length;
+    }
+}
+
+function openTourViewer(tour) {
+    currentTour = tour;
+    currentStepIndex = 0;
+    isTourOpen = true;
+    
+    // Создаем HTML для просмотрщика экскурсии
+    const viewerHTML = `
+        <div class="tour-viewer-overlay" id="tourViewer">
+            <div class="tour-viewer-container">
+                <button class="close-tour-btn" id="closeTourBtn">
+                    <i class="fas fa-times"></i>
+                </button>
+                
+                <div class="tour-viewer-content">
+                    <div class="tour-step-content" id="tourStepContent">
+                        <!-- Контент будет загружен через renderCurrentStep() -->
+                    </div>
+                    
+                    <div class="tour-step-nav">
+                        <button class="tour-nav-btn tour-prev-btn" id="prevTourStepBtn" disabled>
+                            <i class="fas fa-arrow-left"></i> Назад
+                        </button>
+                        
+                        <div class="tour-progress">
+                            <div class="progress-bar">
+                                <div class="progress-fill" id="tourProgressFill" style="width: 0%"></div>
+                            </div>
+                            <div class="progress-text" id="tourProgressText">Шаг 1 из ${tour.steps}</div>
+                        </div>
+                        
+                        <div class="tour-current-info">
+                            Экскурсия: "${tour.title}"
+                        </div>
+                        
+                        <button class="tour-nav-btn tour-next-btn" id="nextTourStepBtn">
+                            Далее <i class="fas fa-arrow-right"></i>
+                        </button>
+                        
+                        <button class="tour-nav-btn tour-menu-btn" id="tourMenuBtn">
+                            <i class="fas fa-list"></i> Меню
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+    
+    // Добавляем просмотрщик на страницу
+    document.body.insertAdjacentHTML('beforeend', viewerHTML);
+    
+    // Блокируем прокрутку
+    document.body.style.overflow = 'hidden';
+    
+    // Рендерим первый шаг
+    renderCurrentStep();
+    
+    // Инициализируем навигацию
+    initTourNavigation();
+    
+    // Добавляем стили для просмотрщика
+    addTourViewerStyles();
+}
+
+function renderCurrentStep() {
+    const content = document.getElementById('tourStepContent');
+    const step = currentTour.stepsData[currentStepIndex];
+    
+    if (!content || !step) return;
+    
+    // Создаем HTML для шага
+    let imagesHTML = '';
+    if (step.images && step.images.length > 0) {
+        imagesHTML = `
+            <div class="tour-step-images">
+                ${step.images.map(img => `
+                    <div class="tour-step-image">
+                        <img src="${img}" alt="Шаг ${step.step}" 
+                             onerror="this.src='${getPlaceholderImage()}'">
+                    </div>
+                `).join('')}
+            </div>
+        `;
+    }
+    
+    content.innerHTML = `
+        <div class="tour-step-number">${step.step}</div>
+        <h2 class="tour-step-title">${step.title}</h2>
+        <div class="tour-step-description">${step.description}</div>
+        ${imagesHTML}
+    `;
+    
+    // Обновляем прогресс
+    updateTourProgress();
+}
+
+function updateTourProgress() {
+    const progressFill = document.getElementById('tourProgressFill');
+    const progressText = document.getElementById('tourProgressText');
+    
+    if (!progressFill || !progressText) return;
+    
+    const progress = ((currentStepIndex + 1) / currentTour.steps) * 100;
+    progressFill.style.width = `${progress}%`;
+    progressText.textContent = `Шаг ${currentStepIndex + 1} из ${currentTour.steps}`;
+    
+    // Обновляем состояние кнопок
+    const prevBtn = document.getElementById('prevTourStepBtn');
+    const nextBtn = document.getElementById('nextTourStepBtn');
+    
+    if (prevBtn) {
+        prevBtn.disabled = currentStepIndex === 0;
+    }
+    
+    if (nextBtn) {
+        if (currentStepIndex === currentTour.steps - 1) {
+            nextBtn.innerHTML = '<i class="fas fa-check"></i> Завершить';
+        } else {
+            nextBtn.innerHTML = 'Далее <i class="fas fa-arrow-right"></i>';
+        }
+    }
+}
+
+function initTourNavigation() {
+    // Кнопка закрытия
+    const closeBtn = document.getElementById('closeTourBtn');
+    if (closeBtn) {
+        closeBtn.addEventListener('click', closeTourViewer);
+    }
+    
+    // Кнопка "Назад"
+    const prevBtn = document.getElementById('prevTourStepBtn');
+    if (prevBtn) {
+        prevBtn.addEventListener('click', function() {
+            if (currentStepIndex > 0) {
+                currentStepIndex--;
+                renderCurrentStep();
+                updateTourProgress();
+            }
+        });
+    }
+    
+    // Кнопка "Далее"
+    const nextBtn = document.getElementById('nextTourStepBtn');
+    if (nextBtn) {
+        nextBtn.addEventListener('click', function() {
+            if (currentStepIndex < currentTour.steps - 1) {
+                currentStepIndex++;
+                renderCurrentStep();
+                updateTourProgress();
+            } else {
+                // Завершение экскурсии
+                alert('Экскурсия завершена! Спасибо за внимание.');
+                closeTourViewer();
+            }
+        });
+    }
+    
+    // Кнопка "Меню"
+    const menuBtn = document.getElementById('tourMenuBtn');
+    if (menuBtn) {
+        menuBtn.addEventListener('click', function() {
+            closeTourViewer();
+            document.getElementById('tours').scrollIntoView({ behavior: 'smooth' });
+        });
+    }
+    
+    // Клавиатурная навигация
+    document.addEventListener('keydown', function(e) {
+        if (!isTourOpen) return;
+        
+        if (e.key === 'ArrowLeft') {
+            if (currentStepIndex > 0) {
+                currentStepIndex--;
+                renderCurrentStep();
+                updateTourProgress();
+            }
+        } else if (e.key === 'ArrowRight') {
+            if (currentStepIndex < currentTour.steps - 1) {
+                currentStepIndex++;
+                renderCurrentStep();
+                updateTourProgress();
+            }
+        } else if (e.key === 'Escape') {
+            closeTourViewer();
+        }
+    });
+    
+    // Закрытие по клику на оверлей
+    const overlay = document.querySelector('.tour-viewer-overlay');
+    if (overlay) {
+        overlay.addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeTourViewer();
+            }
+        });
+    }
+}
+
+function closeTourViewer() {
+    const viewer = document.getElementById('tourViewer');
+    if (viewer) {
+        viewer.remove();
+    }
+    
+    // Разблокируем прокрутку
+    document.body.style.overflow = '';
+    isTourOpen = false;
+}
+
+function addTourViewerStyles() {
+    if (document.getElementById('tourViewerStyles')) return;
+    
+    const styles = `
+        <style id="tourViewerStyles">
+            .tour-viewer-overlay {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-color: rgba(0, 0, 0, 0.95);
+                z-index: 3000;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                animation: fadeIn 0.3s ease;
+                padding: 20px;
+            }
+            
+            .tour-viewer-container {
+                background-color: var(--card-bg);
+                width: 100%;
+                max-width: 1000px;
+                max-height: 90vh;
+                border-radius: 15px;
+                overflow: hidden;
+                position: relative;
+                border: 1px solid var(--border-color);
+                box-shadow: 0 10px 40px rgba(0, 0, 0, 0.7);
+            }
+            
+            .close-tour-btn {
+                position: absolute;
+                top: 15px;
+                right: 15px;
+                background: rgba(0, 0, 0, 0.7);
+                border: none;
+                color: white;
+                width: 40px;
+                height: 40px;
+                border-radius: 50%;
+                font-size: 1.2rem;
+                cursor: pointer;
+                z-index: 10;
+                transition: all 0.3s ease;
+            }
+            
+            .close-tour-btn:hover {
+                background: var(--accent-color);
+                transform: rotate(90deg);
+            }
+            
+            .tour-viewer-content {
+                display: flex;
+                flex-direction: column;
+                height: 100%;
+                overflow-y: auto;
+            }
+            
+            .tour-step-content {
+                flex: 1;
+                padding: 40px;
+                overflow-y: auto;
+            }
+            
+            .tour-step-number {
+                display: inline-block;
+                background: var(--accent-color);
+                color: white;
+                width: 50px;
+                height: 50px;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-weight: bold;
+                font-size: 1.5rem;
+                margin-bottom: 20px;
+            }
+            
+            .tour-step-title {
+                color: white;
+                font-size: 2.2rem;
+                margin-bottom: 25px;
+                font-family: 'Playfair Display', serif;
+                line-height: 1.3;
+            }
+            
+            .tour-step-description {
+                color: #ccc;
+                line-height: 1.8;
+                font-size: 1.1rem;
+                margin-bottom: 30px;
+                white-space: pre-line;
+            }
+            
+            .tour-step-images {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+                gap: 20px;
+                margin: 30px 0;
+            }
+            
+            .tour-step-image {
+                border-radius: 10px;
+                overflow: hidden;
+                border: 1px solid var(--border-color);
+            }
+            
+            .tour-step-image img {
+                width: 100%;
+                height: 200px;
+                object-fit: cover;
+                display: block;
+            }
+            
+            .tour-step-nav {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 25px 40px;
+                background: var(--secondary-dark);
+                border-top: 1px solid var(--border-color);
+                gap: 15px;
+            }
+            
+            .tour-progress {
+                flex: 1;
+                max-width: 300px;
+            }
+            
+            .progress-bar {
+                height: 6px;
+                background: var(--border-color);
+                border-radius: 3px;
+                overflow: hidden;
+                margin-bottom: 8px;
+            }
+            
+            .progress-fill {
+                height: 100%;
+                background: var(--accent-color);
+                border-radius: 3px;
+                transition: width 0.3s ease;
+            }
+            
+            .progress-text {
+                color: var(--text-secondary);
+                font-size: 0.9rem;
+                text-align: center;
+            }
+            
+            .tour-nav-btn {
+                padding: 12px 25px;
+                border: none;
+                border-radius: 8px;
+                font-size: 1rem;
+                font-weight: 600;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                min-width: 140px;
+                justify-content: center;
+            }
+            
+            .tour-nav-btn:disabled {
+                opacity: 0.5;
+                cursor: not-allowed;
+            }
+            
+            .tour-prev-btn {
+                background: transparent;
+                border: 2px solid var(--border-color);
+                color: var(--text-color);
+            }
+            
+            .tour-prev-btn:hover:not(:disabled) {
+                background: var(--border-color);
+            }
+            
+            .tour-next-btn {
+                background: var(--accent-color);
+                color: white;
+                border: 2px solid var(--accent-color);
+            }
+            
+            .tour-next-btn:hover:not(:disabled) {
+                background: var(--accent-light);
+                border-color: var(--accent-light);
+            }
+            
+            .tour-menu-btn {
+                background: transparent;
+                border: 2px solid var(--accent-color);
+                color: var(--accent-color);
+            }
+            
+            .tour-menu-btn:hover {
+                background: var(--accent-color);
+                color: white;
+            }
+            
+            .tour-current-info {
+                color: var(--text-secondary);
+                font-size: 0.9rem;
+                text-align: center;
+            }
+            
+            @media (max-width: 768px) {
+                .tour-viewer-container {
+                    max-height: 100vh;
+                    border-radius: 0;
+                }
+                
+                .tour-step-content {
+                    padding: 25px;
+                }
+                
+                .tour-step-title {
+                    font-size: 1.8rem;
+                }
+                
+                .tour-step-nav {
+                    flex-direction: column;
+                    padding: 20px;
+                }
+                
+                .tour-nav-btn {
+                    width: 100%;
+                    justify-content: center;
+                }
+                
+                .tour-progress {
+                    max-width: 100%;
+                    margin-bottom: 15px;
+                }
+                
+                .tour-step-images {
+                    grid-template-columns: 1fr;
+                }
+            }
+        </style>
+    `;
+    
+    document.head.insertAdjacentHTML('beforeend', styles);
+}
+
+// ================================
 // ГАЛЕРЕЯ
 // ================================
 
 function renderGallery() {
     const container = document.getElementById('galleryContainer');
+    if (!container) return;
+    
     container.innerHTML = '';
     
     galleryImages.forEach(image => {
@@ -837,7 +1503,10 @@ function createGalleryItem(image) {
 }
 
 function updateGalleryCount() {
-    document.getElementById('galleryCount').textContent = galleryImages.length;
+    const counter = document.getElementById('galleryCount');
+    if (counter) {
+        counter.textContent = galleryImages.length;
+    }
 }
 
 function openGalleryModal(image) {
@@ -846,6 +1515,8 @@ function openGalleryModal(image) {
     const modalTitle = document.getElementById('modalTitle');
     const modalDescription = document.getElementById('modalDescription');
     const modalDate = document.getElementById('modalDate');
+    
+    if (!modal || !modalImage || !modalTitle || !modalDescription || !modalDate) return;
     
     modalImage.src = image.image;
     modalImage.alt = image.title;
@@ -864,11 +1535,11 @@ function initModal() {
     const modal = document.getElementById('imageModal');
     const closeBtn = document.querySelector('.close-modal');
     
-    if (closeBtn) {
-        closeBtn.addEventListener('click', function() {
-            modal.style.display = 'none';
-        });
-    }
+    if (!modal || !closeBtn) return;
+    
+    closeBtn.addEventListener('click', function() {
+        modal.style.display = 'none';
+    });
     
     window.addEventListener('click', function(e) {
         if (e.target === modal) {
@@ -922,7 +1593,10 @@ function initNavigation() {
             
             const targetId = this.getAttribute('href');
             if (targetId !== '#') {
-                document.querySelector(targetId).scrollIntoView({ behavior: 'smooth' });
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    targetElement.scrollIntoView({ behavior: 'smooth' });
+                }
             }
         });
     });
@@ -963,6 +1637,7 @@ function getPlaceholderImage() {
 function checkImageLoad() {
     console.log("=== ПРОВЕРКА ЗАГРУЗКИ ИЗОБРАЖЕНИЙ ===");
     
+    // Проверка экспонатов
     museumExhibits.forEach(exhibit => {
         console.log(`Экспонат: ${exhibit.title}`);
         
@@ -977,17 +1652,59 @@ function checkImageLoad() {
             img.src = imgPath;
         });
     });
+    
+    // Проверка экскурсий
+    museumTours.forEach(tour => {
+        console.log(`Экскурсия: ${tour.title}`);
+        
+        // Проверка основного изображения экскурсии
+        const mainImg = new Image();
+        mainImg.onload = () => {
+            console.log(`  ✓ Основное изображение: Загружено успешно`);
+        };
+        mainImg.onerror = () => {
+            console.log(`  ✗ Основное изображение: Ошибка загрузки`);
+        };
+        mainImg.src = tour.image;
+        
+        // Проверка изображений в шагах
+        tour.stepsData.forEach((step, stepIndex) => {
+            step.images.forEach((imgPath, imgIndex) => {
+                const img = new Image();
+                img.onload = () => {
+                    console.log(`  ✓ Шаг ${stepIndex + 1}, изображение ${imgIndex + 1}: Загружено успешно`);
+                };
+                img.onerror = () => {
+                    console.log(`  ✗ Шаг ${stepIndex + 1}, изображение ${imgIndex + 1}: Ошибка загрузки`);
+                };
+                img.src = imgPath;
+            });
+        });
+    });
 }
 
 // ================================
-// ДОБАВЛЕНИЕ НОВЫХ ЭКСПОНАТОВ
+// КНОПКА ПОДДЕРЖКИ
+// ================================
+
+function initSupportButton() {
+    const supportBtn = document.querySelector('.support-btn');
+    if (supportBtn) {
+        supportBtn.addEventListener('click', function() {
+            alert('Спасибо за желание поддержать проект! В настоящее время мы принимаем пожертвования через банковский перевод. Пожалуйста, свяжитесь с нами по email: museum@blockade.ru');
+        });
+    }
+}
+
+// ================================
+// ДОБАВЛЕНИЕ НОВЫХ ЭКСПОНАТОВ И ЭКСКУРСИЙ
 // ================================
 
 /*
 ПРИМЕР ДОБАВЛЕНИЯ НОВОГО ЭКСПОНАТА:
 
 {
-    id: 2, // Увеличьте номер на 1
+    id: 4, // Увеличьте номер на 1
     title: "Название вашего экспоната",
     description: "Краткое описание (отображается в карточке)",
     fullDescription: "Полное подробное описание (отображается при просмотре)",
@@ -996,9 +1713,41 @@ function checkImageLoad() {
     author: "Автор (если известен)",
     location: "Место нахождения",
     images: [
-        "objects/object_2/img_1.jpg", // Пути к вашим изображениям
-        "objects/object_2/img_2.jpg",
-        "objects/object_2/img_3.jpg"
+        "objects/object_4/img_1.jpg", // Пути к вашим изображениям
+        "objects/object_4/img_2.jpg",
+        "objects/object_4/img_3.jpg"
+    ]
+}
+*/
+
+/*
+ПРИМЕР ДОБАВЛЕНИЯ НОВОЙ ЭКСКУРСИИ:
+
+{
+    id: 4, // Увеличьте номер
+    number: "04",
+    title: "Название вашей экскурсии",
+    description: "Краткое описание экскурсии",
+    duration: "10-15 минут",
+    steps: 3, // Количество шагов
+    image: "ссылка_на_изображение.jpg",
+    stepsData: [
+        {
+            step: 1,
+            title: "Название шага 1",
+            description: "Подробное описание шага 1\\n\\nМожно использовать переносы строк",
+            images: [
+                "путь/к/изображению1.jpg",
+                "путь/к/изображению2.jpg"
+            ] // Может быть пустым массивом
+        },
+        {
+            step: 2,
+            title: "Название шага 2",
+            description: "Описание шага 2",
+            images: [] // Без изображений
+        },
+        // ... остальные шаги
     ]
 }
 */
