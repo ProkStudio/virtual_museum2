@@ -380,113 +380,6 @@ section {
     font-size: 1.5rem;
 }
 
-/* Галерея */
-.gallery-section {
-    background-color: var(--primary-dark);
-}
-
-.gallery-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 1.5rem;
-}
-
-.gallery-item {
-    background-color: var(--card-bg);
-    border-radius: 10px;
-    overflow: hidden;
-    cursor: pointer;
-    transition: transform 0.3s ease;
-    border: 1px solid var(--border-color);
-}
-
-.gallery-item:hover {
-    transform: scale(1.03);
-    border-color: var(--accent-color);
-}
-
-.gallery-image {
-    height: 200px;
-    overflow: hidden;
-}
-
-.gallery-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.5s ease;
-}
-
-.gallery-item:hover .gallery-image img {
-    transform: scale(1.1);
-}
-
-.gallery-caption {
-    padding: 1rem;
-    text-align: center;
-    font-size: 0.9rem;
-    color: var(--text-secondary);
-}
-
-.gallery-counter {
-    text-align: center;
-    margin-top: 3rem;
-    font-size: 1.2rem;
-    color: var(--text-secondary);
-}
-
-.gallery-counter span {
-    color: var(--accent-color);
-    font-weight: bold;
-    font-size: 1.5rem;
-}
-
-/* Статистика */
-.stats-section {
-    background-color: var(--secondary-dark);
-    border-radius: 10px;
-    margin-top: 2rem;
-}
-
-.stats-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 2rem;
-}
-
-.stat-card {
-    background-color: var(--card-bg);
-    padding: 2rem;
-    border-radius: 10px;
-    text-align: center;
-    border: 1px solid var(--border-color);
-    transition: transform 0.3s ease;
-}
-
-.stat-card:hover {
-    transform: translateY(-5px);
-    border-color: var(--accent-color);
-}
-
-.stat-icon {
-    font-size: 3rem;
-    color: var(--accent-color);
-    margin-bottom: 1rem;
-}
-
-.stat-number {
-    font-size: 3rem;
-    font-weight: bold;
-    margin-bottom: 0.5rem;
-    color: var(--text-color);
-    font-family: 'Playfair Display', serif;
-}
-
-.stat-label {
-    color: var(--text-secondary);
-    font-size: 1.1rem;
-}
-
 /* Экскурсии */
 .tours-section {
     background-color: var(--secondary-dark);
@@ -614,260 +507,139 @@ section {
     color: white;
 }
 
-/* Просмотрщик экскурсий */
-.tour-viewer-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.95);
-    z-index: 3000;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    animation: fadeIn 0.3s ease;
-    padding: 20px;
-}
-
-.tour-viewer-container {
-    background-color: var(--card-bg);
-    width: 100%;
-    max-width: 1000px;
-    max-height: 90vh;
-    border-radius: 15px;
-    overflow: hidden;
-    position: relative;
-    border: 1px solid var(--border-color);
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.7);
-}
-
-.close-tour-btn {
-    position: absolute;
-    top: 15px;
-    right: 15px;
-    background: rgba(0, 0, 0, 0.7);
-    border: none;
-    color: white;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    font-size: 1.2rem;
-    cursor: pointer;
-    z-index: 10;
-    transition: all 0.3s ease;
-}
-
-.close-tour-btn:hover {
-    background: var(--accent-color);
-    transform: rotate(90deg);
-}
-
-.tour-viewer-content {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    overflow-y: auto;
-}
-
-.tour-step-content {
-    flex: 1;
-    padding: 40px;
-    overflow-y: auto;
-}
-
-.tour-step-number {
-    display: inline-block;
-    background: var(--accent-color);
-    color: white;
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: bold;
-    font-size: 1.5rem;
-    margin-bottom: 20px;
-}
-
-.tour-step-title {
-    color: white;
-    font-size: 2.2rem;
-    margin-bottom: 25px;
-    font-family: 'Playfair Display', serif;
-    line-height: 1.3;
-}
-
-.tour-step-description {
-    color: #ccc;
-    line-height: 1.8;
-    font-size: 1.1rem;
-    margin-bottom: 30px;
-    white-space: pre-line;
-}
-
-.tour-step-images {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 20px;
-    margin: 30px 0;
-}
-
+/* Исправления для изображений в экскурсиях */
 .tour-step-image {
     border-radius: 10px;
     overflow: hidden;
     border: 1px solid var(--border-color);
+    height: 250px;
+    position: relative;
 }
 
 .tour-step-image img {
     width: 100%;
-    height: 200px;
+    height: 100%;
     object-fit: cover;
     display: block;
+    transition: transform 0.3s ease;
 }
 
-.tour-step-nav {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 25px 40px;
-    background: var(--secondary-dark);
-    border-top: 1px solid var(--border-color);
-    gap: 15px;
+.tour-step-image:hover img {
+    transform: scale(1.05);
 }
 
-.tour-progress {
-    flex: 1;
-    max-width: 300px;
+.tour-step-images {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    margin: 30px 0;
 }
 
-.progress-bar {
-    height: 6px;
-    background: var(--border-color);
-    border-radius: 3px;
+/* Галерея */
+.gallery-section {
+    background-color: var(--primary-dark);
+}
+
+.gallery-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1.5rem;
+}
+
+.gallery-item {
+    background-color: var(--card-bg);
+    border-radius: 10px;
     overflow: hidden;
-    margin-bottom: 8px;
-}
-
-.progress-fill {
-    height: 100%;
-    background: var(--accent-color);
-    border-radius: 3px;
-    transition: width 0.3s ease;
-}
-
-.progress-text {
-    color: var(--text-secondary);
-    font-size: 0.9rem;
-    text-align: center;
-}
-
-.tour-nav-btn {
-    padding: 12px 25px;
-    border: none;
-    border-radius: 8px;
-    font-size: 1rem;
-    font-weight: 600;
     cursor: pointer;
-    transition: all 0.3s ease;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    min-width: 140px;
-    justify-content: center;
+    transition: transform 0.3s ease;
+    border: 1px solid var(--border-color);
 }
 
-.tour-nav-btn:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
+.gallery-item:hover {
+    transform: scale(1.03);
+    border-color: var(--accent-color);
 }
 
-.tour-prev-btn {
-    background: transparent;
-    border: 2px solid var(--border-color);
-    color: var(--text-color);
+.gallery-image {
+    height: 200px;
+    overflow: hidden;
 }
 
-.tour-prev-btn:hover:not(:disabled) {
-    background: var(--border-color);
+.gallery-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
 }
 
-.tour-next-btn {
-    background: var(--accent-color);
-    color: white;
-    border: 2px solid var(--accent-color);
+.gallery-item:hover .gallery-image img {
+    transform: scale(1.1);
 }
 
-.tour-next-btn:hover:not(:disabled) {
-    background: var(--accent-light);
-    border-color: var(--accent-light);
-}
-
-.tour-menu-btn {
-    background: transparent;
-    border: 2px solid var(--accent-color);
-    color: var(--accent-color);
-}
-
-.tour-menu-btn:hover {
-    background: var(--accent-color);
-    color: white;
-}
-
-.tour-current-info {
-    color: var(--text-secondary);
-    font-size: 0.9rem;
+.gallery-caption {
+    padding: 1rem;
     text-align: center;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
 }
 
-/* Адаптивность для экскурсий */
-@media (max-width: 768px) {
-    .tour-viewer-container {
-        max-height: 100vh;
-        border-radius: 0;
-    }
-    
-    .tour-step-content {
-        padding: 25px;
-    }
-    
-    .tour-step-title {
-        font-size: 1.8rem;
-    }
-    
-    .tour-step-nav {
-        flex-direction: column;
-        padding: 20px;
-    }
-    
-    .tour-nav-btn {
-        width: 100%;
-        justify-content: center;
-    }
-    
-    .tour-progress {
-        max-width: 100%;
-        margin-bottom: 15px;
-    }
-    
-    .tour-step-images {
-        grid-template-columns: 1fr;
-    }
+.gallery-counter {
+    text-align: center;
+    margin-top: 3rem;
+    font-size: 1.2rem;
+    color: var(--text-secondary);
 }
 
-@media (max-width: 576px) {
-    .tours-container {
-        grid-template-columns: 1fr;
-    }
-    
-    .tour-step-title {
-        font-size: 1.5rem;
-    }
-    
-    .tour-step-description {
-        font-size: 1rem;
-    }
+.gallery-counter span {
+    color: var(--accent-color);
+    font-weight: bold;
+    font-size: 1.5rem;
+}
+
+/* Статистика */
+.stats-section {
+    background-color: var(--secondary-dark);
+    border-radius: 10px;
+    margin-top: 2rem;
+}
+
+.stats-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+}
+
+.stat-card {
+    background-color: var(--card-bg);
+    padding: 2rem;
+    border-radius: 10px;
+    text-align: center;
+    border: 1px solid var(--border-color);
+    transition: transform 0.3s ease;
+}
+
+.stat-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--accent-color);
+}
+
+.stat-icon {
+    font-size: 3rem;
+    color: var(--accent-color);
+    margin-bottom: 1rem;
+}
+
+.stat-number {
+    font-size: 3rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+    color: var(--text-color);
+    font-family: 'Playfair Display', serif;
+}
+
+.stat-label {
+    color: var(--text-secondary);
+    font-size: 1.1rem;
 }
 
 /* Футер */
@@ -1017,7 +789,24 @@ footer {
     color: white;
 }
 
-/* Адаптивность */
+/* Адаптивность для изображений в экскурсиях */
+@media (max-width: 768px) {
+    .tour-step-images {
+        grid-template-columns: 1fr;
+    }
+    
+    .tour-step-image {
+        height: 200px;
+    }
+}
+
+@media (max-width: 576px) {
+    .tour-step-image {
+        height: 180px;
+    }
+}
+
+/* Общая адаптивность */
 @media (max-width: 992px) {
     .hero h1 {
         font-size: 2.8rem;
@@ -1057,6 +846,10 @@ footer {
     
     .search-box {
         max-width: 100%;
+    }
+    
+    .tours-container {
+        grid-template-columns: 1fr;
     }
 }
 
