@@ -22,7 +22,7 @@ const museumExhibits = [
     {
         id: 2,
         title: "Пилотка",
-        description: "Ее носили солдаты",
+        description: "Головной убор солдата Красной Армии",
         fullDescription: "Пилотка - головной убор, который носили солдаты Красной Армии во время боев. В блокадном Ленинграде такие пилотки были у всех военнослужащих, защищавших город. Многие бойцы хранили в пилотках фотографии родных, письма от семьи или кусочки хлеба.",
         category: "object",
         year: "1941",
@@ -37,8 +37,8 @@ const museumExhibits = [
     },
     {
         id: 3,
-        title: "Бидон",
-        description: "Блокадный бидон для воды",
+        title: "Бидон для воды",
+        description: "Металлический бидон для переноски воды",
         fullDescription: "Металлический бидон для воды - один из самых важных предметов в блокадном Ленинграде. Когда водопровод перестал работать, люди ходили за водой к Неве, Фонтанке и другим водоемам. В таком бидоне приносили 1-2 ведра воды в день на всю семью.",
         category: "object",
         year: "1941",
@@ -70,7 +70,7 @@ const museumTours = [
             {
                 step: 1,
                 title: "Хлебные карточки и пайки",
-                description: "Система карточного снабжения была введена 18 июля 1941 года. Рабочие получали 250 грамм хлеба в день, служащие, иждивенцы и дети - всего 125 грамм. Этот хлеб наполовину состоял из пищевых суррогатов: целлюлозы, жмыха, обойной пыли, хвои.\n\nПотеря карточки означала верную смерть от голода. Люди берегли их как самую большую ценность, пришивали к одежде, хранили в специальных мешочках.",
+                description: "Система карточного снабжения была введена 18 июля 1941 года. Рабочие получали 250 грамм хлеба в день, служащие, иждивенцев и дети - всего 125 грамм. Этот хлеб наполовину состоял из пищевых суррогатов: целлюлозы, жмыха, обойной пыли, хвои.\n\nПотеря карточки означала верную смерть от голода. Люди берегли их как самую большую ценность, пришивали к одежде, хранили в специальных мешочках.",
                 images: [
                     "objects/object_1/img_1.png",
                     "objects/object_1/img_2.jpg"
@@ -1085,7 +1085,8 @@ function renderCurrentStep() {
                 ${step.images.map(img => `
                     <div class="tour-step-image">
                         <img src="${img}" alt="Шаг ${step.step}" 
-                             onerror="this.src='${getPlaceholderImage()}'">
+                             onerror="this.src='${getPlaceholderImage()}'"
+                             style="object-fit: cover;">
                     </div>
                 `).join('')}
             </div>
@@ -1237,6 +1238,11 @@ function addTourViewerStyles() {
                 padding: 20px;
             }
             
+            @keyframes fadeIn {
+                from { opacity: 0; }
+                to { opacity: 1; }
+            }
+            
             .tour-viewer-container {
                 background-color: var(--card-bg);
                 width: 100%;
@@ -1316,7 +1322,7 @@ function addTourViewerStyles() {
             
             .tour-step-images {
                 display: grid;
-                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
                 gap: 20px;
                 margin: 30px 0;
             }
@@ -1325,13 +1331,20 @@ function addTourViewerStyles() {
                 border-radius: 10px;
                 overflow: hidden;
                 border: 1px solid var(--border-color);
+                height: 250px;
+                position: relative;
             }
             
             .tour-step-image img {
                 width: 100%;
-                height: 200px;
+                height: 100%;
                 object-fit: cover;
                 display: block;
+                transition: transform 0.3s ease;
+            }
+            
+            .tour-step-image:hover img {
+                transform: scale(1.05);
             }
             
             .tour-step-nav {
@@ -1442,6 +1455,14 @@ function addTourViewerStyles() {
                     font-size: 1.8rem;
                 }
                 
+                .tour-step-images {
+                    grid-template-columns: 1fr;
+                }
+                
+                .tour-step-image {
+                    height: 200px;
+                }
+                
                 .tour-step-nav {
                     flex-direction: column;
                     padding: 20px;
@@ -1456,9 +1477,11 @@ function addTourViewerStyles() {
                     max-width: 100%;
                     margin-bottom: 15px;
                 }
-                
-                .tour-step-images {
-                    grid-template-columns: 1fr;
+            }
+            
+            @media (max-width: 576px) {
+                .tour-step-image {
+                    height: 180px;
                 }
             }
         </style>
@@ -1695,59 +1718,3 @@ function initSupportButton() {
         });
     }
 }
-
-// ================================
-// ДОБАВЛЕНИЕ НОВЫХ ЭКСПОНАТОВ И ЭКСКУРСИЙ
-// ================================
-
-/*
-ПРИМЕР ДОБАВЛЕНИЯ НОВОГО ЭКСПОНАТА:
-
-{
-    id: 4, // Увеличьте номер на 1
-    title: "Название вашего экспоната",
-    description: "Краткое описание (отображается в карточке)",
-    fullDescription: "Полное подробное описание (отображается при просмотре)",
-    category: "object", // document, photo, object, personal
-    year: "1941",
-    author: "Автор (если известен)",
-    location: "Место нахождения",
-    images: [
-        "objects/object_4/img_1.jpg", // Пути к вашим изображениям
-        "objects/object_4/img_2.jpg",
-        "objects/object_4/img_3.jpg"
-    ]
-}
-*/
-
-/*
-ПРИМЕР ДОБАВЛЕНИЯ НОВОЙ ЭКСКУРСИИ:
-
-{
-    id: 4, // Увеличьте номер
-    number: "04",
-    title: "Название вашей экскурсии",
-    description: "Краткое описание экскурсии",
-    duration: "10-15 минут",
-    steps: 3, // Количество шагов
-    image: "ссылка_на_изображение.jpg",
-    stepsData: [
-        {
-            step: 1,
-            title: "Название шага 1",
-            description: "Подробное описание шага 1\\n\\nМожно использовать переносы строк",
-            images: [
-                "путь/к/изображению1.jpg",
-                "путь/к/изображению2.jpg"
-            ] // Может быть пустым массивом
-        },
-        {
-            step: 2,
-            title: "Название шага 2",
-            description: "Описание шага 2",
-            images: [] // Без изображений
-        },
-        // ... остальные шаги
-    ]
-}
-*/
