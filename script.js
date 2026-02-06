@@ -5,11 +5,11 @@
 const museumExhibits = [
     {
         id: 1,
-        title: "Блокадный паек",
-        description: "Хлебная карточка на ноябрь 1941 года. По этой карточке житель блокадного Ленинграда получал 125 грамм хлеба в сутки.",
-        fullDescription: "Хлебные карточки были введены в Ленинграде 18 июля 1941 года. Карточка на ноябрь 1941 года давала право на получение 125 граммов хлеба в сутки для служащих, иждивенцев и детей. Этот кусочек хлеба, состоявший наполовину из пищевых суррогатов (целлюлоза, жмых, обойная пыль, хвоя), часто был единственной пищей в день. Потеря карточки означала верную смерть от голода.",
+        title: "Фляга",
+        description: "Из нее пили",
+        fullDescription: "Из нее пили солдаты воду во время войны",
         category: "photo",
-        year: "1941",
+        year: "-",
         author: "Неизвестен",
         location: "Ленинград",
         images: [
@@ -25,7 +25,7 @@ const museumExhibits = [
         description: "Головной убор солдата Красной Армии",
         fullDescription: "Пилотка - головной убор, который носили солдаты Красной Армии во время боев. В блокадном Ленинграде такие пилотки были у всех военнослужащих, защищавших город. Многие бойцы хранили в пилотках фотографии родных, письма от семьи или кусочки хлеба.",
         category: "object",
-        year: "1941",
+        year: "-",
         author: "Неизвестен",
         location: "Ленинград",
         images: [
@@ -41,7 +41,7 @@ const museumExhibits = [
         description: "Металлический бидон для переноски воды",
         fullDescription: "Металлический бидон для воды - один из самых важных предметов в блокадном Ленинграде. Когда водопровод перестал работать, люди ходили за водой к Неве, Фонтанке и другим водоемам. В таком бидоне приносили 1-2 ведра воды в день на всю семью.",
         category: "object",
-        year: "1941",
+        year: "-",
         author: "Неизвестен",
         location: "Ленинград",
         images: [
@@ -49,6 +49,326 @@ const museumExhibits = [
             "objects/object_3/img_2.png", 
             "objects/object_3/img_3.png",
             "objects/object_3/img_4.png"
+        ]
+    },
+    {
+        id: 4,
+        title: "Ленинградская поэма",
+        description: "Ленинградская поэма, Ольга Берггольц",
+        fullDescription: "Ленинградская поэма, Ольга Берггольц. Передала в музей Соволева М.В. - учитель литературы и русского языка школы №60",
+        category: "object",
+        year: "1942",
+        author: "Неизвестен",
+        location: "Ленинград",
+        images: [
+            "objects/object_4/img_1.jpeg",
+        ]
+    },
+    {
+        id: 5,
+        title: "Часы",
+        description: "soon",
+        fullDescription: "soon",
+        category: "object",
+        year: "-",
+        author: "Неизвестен",
+        location: "Ленинград",
+        images: [
+            "objects/object_5/img_1.jpeg",
+            "objects/object_5/img_2.jpeg", 
+            "objects/object_5/img_3.jpeg",
+            "objects/object_5/img_4.jpeg"
+        ]
+    },
+    {
+        id: 6,
+        title: "Сертификат на блокадный хлеб",
+        description: "Сертификат на изделие <БЛОКАДНЫЙ ХЛЕБ ЛЕНИНГРАДА>",
+        fullDescription: "soon",
+        category: "document",
+        year: "-",
+        author: "Неизвестен",
+        location: "Ленинград",
+        images: [
+            "objects/object_6/img_1.jpeg",
+            "objects/object_6/img_2.jpeg", 
+            "objects/object_6/img_3.jpeg"
+        ]
+    },
+    {
+        id: 7,
+        title: "Спичечный коробок",
+        description: "Спичечный коробок со спичками блокадного Ленинграда",
+        fullDescription: "soon",
+        category: "object",
+        year: "1942",
+        author: "Неизвестен",
+        location: "Ленинград",
+        images: [
+            "objects/object_7/img_1.jpeg",
+            "objects/object_7/img_2.jpeg"
+        ]
+    },
+    {
+        id: 8,
+        title: "Программка Седьмой симфонии",
+        description: "soon",
+        fullDescription: "soon",
+        category: "object",
+        year: "1942",
+        author: "Неизвестен",
+        location: "Ленинград",
+        images: [
+            "objects/object_8/img_1.jpg",
+            "objects/object_8/img_2.jpg"
+        ]
+    },
+    {
+        id: 9,
+        title: "Больничный лист",
+        description: "soon",
+        fullDescription: "soon",
+        category: "document",
+        year: "1942",
+        author: "Неизвестен",
+        location: "Ленинград",
+        images: [
+            "objects/object_9/img_1.jpg"
+        ]
+    },
+    {
+        id: 10,
+        title: "Немецкие оккупационные деньги",
+        description: "soon",
+        fullDescription: "soon",
+        category: "object",
+        year: "-",
+        author: "Неизвестен",
+        location: "Ленинград",
+        images: [
+            "objects/object_10/img_1.jpg"
+        ]
+    },
+    {
+        id: 11,
+        title: "Характеристика бойца",
+        description: "soon",
+        fullDescription: "soon",
+        category: "object",
+        year: "1945",
+        author: "Неизвестен",
+        location: "Ленинград",
+        images: [
+            "objects/object_11/img_1.jpg"
+        ]
+    },
+    {
+        id: 12,
+        title: "Священная земля",
+        description: "soon",
+        fullDescription: "soon",
+        category: "object",
+        year: "1945",
+        author: "Неизвестен",
+        location: "Ленинград",
+        images: [
+            "objects/object_12/img_1.jpg"
+        ]
+    },
+    {
+        id: 13,
+        title: "Красноармейская книжка",
+        description: "soon",
+        fullDescription: "soon",
+        category: "object",
+        year: "1945",
+        author: "Неизвестен",
+        location: "Ленинград",
+        images: [
+            "objects/object_13/img_1.jpg"
+        ]
+    },
+    {
+        id: 14,
+        title: "Красноармейская книжка",
+        description: "soon",
+        fullDescription: "soon",
+        category: "object",
+        year: "1945",
+        author: "Неизвестен",
+        location: "Ленинград",
+        images: [
+            "objects/object_14/img_1.jpg"
+        ]
+    },
+    {
+        id: 15,
+        title: "Текст военной присяги",
+        description: "soon",
+        fullDescription: "soon",
+        category: "object",
+        year: "-",
+        author: "Неизвестен",
+        location: "Ленинград",
+        images: [
+            "objects/object_15/img_1.jpg",
+            "objects/object_15/img_2.jpg"
+        ]
+    },
+    {
+        id: 16,
+        title: "Портсигар",
+        description: "soon",
+        fullDescription: "soon",
+        category: "object",
+        year: "-",
+        author: "Неизвестен",
+        location: "Ленинград",
+        images: [
+            "objects/object_16/img_1.jpg",
+            "objects/object_16/img_2.jpg"
+        ]
+    },
+    {
+        id: 17,
+        title: "Гимнастерка",
+        description: "soon",
+        fullDescription: "soon",
+        category: "object",
+        year: "-",
+        author: "Неизвестен",
+        location: "Ленинград",
+        images: [
+            "objects/object_17/img_1.jpg"
+        ]
+    },
+    {
+        id: 18,
+        title: "Погоны ефрейтора",
+        description: "soon",
+        fullDescription: "soon",
+        category: "object",
+        year: "-",
+        author: "Неизвестен",
+        location: "Ленинград",
+        images: [
+            "objects/object_18/img_1.jpg",
+            "objects/object_18/img_2.jpg"
+        ]
+    },
+    {
+        id: 19,
+        title: "Портмоне",
+        description: "soon",
+        fullDescription: "soon",
+        category: "object",
+        year: "-",
+        author: "Неизвестен",
+        location: "Ленинград",
+        images: [
+            "objects/object_19/img_1.jpg",
+            "objects/object_19/img_2.jpg"
+        ]
+    },
+    {
+        id: 20,
+        title: "Бритвенный прибор",
+        description: "soon",
+        fullDescription: "soon",
+        category: "object",
+        year: "-",
+        author: "Неизвестен",
+        location: "Ленинград",
+        images: [
+            "objects/object_20/img_1.jpg",
+            "objects/object_20/img_2.jpg",
+            "objects/object_20/img_3.jpg"
+        ]
+    },
+    {
+        id: 21,
+        title: "Кружка",
+        description: "soon",
+        fullDescription: "soon",
+        category: "object",
+        year: "-",
+        author: "Неизвестен",
+        location: "Ленинград",
+        images: [
+            "objects/object_21/img_1.jpg",
+            "objects/object_21/img_2.jpg",
+            "objects/object_21/img_3.jpg",
+            "objects/object_21/img_4.jpg",
+            "objects/object_21/img_5.jpg"
+        ]
+    },
+    {
+        id: 22,
+        title: "Фляга",
+        description: "soon",
+        fullDescription: "soon",
+        category: "object",
+        year: "-",
+        author: "Неизвестен",
+        location: "Ленинград",
+        images: [
+            "objects/object_22/img_1.jpg",
+            "objects/object_22/img_2.jpg"
+        ]
+    },
+    {
+        id: 23,
+        title: "Письма",
+        description: "soon",
+        fullDescription: "soon",
+        category: "object",
+        year: "-",
+        author: "Неизвестен",
+        location: "Ленинград",
+        images: [
+            "objects/object_23/img_1.jpg",
+            "objects/object_23/img_2.jpg",
+            "objects/object_23/img_3.jpg"
+        ]
+    },
+    {
+        id: 24,
+        title: "Кодограмма",
+        description: "soon",
+        fullDescription: "soon",
+        category: "object",
+        year: "-",
+        author: "Неизвестен",
+        location: "Ленинград",
+        images: [
+            "objects/object_24/img_1.jpg"
+        ]
+    },
+    {
+        id: 25,
+        title: "Фотография",
+        description: "soon",
+        fullDescription: "soon",
+        category: "object",
+        year: "-",
+        author: "Неизвестен",
+        location: "Ленинград",
+        images: [
+            "objects/object_25/img_1.jpg"
+        ]
+    },
+    {
+        id: 26,
+        title: "Послание",
+        description: "soon",
+        fullDescription: "soon",
+        category: "object",
+        year: "-",
+        author: "Неизвестен",
+        location: "Ленинград",
+        images: [
+            "objects/object_26/img_1.jpg",
+            "objects/object_26/img_2.jpg"
         ]
     }
 ];
