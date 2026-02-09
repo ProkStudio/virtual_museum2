@@ -592,7 +592,7 @@ const galleryImages = [
         title: "Музей ГБОУ СОШ №60",
         description: "Музей «Защитники Дороги Жизни. (1941-1945 гг.) Ладожский дивизионный район ПВО»",
         date: "2026",
-        image: "objects/other/img_3.jpg?w=800"
+        image: "-"
     }
 ];
 
